@@ -296,6 +296,8 @@ async function initPanel() {
 // ESTADÍSTICAS
 // ==========================================
 async function saveEstadisticas() {
+    var fresh = await readFile('_data/estadisticas.json');
+    if (fresh) estadisticasSha = fresh.sha;
     var content = {
         beneficiarios: Number(document.getElementById('stat-beneficiarios').value) || 0,
         proyectos: Number(document.getElementById('stat-proyectos').value) || 0,
@@ -338,6 +340,8 @@ function addInforme() {
 }
 
 async function saveInformes() {
+    var fresh = await readFile('_data/informes.json');
+    if (fresh) informesSha = fresh.sha;
     var rows = document.querySelectorAll('#informesList .item-row');
     var informes = [];
     rows.forEach(function(row) {
@@ -380,6 +384,8 @@ function addVideo() {
 }
 
 async function saveVideos() {
+    var fresh = await readFile('_data/videos.json');
+    if (fresh) videosSha = fresh.sha;
     var rows = document.querySelectorAll('#videosList .item-row');
     var videos = [];
     rows.forEach(function(row) {
