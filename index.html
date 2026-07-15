@@ -618,8 +618,10 @@
             });
 
             // ==========================================
-            // Contadores animados desde archivos JSON locales
+            // Contadores animados desde archivos JSON (GitHub raw)
             // ==========================================
+            const DATA_BASE = 'https://raw.githubusercontent.com/cbiallinkay-pixel/allinkay-web/main/_data';
+
             const statMap = {
                 'beneficiarios': document.querySelector('[data-stat="beneficiarios"]'),
                 'proyectos': document.querySelector('[data-stat="proyectos"]'),
@@ -709,7 +711,7 @@
             }
 
             // ==========================================
-            // Cargar datos desde archivos JSON del repositorio
+            // Cargar datos desde GitHub (actualización instantánea)
             // ==========================================
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -717,7 +719,7 @@
                         observer.unobserve(entry.target);
 
                         // Cargar estadísticas
-                        fetch('_data/estadisticas.json')
+                        fetch(DATA_BASE + '/estadisticas.json?t=' + Date.now())
                             .then(r => r.json())
                             .then(data => {
                                 Object.keys(statMap).forEach(key => {
@@ -735,13 +737,13 @@
                             });
 
                         // Cargar informes
-                        fetch('_data/informes.json')
+                        fetch(DATA_BASE + '/informes.json?t=' + Date.now())
                             .then(r => r.json())
                             .then(data => buildInformes(data.informes))
                             .catch(() => buildInformes([]));
 
                         // Cargar videos
-                        fetch('_data/videos.json')
+                        fetch(DATA_BASE + '/videos.json?t=' + Date.now())
                             .then(r => r.json())
                             .then(data => buildVideos(data.videos))
                             .catch(() => {});
