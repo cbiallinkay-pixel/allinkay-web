@@ -618,9 +618,9 @@
             });
 
             // ==========================================
-            // Contadores animados desde archivos JSON (GitHub raw)
+            // Contadores animados desde GitHub API (sin caché)
             // ==========================================
-            const DATA_BASE = 'https://raw.githubusercontent.com/cbiallinkay-pixel/allinkay-web/main/_data';
+            const GITHUB_API = 'https://api.github.com/repos/cbiallinkay-pixel/allinkay-web/contents/_data';
 
             const statMap = {
                 'beneficiarios': document.querySelector('[data-stat="beneficiarios"]'),
@@ -711,16 +711,21 @@
             }
 
             // ==========================================
-            // Cargar datos desde GitHub (actualización instantánea)
+            // Cargar datos desde GitHub API (actualización instantánea)
             // ==========================================
+            function fetchJSON(filename) {
+                return fetch(GITHUB_API + '/' + filename + '?ref=main&t=' + Date.now())
+                    .then(r => r.json())
+                    .then(data => JSON.parse(atob(data.content)));
+            }
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         observer.unobserve(entry.target);
 
                         // Cargar estadísticas
-                        fetch(DATA_BASE + '/estadisticas.json?t=' + Date.now())
-                            .then(r => r.json())
+                        fetchJSON('estadisticas.json')
                             .then(data => {
                                 Object.keys(statMap).forEach(key => {
                                     const el = statMap[key];
@@ -737,14 +742,12 @@
                             });
 
                         // Cargar informes
-                        fetch(DATA_BASE + '/informes.json?t=' + Date.now())
-                            .then(r => r.json())
+                        fetchJSON('informes.json')
                             .then(data => buildInformes(data.informes))
                             .catch(() => buildInformes([]));
 
                         // Cargar videos
-                        fetch(DATA_BASE + '/videos.json?t=' + Date.now())
-                            .then(r => r.json())
+                        fetchJSON('videos.json')
                             .then(data => buildVideos(data.videos))
                             .catch(() => {});
                     }
