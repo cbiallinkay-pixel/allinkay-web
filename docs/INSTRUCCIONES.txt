@@ -1,0 +1,11 @@
+CARPETA DE INFORMES DE IMPACTO
+==============================
+
+Coloca aquí los archivos PDF con los nombres exactos:
+
+- informe-anual-2025.pdf
+- informe-anual-2024.pdf
+- reporte-beneficiarios-2025.pdf
+
+Una vez que subas los PDFs con esos nombres, los botones
+de descarga en la página funcionarán automáticamente.

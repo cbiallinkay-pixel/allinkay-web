@@ -1,0 +1,132 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "img"
+public_folder: "/img"
+
+collections:
+
+  # ─── CONFIGURACIÓN GENERAL ─────────────────────────────
+  - name: "configuracion"
+    label: "Configuración del sitio"
+    files:
+      - label: "Estadísticas de impacto"
+        name: "estadisticas"
+        file: "_data/estadisticas.json"
+        format: "json"
+        fields:
+          - { label: "Beneficiarios atendidos", name: "beneficiarios", widget: "number", value_type: "int" }
+          - { label: "Proyectos realizados", name: "proyectos", widget: "number", value_type: "int" }
+          - { label: "% de satisfacción", name: "satisfaccion", widget: "number", value_type: "int" }
+          - { label: "Años de trayectoria", name: "anios", widget: "number", value_type: "int" }
+
+      - label: "Informes de impacto"
+        name: "informes"
+        file: "_data/informes.json"
+        format: "json"
+        fields:
+          - label: "Informes"
+            name: "informes"
+            widget: "list"
+            fields:
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Descripción", name: "descripcion", widget: "string" }
+              - { label: "URL del archivo (enlace de descarga o 'proximamente')", name: "url", widget: "string" }
+
+      - label: "Videos de Facebook"
+        name: "videos"
+        file: "_data/videos.json"
+        format: "json"
+        fields:
+          - label: "Videos"
+            name: "videos"
+            widget: "list"
+            fields:
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "URL del video de Facebook", name: "url", widget: "string" }
+
+  # ─── GALERÍA ───────────────────────────────────────────
+  - name: "galeria"
+    label: "Galería de fotos"
+    folder: "_galeria"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Foto", name: "imagen", widget: "image" }
+      - { label: "Descripción", name: "descripcion", widget: "string", required: false }
+
+  # ─── NOTICIAS Y CAMPAÑAS ───────────────────────────────
+  - name: "noticias"
+    label: "Noticias y Campañas"
+    folder: "_noticias"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Fecha", name: "fecha", widget: "datetime", format: "DD MMM YYYY" }
+      - label: "Categoría"
+        name: "categoria"
+        widget: "select"
+        options:
+          - { label: "Actividad", value: "actividad" }
+          - { label: "Historia de impacto", value: "historia" }
+          - { label: "Evento", value: "evento" }
+      - { label: "Imagen", name: "imagen", widget: "image" }
+      - { label: "Resumen", name: "resumen", widget: "text" }
+      - { label: "Contenido completo", name: "body", widget: "markdown", required: false }
+
+  # ─── SERVICIOS ─────────────────────────────────────────
+  - name: "servicios"
+    label: "Servicios"
+    folder: "_servicios"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nombre del servicio", name: "title", widget: "string" }
+      - { label: "Imagen", name: "imagen", widget: "image" }
+      - { label: "Descripción corta", name: "descripcion_corta", widget: "string" }
+      - { label: "Descripción completa", name: "descripcion", widget: "text" }
+      - label: "Categoría"
+        name: "categoria"
+        widget: "string"
+      - label: "Puntos clave"
+        name: "puntos"
+        widget: "list"
+        field: { label: "Punto", name: "punto", widget: "string" }
+
+  # ─── APADRINAR ─────────────────────────────────────────
+  - name: "apadrinar"
+    label: "Perfiles para Apadrinar"
+    folder: "_apadrinar"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nombre y edad", name: "title", widget: "string", hint: "Ej: Sofía, 8 años" }
+      - label: "Rango de edad"
+        name: "edad"
+        widget: "select"
+        options:
+          - { label: "0 - 5 años", value: "0-5" }
+          - { label: "6 - 12 años", value: "6-12" }
+          - { label: "13 - 17 años", value: "13-17" }
+          - { label: "18 años o más", value: "18+" }
+      - label: "Tipo de ayuda"
+        name: "tipo"
+        widget: "select"
+        options:
+          - { label: "Tratamiento psicológico", value: "psicologia" }
+          - { label: "Atención médica", value: "medica" }
+          - { label: "Talleres psicoeducativos", value: "taller" }
+          - { label: "Apoyo integral", value: "integral" }
+      - label: "Ubicación"
+        name: "ubicacion"
+        widget: "select"
+        options:
+          - { label: "Quito Norte", value: "norte" }
+          - { label: "Quito Sur", value: "sur" }
+          - { label: "Quito Centro", value: "centro" }
+          - { label: "Valles", value: "valles" }
+      - { label: "Historia", name: "historia", widget: "text" }
+      - { label: "Aporte mensual desde (USD)", name: "monto", widget: "number" }

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/general/logo.jpg" type="image/jpeg">
+    <title>Programas - Allinkay web</title>
+    <meta name="description" content="Programas de salud mental, prevención y educación de Fundación Allinkay.">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZTVS4B7K2"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HZTVS4B7K2');</script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <nav>
+            <a href="index.html" class="nav-logo"><img src="img/general/logo.jpg" alt="Logo Fundación Allinkay"></a>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="navMenu">
+                <li><a href="index.html" data-color="rgba(26, 188, 156, 0.5)">Inicio</a></li>
+                <li><a href="quienes-somos.html" data-color="rgba(52, 152, 219, 0.5)">Quienes somos</a></li>
+                <li><a href="servicios.html" data-color="rgba(46, 204, 113, 0.5)">Servicios</a></li>
+                <li><a href="programas.html" data-color="rgba(241, 196, 15, 0.5)">Programas</a></li>
+                <li><a href="donar.html" data-color="rgba(231, 76, 60, 0.7)">Donar ahora</a></li>
+                <li><a href="alianzas.html" data-color="rgba(241, 196, 15, 0.5)">Empresas aliadas</a></li>
+                <li><a href="apadrinar.html" data-color="rgba(230, 126, 34, 0.5)">Apadrinar</a></li>
+                <li><a href="index.html#contacto" data-color="rgba(149, 165, 166, 0.5)">Contactos</a></li>
+                <li class="lavalamp"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="programas-page">
+        <section class="programas-section">
+            <h2 class="programas-title">Programas</h2>
+            
+            <div class="programas-grid">
+                <!-- Programa 1 -->
+                <div class="programa-card">
+                    <div class="programa-icon-container icon-blue-theme">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="programa-content">
+                        <h3 class="title-blue-theme">Prevención de violencia</h3>
+                        <p>Programas educativos y de intervención para prevenir la violencia en comunidades.</p>
+                    </div>
+                </div>
+
+                <!-- Programa 2 -->
+                <div class="programa-card">
+                    <div class="programa-icon-container icon-green-theme">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="programa-content">
+                        <h3 class="title-green-theme">Salud mental comunitaria</h3>
+                        <p>Atención psicológica accesible para fortalecer el bienestar emocional.</p>
+                    </div>
+                </div>
+
+                <!-- Programa 3 -->
+                <div class="programa-card">
+                    <div class="programa-icon-container icon-purple-theme">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                    </div>
+                    <div class="programa-content">
+                        <h3 class="title-purple-theme">Atención a mujeres víctimas</h3>
+                        <p>Acompañamiento integral a mujeres víctimas de violencia.</p>
+                    </div>
+                </div>
+
+                <!-- Programa 4 -->
+                <div class="programa-card">
+                    <div class="programa-icon-container icon-teal-theme">
+                        <i class="fa-solid fa-people-roof"></i>
+                    </div>
+                    <div class="programa-content">
+                        <h3 class="title-teal-theme">Apoyo a familias vulnerables</h3>
+                        <p>Soporte a familias en situación de vulnerabilidad.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Fundación Integral Allin Kay. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const navMenuEl = document.getElementById('navMenu');
+            if (hamburger && navMenuEl) {
+                hamburger.addEventListener('click', () => { navMenuEl.classList.toggle('open'); hamburger.classList.toggle('active'); });
+                navMenuEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { navMenuEl.classList.remove('open'); hamburger.classList.remove('active'); }));
+            }
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const lavalamp = document.querySelector('.lavalamp');
+            const navUl = document.querySelector('nav ul');
+
+            function moveLavalamp(el) {
+                const linkRect = el.getBoundingClientRect();
+                const ulRect = navUl.getBoundingClientRect();
+                lavalamp.style.width = `${linkRect.width}px`;
+                lavalamp.style.height = `${linkRect.height}px`;
+                lavalamp.style.left = `${linkRect.left - ulRect.left}px`;
+                lavalamp.style.top = `${linkRect.top - ulRect.top}px`;
+                lavalamp.style.opacity = '1';
+
+                if (el.dataset.color) {
+                    lavalamp.style.backgroundColor = el.dataset.color;
+                }
+            }
+
+            const activeItem = navLinks[3]; // Programas es el índice 3
+            setTimeout(() => {
+                moveLavalamp(activeItem);
+            }, 50);
+
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', (e) => {
+                    moveLavalamp(e.target);
+                });
+            });
+
+            navUl.addEventListener('mouseleave', () => {
+                moveLavalamp(activeItem); 
+            });
+
+            window.addEventListener('resize', () => {
+                moveLavalamp(activeItem);
+            });
+        });
+    </script>
+
+    <!-- Botones flotantes -->
+    <div class="fab-container">
+        <a href="https://wa.me/593988282747?text=Hola%20Fundaci%C3%B3n%20Allinkay%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n" 
+           target="_blank" rel="noopener" class="fab fab-whatsapp" aria-label="Contactar por WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="fab-tooltip">WhatsApp</span>
+        </a>
+        <a href="donar.html" class="fab fab-donar" aria-label="Hacer una donación">
+            <i class="fa-solid fa-heart"></i>
+            <span class="fab-tooltip">¡Donar!</span>
+        </a>
+    </div>
+
+</body>
+
+</html>
+

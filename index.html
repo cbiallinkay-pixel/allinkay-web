@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<!-- Define que es un documento HTML5 -->
+<html lang="es">
+<!-- Etiqueta principal del documento, define el idioma en español -->
+
+<head>
+    <!-- Configuración e información del documento (no visible en la página) -->
+
+    <meta charset="UTF-8">
+    <!-- Permite el uso de caracteres especiales de nuestro idioma como la "ñ" y tildes -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/general/logo.jpg" type="image/jpeg">
+    <!-- Hace que la página sea responsive, adaptándose a pantallas de celulares y computadoras -->
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZTVS4B7K2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-HZTVS4B7K2');
+    </script>
+
+    <title>Allinkay - Fundación de Salud Mental y Bienestar | Quito, Ecuador</title>
+    <meta name="description"
+        content="Fundación Allinkay ofrece atención psicológica, médica y psicopedagógica a comunidades vulnerables en Quito, Ecuador. Apóyanos con tu donación.">
+    <meta name="keywords"
+        content="fundación, salud mental, psicología, medicina, Quito, Ecuador, donación, bienestar, Allinkay">
+    <meta name="author" content="Fundación Allinkay">
+    <meta property="og:title" content="Fundación Allinkay - Transformando vidas en Quito">
+    <meta property="og:description"
+        content="Atención psicológica, médica y psicopedagógica para comunidades vulnerables. Únete a nuestra causa.">
+    <meta property="og:image" content="img/general/logo.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Título que aparece en la pestaña del navegador y es importante para el SEO -->
+
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Enlace al archivo CSS externo donde se definirán los estilos visuales -->
+    <!-- AOS (Animate On Scroll) CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+    <!-- FontAwesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Netlify Identity -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+
+<body>
+    <!-- Contenedor principal de todo el contenido visible de la página web -->
+
+    <header class="main-header">
+        <nav>
+            <a href="index.html" class="nav-logo"><img src="img/general/logo.jpg" alt="Logo Fundación Allinkay"></a>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+            <!-- Menú de navegación principal con enlaces a otras partes de la página o sitio -->
+            <ul id="navMenu">
+                <li><a href="index.html" data-color="rgba(26, 188, 156, 0.5)">Inicio</a></li>
+                <li><a href="quienes-somos.html" data-color="rgba(52, 152, 219, 0.5)">Quienes somos</a></li>
+                <li><a href="servicios.html" data-color="rgba(46, 204, 113, 0.5)">Servicios</a></li>
+                <li><a href="programas.html" data-color="rgba(241, 196, 15, 0.5)">Programas</a></li>
+                <li><a href="donar.html" data-color="rgba(231, 76, 60, 0.7)">Donar ahora</a></li>
+                <li><a href="alianzas.html" data-color="rgba(241, 196, 15, 0.5)">Empresas aliadas</a></li>
+                <li><a href="apadrinar.html" data-color="rgba(230, 126, 34, 0.5)">Apadrinar</a></li>
+                <li><a href="index.html#contacto" data-color="rgba(149, 165, 166, 0.5)">Contactos</a></li>
+                <li class="lavalamp"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sección principal (Hero) con la imagen de banner -->
+        <section class="hero">
+            <h1 class="sr-only">Tu bienestar es nuestra prioridad. Transformando vidas.</h1>
+            <img src="img/general/fondo.jpg"
+                alt="Tu bienestar es nuestra prioridad. Medicina General, Psicología, Psicopedagogía." class="hero-img">
+        </section>
+
+        <!-- Contenido principal y único de esta página. Solo debe haber un <main> por página -->
+
+        <!-- SECCIÓN TRANSPARENCIA -->
+        <section class="transparencia-section">
+            <div class="transparencia-header" data-aos="fade-up">
+                <span class="transparencia-badge"><i class="fa-solid fa-shield-halved"></i> Transparencia</span>
+                <h2>Nuestro impacto en números</h2>
+                <p>Creemos en la rendición de cuentas. Aquí compartimos abiertamente los resultados de nuestro trabajo.
+                </p>
+            </div>
+
+            <div class="transparencia-stats">
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="stat-icon" style="background:#e6fffa; color:#0f766e;"><i class="fa-solid fa-users"></i>
+                    </div>
+                    <span class="stat-number" data-stat="beneficiarios" data-target="0">0</span>
+                    <span class="stat-label">Beneficiarios atendidos</span>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-icon" style="background:#ebf8ff; color:#2b6cb0;"><i
+                            class="fa-solid fa-folder-open"></i></div>
+                    <span class="stat-number" data-stat="proyectos" data-target="0">0</span>
+                    <span class="stat-label">Proyectos realizados</span>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="stat-icon" style="background:#faf5ff; color:#805ad5;"><i
+                            class="fa-solid fa-hand-holding-heart"></i></div>
+                    <span class="stat-number" data-stat="satisfaccion" data-target="0">0</span>
+                    <span class="stat-label">% de satisfacción</span>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="stat-icon" style="background:#fff7ed; color:#c05621;"><i
+                            class="fa-solid fa-calendar-check"></i></div>
+                    <span class="stat-number" data-stat="anios" data-target="0">0</span>
+                    <span class="stat-label">Años de trayectoria</span>
+                </div>
+            </div>
+
+            <div class="transparencia-informes" data-aos="fade-up" data-aos-delay="100">
+                <h3><i class="fa-solid fa-file-lines"></i> Informes de impacto</h3>
+                <div class="informes-grid">
+                    <!-- Los informes se cargan dinámicamente desde Google Sheets -->
+                    <div style="color:#66788a; font-size:0.9rem; padding:10px;">Cargando informes...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN NOTICIAS Y CAMPAÑAS -->
+        <section class="noticias-section">
+            <div class="noticias-header" data-aos="fade-up">
+                <span class="noticias-badge"><i class="fa-solid fa-bullhorn"></i> Noticias y Campañas</span>
+                <h2>Lo que estamos haciendo</h2>
+                <p>Actividades, historias de impacto y próximos eventos de nuestra comunidad.</p>
+            </div>
+
+            <!-- Filtros -->
+            <div class="noticias-filtros" data-aos="fade-up" data-aos-delay="100">
+                <button class="filtro-btn active" data-filtro="todos">Todos</button>
+                <button class="filtro-btn" data-filtro="actividad">Actividades</button>
+                <button class="filtro-btn" data-filtro="historia">Historias de impacto</button>
+                <button class="filtro-btn" data-filtro="evento">Eventos</button>
+            </div>
+
+            <div class="noticias-grid">
+
+                <!-- Tarjeta 1 — Actividad -->
+                <article class="noticia-card" data-tipo="actividad" data-aos="fade-up" data-aos-delay="0">
+                    <div class="noticia-img-wrap noticia-img-click" data-src="img/noticias/actividades/actividad1.jpg">
+                        <img src="img/noticias/actividades/actividad1.jpg" alt="Jornada de salud comunitaria">
+                        <span class="noticia-tag tag-actividad">Actividad</span>
+                        <div class="noticia-img-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div class="noticia-body">
+                        <span class="noticia-fecha"><i class="fa-regular fa-calendar"></i> 10 Abr 2026</span>
+                        <h3>Jornada de salud comunitaria en el barrio norte</h3>
+                        <p>Más de 200 personas recibieron atención médica y psicológica gratuita durante nuestra jornada
+                            mensual de salud.</p>
+                        <button class="noticia-leer" data-noticia="1">Leer más <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 2 — Historia de impacto -->
+                <article class="noticia-card noticia-destacada" data-tipo="historia" data-aos="fade-up"
+                    data-aos-delay="100">
+                    <div class="noticia-img-wrap noticia-img-click" data-src="img/noticias/historias/historia1.jpg">
+                        <img src="img/noticias/historias/historia1.jpg" alt="Historia de impacto">
+                        <span class="noticia-tag tag-historia">Historia de impacto</span>
+                        <div class="noticia-img-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div class="noticia-body">
+                        <span class="noticia-fecha"><i class="fa-regular fa-calendar"></i> 2 Abr 2026</span>
+                        <h3>"Recuperé mi vida gracias al acompañamiento de Allinkay"</h3>
+                        <p>María, de 34 años, comparte cómo el programa de acompañamiento en adicciones transformó su
+                            vida y la de su familia.</p>
+                        <button class="noticia-leer" data-noticia="2">Leer más <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 3 — Evento -->
+                <article class="noticia-card" data-tipo="evento" data-aos="fade-up" data-aos-delay="200">
+                    <div class="noticia-img-wrap noticia-img-click" data-src="img/noticias/eventos/evento1.jpg">
+                        <img src="img/noticias/eventos/evento1.jpg" alt="Evento próximo">
+                        <span class="noticia-tag tag-evento">Evento</span>
+                        <div class="noticia-img-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div class="noticia-body">
+                        <span class="noticia-fecha"><i class="fa-regular fa-calendar"></i> 5 May 2026</span>
+                        <h3>Feria de bienestar y salud mental 2026</h3>
+                        <p>Te invitamos a nuestra feria anual con talleres, charlas y actividades para toda la familia.
+                            ¡Entrada libre!</p>
+                        <button class="noticia-leer" data-noticia="3">Leer más <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 4 — Actividad -->
+                <article class="noticia-card" data-tipo="actividad" data-aos="fade-up" data-aos-delay="0">
+                    <div class="noticia-img-wrap noticia-img-click" data-src="img/noticias/actividades/actividad2.jpg">
+                        <img src="img/noticias/actividades/actividad2.jpg" alt="Taller psicoeducativo">
+                        <span class="noticia-tag tag-actividad">Actividad</span>
+                        <div class="noticia-img-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div class="noticia-body">
+                        <span class="noticia-fecha"><i class="fa-regular fa-calendar"></i> 18 Mar 2026</span>
+                        <h3>Taller de crianza positiva para padres y madres</h3>
+                        <p>Realizamos un taller con 60 familias sobre herramientas de comunicación y manejo emocional en
+                            el hogar.</p>
+                        <button class="noticia-leer" data-noticia="4">Leer más <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 5 — Historia de impacto -->
+                <article class="noticia-card" data-tipo="historia" data-aos="fade-up" data-aos-delay="100">
+                    <div class="noticia-img-wrap noticia-img-click" data-src="img/noticias/historias/historia2.jpg">
+                        <img src="img/noticias/historias/historia2.jpg" alt="Historia de impacto niño">
+                        <span class="noticia-tag tag-historia">Historia de impacto</span>
+                        <div class="noticia-img-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div class="noticia-body">
+                        <span class="noticia-fecha"><i class="fa-regular fa-calendar"></i> 25 Feb 2026</span>
+                        <h3>Lucas volvió a sonreír: psicopedagogía que cambia vidas</h3>
+                        <p>Con 8 años y dificultades de aprendizaje, Lucas encontró en nuestro equipo el apoyo que
+                            necesitaba para avanzar.</p>
+                        <button class="noticia-leer" data-noticia="5">Leer más <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 6 — Evento -->
+                <article class="noticia-card" data-tipo="evento" data-aos="fade-up" data-aos-delay="200">
+                    <div class="noticia-img-wrap noticia-img-click" data-src="img/noticias/eventos/evento2.jpg">
+                        <img src="img/noticias/eventos/evento2.jpg" alt="Campaña de donación">
+                        <span class="noticia-tag tag-evento">Evento</span>
+                        <div class="noticia-img-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div class="noticia-body">
+                        <span class="noticia-fecha"><i class="fa-regular fa-calendar"></i> 20 May 2026</span>
+                        <h3>Campaña "Un aporte, mil sonrisas" — Mayo 2026</h3>
+                        <p>Únete a nuestra campaña de recaudación anual. Cada donación financia atención directa a familias vulnerables.</p>
+                        <button class="noticia-leer" data-noticia="6">Leer más <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Modal de Noticia -->
+        <div id="noticiaModal" class="noticia-modal-overlay">
+            <div class="noticia-modal">
+                <button class="noticia-modal-close" id="noticiaModalClose"><i class="fa-solid fa-xmark"></i></button>
+                <img id="noticiaModalImg" src="" alt="">
+                <div class="noticia-modal-body">
+                    <span class="noticia-modal-tag" id="noticiaModalTag"></span>
+                    <span class="noticia-modal-fecha" id="noticiaModalFecha"></span>
+                    <h2 id="noticiaModalTitulo"></h2>
+                    <p id="noticiaModalTexto"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lightbox noticias -->
+        <div id="noticiaLightbox" class="lightbox">
+            <span class="close-lightbox" id="closeNoticiaLightbox">&times;</span>
+            <img class="lightbox-content" id="noticiaLightboxImg">
+        </div>
+
+        <!-- SECCIÓN VIDEOS Y PUBLICIDAD -->
+        <section class="videos-section">
+            <div class="videos-header" data-aos="fade-up">
+                <span class="videos-badge"><i class="fa-brands fa-facebook"></i> Videos</span>
+                <h2>Mira lo que hacemos</h2>
+                <p>Conoce de cerca el trabajo y el impacto de Fundación Allinkay.</p>
+            </div>
+
+            <div class="videos-grid" id="videosGrid">
+
+                <!-- Video 1 -->
+                <div class="video-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="video-embed">
+                        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F1HAjL29kBN%2F&show_text=false&width=500"
+                            width="100%" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                            allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag"><i class="fa-brands fa-facebook"></i> Facebook</span>
+                        <p>Conoce el trabajo de Fundación Allinkay</p>
+                        <a href="https://www.facebook.com/share/v/1HAjL29kBN/" target="_blank" rel="noopener" class="video-abrir"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir en Facebook</a>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="video-embed">
+                        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F1CmrapQQZQ%2F&show_text=false&width=500"
+                            width="100%" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                            allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag"><i class="fa-brands fa-facebook"></i> Facebook</span>
+                        <p>Actividades y programas de la fundación</p>
+                        <a href="https://www.facebook.com/share/v/1CmrapQQZQ/" target="_blank" rel="noopener" class="video-abrir"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir en Facebook</a>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="video-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="video-embed">
+                        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F1D2s37NXY4%2F&show_text=false&width=500"
+                            width="100%" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                            allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag"><i class="fa-brands fa-facebook"></i> Facebook</span>
+                        <p>Impacto en la comunidad de Quito</p>
+                        <a href="https://www.facebook.com/share/r/1D2s37NXY4/" target="_blank" rel="noopener" class="video-abrir"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir en Facebook</a>
+                    </div>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="video-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="video-embed">
+                        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F1ADL4UHvgR%2F&show_text=false&width=500"
+                            width="100%" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                            allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag"><i class="fa-brands fa-facebook"></i> Facebook</span>
+                        <p>Testimonios y historias de vida</p>
+                        <a href="https://www.facebook.com/share/v/1ADL4UHvgR/" target="_blank" rel="noopener" class="video-abrir"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir en Facebook</a>
+                    </div>
+                </div>
+
+                <!-- Video 5 — Reel (único con ID numérico, carga directo) -->
+                <div class="video-card video-destacado" data-aos="fade-up" data-aos-delay="100">
+                    <div class="video-embed">
+                        <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F682093238211379%2F&show_text=false&width=267&t=0"
+                            width="100%" height="280" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                            allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag"><i class="fa-brands fa-facebook"></i> Reel</span>
+                        <p>Reel — Fundación Allinkay en acción</p>
+                        <a href="https://www.facebook.com/reel/682093238211379" target="_blank" rel="noopener" class="video-abrir"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir en Facebook</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="videos-cta" data-aos="fade-up">
+                <a href="https://www.facebook.com/allin.kay.32251" target="_blank" rel="noopener" class="videos-fb-btn">
+                    <i class="fa-brands fa-facebook"></i> Ver más en Facebook
+                </a>
+            </div>
+        </section>
+
+        <section class="galeria-section">
+            <h2 class="programas-title" data-aos="fade-up">Nuestra Galería</h2>
+            <p class="galeria-subtitle" data-aos="fade-up" data-aos-delay="100">Un vistazo al impacto y trabajo que
+                realizamos día a día.</p>
+            <div class="galeria-grid">
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="0"><img src="img/galeria/galeria1.jpg"
+                        alt="Galería 1" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="50"><img src="img/galeria/galeria2.jpg"
+                        alt="Galería 2" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="100"><img src="img/galeria/galeria3.jpg"
+                        alt="Galería 3" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="150"><img src="img/galeria/galeria4.jpg"
+                        alt="Galería 4" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="200"><img src="img/galeria/galeria5.jpg"
+                        alt="Galería 5" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="250"><img src="img/galeria/galeria6.jpg"
+                        alt="Galería 6" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="300"><img src="img/galeria/galeria7.jpg"
+                        alt="Galería 7" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="350"><img src="img/galeria/galeria8.jpg"
+                        alt="Galería 8" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="400"><img src="img/galeria/galeria9.jpg"
+                        alt="Galería 9" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="450"><img src="img/galeria/galeria10.jpg"
+                        alt="Galería 10" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="500"><img src="img/galeria/galeria11.jpg"
+                        alt="Galería 11" class="galeria-img" loading="lazy"></div>
+                <div class="galeria-item" data-aos="zoom-in" data-aos-delay="550"><img src="img/galeria/galeria12.jpg"
+                        alt="Galería 12" class="galeria-img" loading="lazy"></div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN CONTACTO -->
+        <section class="contacto-section" id="contacto">
+            <div class="contacto-header" data-aos="fade-up">
+                <span class="contacto-badge"><i class="fa-solid fa-location-dot"></i> Contacto</span>
+                <h2>Estamos para ayudarte</h2>
+                <p>Escríbenos, llámanos o visítanos. Con gusto te atendemos.</p>
+            </div>
+
+            <div class="contacto-grid">
+
+                <!-- Columna izquierda: info + mapa -->
+                <div class="contacto-info" data-aos="fade-right">
+                    <div class="contacto-dato">
+                        <div class="contacto-icono"><i class="fa-solid fa-location-dot"></i></div>
+                        <div>
+                            <strong>Dirección</strong>
+                            <span>Lino Curima OE6-60 y Joaquín Tipantuña,<br>sector Barrionuevo, Quito –
+                                Pichincha</span>
+                        </div>
+                    </div>
+                    <div class="contacto-dato">
+                        <div class="contacto-icono"><i class="fa-solid fa-phone"></i></div>
+                        <div>
+                            <strong>Teléfono</strong>
+                            <a href="tel:0988282747">0988282747</a>
+                        </div>
+                    </div>
+                    <div class="contacto-dato">
+                        <div class="contacto-icono"><i class="fa-solid fa-envelope"></i></div>
+                        <div>
+                            <strong>Correo electrónico</strong>
+                            <a href="mailto:cbiallinkay@gmail.com">cbiallinkay@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <!-- Redes sociales -->
+                    <div class="contacto-redes">
+                        <strong>Síguenos en redes</strong>
+                        <div class="redes-links">
+                            <a href="https://www.facebook.com/allin.kay.32251?locale=es_LA" target="_blank"
+                                rel="noopener" class="red-social red-fb">
+                                <i class="fa-brands fa-facebook-f"></i>
+                                <span>Facebook</span>
+                            </a>
+                            <a href="https://www.instagram.com/allin_kay_quito/" target="_blank" rel="noopener"
+                                class="red-social red-ig">
+                                <i class="fa-brands fa-instagram"></i>
+                                <span>@allin_kay_quito</span>
+                            </a>
+                            <a href="https://www.tiktok.com/@allinkay2" target="_blank" rel="noopener"
+                                class="red-social red-tt">
+                                <i class="fa-brands fa-tiktok"></i>
+                                <span>@allinkay2</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mapa -->
+                    <div class="contacto-mapa">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.7!2d-78.5365!3d-0.2499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59bf1f9c14c53%3A0xd39cff7ca30766fa!2sFundaci%C3%B3n%20Integral%20Allin%20Kay!5e0!3m2!1ses!2sec!4v1700000000000!5m2!1ses!2sec"
+                            width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade" title="Ubicación Fundación Integral Allin Kay">
+                        </iframe>
+                        <a class="mapa-link"
+                            href="https://www.google.com/maps/place/Fundaci%C3%B3n+Integral+Allin+Kay/@-0.2499455,-78.536534,17z"
+                            target="_blank" rel="noopener">
+                            <i class="fa-solid fa-up-right-from-square"></i> Abrir en Google Maps
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna derecha: formulario -->
+                <div class="contacto-form-wrap" data-aos="fade-left">
+                    <h3>Envíanos un mensaje</h3>
+                    <form class="contacto-form" name="contacto" onsubmit="handleContacto(event)">
+                        <input type="hidden" name="access_key" value="ba3a23ec-1790-4246-847e-0d924581a914">
+                        <input type="hidden" name="subject" value="Nuevo mensaje de Contacto - Allinkay">
+                        <input type="hidden" name="from_name" value="Allinkay Web - Formulario de Contacto">
+                        <div class="cf-row">
+                            <div class="cf-group">
+                                <label for="cf-nombre">Nombre</label>
+                                <input type="text" id="cf-nombre" name="nombre" class="cf-input" placeholder="Tu nombre"
+                                    required>
+                            </div>
+                            <div class="cf-group">
+                                <label for="cf-email">Correo electrónico</label>
+                                <input type="email" id="cf-email" name="email" class="cf-input"
+                                    placeholder="tu@correo.com" required>
+                            </div>
+                        </div>
+                        <div class="cf-group">
+                            <label for="cf-asunto">Asunto</label>
+                            <input type="text" id="cf-asunto" name="asunto" class="cf-input"
+                                placeholder="¿En qué podemos ayudarte?">
+                        </div>
+                        <div class="cf-group">
+                            <label for="cf-mensaje">Mensaje</label>
+                            <textarea id="cf-mensaje" name="mensaje" class="cf-input cf-textarea"
+                                placeholder="Escribe tu mensaje aquí..." required></textarea>
+                        </div>
+                        <button type="submit" class="cf-btn">
+                            <i class="fa-solid fa-paper-plane"></i> Enviar mensaje
+                        </button>
+                        <p class="cf-success" id="cf-success">¡Mensaje enviado! Te responderemos pronto.</p>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <!-- Pie de página, comúnmente contiene información de copyright, enlaces de contacto, legales, etc. -->
+        <p>&copy; 2026 Fundación Integral Allin Kay. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Modal (Lightbox) para imágenes -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <button class="nav-lightbox prev-lightbox">&#10094;</button>
+        <img class="lightbox-content" id="lightbox-img">
+        <button class="nav-lightbox next-lightbox">&#10095;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hamburger menu
+            const hamburger = document.getElementById('hamburger');
+            const navMenuEl = document.getElementById('navMenu');
+            if (hamburger && navMenuEl) {
+                hamburger.addEventListener('click', () => {
+                    navMenuEl.classList.toggle('open');
+                    hamburger.classList.toggle('active');
+                });
+                navMenuEl.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        navMenuEl.classList.remove('open');
+                        hamburger.classList.remove('active');
+                    });
+                });
+            }
+
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const lavalamp = document.querySelector('.lavalamp');
+            const navUl = document.querySelector('nav ul');
+
+            function moveLavalamp(el) {
+                const linkRect = el.getBoundingClientRect();
+                const ulRect = navUl.getBoundingClientRect();
+                lavalamp.style.width = `${linkRect.width}px`;
+                lavalamp.style.height = `${linkRect.height}px`;
+                lavalamp.style.left = `${linkRect.left - ulRect.left}px`;
+                lavalamp.style.top = `${linkRect.top - ulRect.top}px`;
+                lavalamp.style.opacity = '1';
+
+                if (el.dataset.color) {
+                    lavalamp.style.backgroundColor = el.dataset.color;
+                }
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', (e) => {
+                    moveLavalamp(e.target);
+                });
+            });
+
+            navUl.addEventListener('mouseleave', () => {
+                lavalamp.style.opacity = '0';
+            });
+
+            // ==========================================
+            // Lógica de la Galería (Lightbox)
+            // ==========================================
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.querySelector('.close-lightbox');
+            const prevBtn = document.querySelector('.prev-lightbox');
+            const nextBtn = document.querySelector('.next-lightbox');
+            const galleryImages = document.querySelectorAll('.galeria-img');
+            let currentImageIndex = 0;
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                lightboxImg.src = galleryImages[currentImageIndex].src;
+                lightbox.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Prevenir scroll
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('show');
+                document.body.style.overflow = 'auto'; // Restaurar scroll
+            }
+
+            function showNext() {
+                currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+                lightboxImg.src = galleryImages[currentImageIndex].src;
+            }
+
+            function showPrev() {
+                currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+                lightboxImg.src = galleryImages[currentImageIndex].src;
+            }
+
+            galleryImages.forEach((img, index) => {
+                img.addEventListener('click', () => openLightbox(index));
+                img.parentElement.addEventListener('click', () => openLightbox(index));
+            });
+
+            closeBtn.addEventListener('click', closeLightbox);
+            nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+            prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
+
+            // Cerrar al hacer clic fuera de la imagen
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Navegación por teclado
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('show')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') showNext();
+                if (e.key === 'ArrowLeft') showPrev();
+            });
+
+            // ==========================================
+            // Contadores animados desde archivos JSON locales
+            // ==========================================
+            const statMap = {
+                'beneficiarios': document.querySelector('[data-stat="beneficiarios"]'),
+                'proyectos': document.querySelector('[data-stat="proyectos"]'),
+                'satisfaccion': document.querySelector('[data-stat="satisfaccion"]'),
+                'anios': document.querySelector('[data-stat="anios"]')
+            };
+
+            function animateCounter(el, target) {
+                const duration = 1800;
+                const step = target / (duration / 16);
+                let current = 0;
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        el.textContent = target.toLocaleString('es');
+                        clearInterval(timer);
+                    } else {
+                        el.textContent = Math.floor(current).toLocaleString('es');
+                    }
+                }, 16);
+            }
+
+            function buildInformes(informes) {
+                const grid = document.querySelector('.informes-grid');
+                if (!grid) return;
+
+                if (!informes || informes.length === 0) {
+                    grid.innerHTML = '<p style="color:#66788a;font-size:0.9rem;padding:10px;">Próximamente publicaremos nuestros informes de impacto.</p>';
+                    return;
+                }
+
+                grid.innerHTML = informes.map(inf => {
+                    const disponible = inf.url && inf.url.toLowerCase() !== 'proximamente';
+                    const href = disponible ? convertFileUrl(inf.url) : '#';
+                    const badge = disponible
+                        ? `<i class="fa-solid fa-download informe-dl"></i>`
+                        : `<span class="informe-badge-pronto">Próximamente</span>`;
+                    const target = disponible ? 'target="_blank" rel="noopener"' : '';
+                    return `
+                        <a href="${href}" class="informe-card" ${target}>
+                            <div class="informe-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                            <div class="informe-info">
+                                <strong>${inf.titulo}</strong>
+                                <span>${inf.descripcion || 'Resultados, proyectos y uso de recursos'}</span>
+                            </div>
+                            ${badge}
+                        </a>`;
+                }).join('');
+            }
+
+            function convertFileUrl(url) {
+                if (!url) return url;
+                const driveMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (driveMatch) return `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+                if (url.includes('github.com') && url.includes('/blob/')) {
+                    return url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
+                }
+                return url;
+            }
+
+            // ==========================================
+            // Construir videos desde JSON local
+            // ==========================================
+            function buildVideos(videos) {
+                const grid = document.getElementById('videosGrid');
+                if (!grid || !videos || videos.length === 0) return;
+
+                grid.innerHTML = videos.map((v, idx) => {
+                    const embedSrc = 'https://www.facebook.com/plugins/video.php?href=' +
+                        encodeURIComponent(v.url) + '&show_text=false&width=500';
+                    const destacado = idx === videos.length - 1 ? ' video-destacado' : '';
+                    return `
+                        <div class="video-card${destacado}">
+                            <div class="video-embed">
+                                <iframe src="${embedSrc}" width="100%" height="280"
+                                    style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                                    allowfullscreen="true"
+                                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                            </div>
+                            <div class="video-info">
+                                <span class="video-tag"><i class="fa-brands fa-facebook"></i> Facebook</span>
+                                <p>${v.titulo}</p>
+                                <a href="${v.url}" target="_blank" rel="noopener" class="video-abrir"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir en Facebook</a>
+                            </div>
+                        </div>`;
+                }).join('');
+            }
+
+            // ==========================================
+            // Cargar datos desde archivos JSON del repositorio
+            // ==========================================
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        observer.unobserve(entry.target);
+
+                        // Cargar estadísticas
+                        fetch('_data/estadisticas.json')
+                            .then(r => r.json())
+                            .then(data => {
+                                Object.keys(statMap).forEach(key => {
+                                    const el = statMap[key];
+                                    if (el && data[key] !== undefined) {
+                                        el.dataset.target = data[key];
+                                        animateCounter(el, Number(data[key]));
+                                    }
+                                });
+                            })
+                            .catch(() => {
+                                document.querySelectorAll('.stat-number').forEach(el => {
+                                    animateCounter(el, Number(el.dataset.target) || 0);
+                                });
+                            });
+
+                        // Cargar informes
+                        fetch('_data/informes.json')
+                            .then(r => r.json())
+                            .then(data => buildInformes(data.informes))
+                            .catch(() => buildInformes([]));
+
+                        // Cargar videos
+                        fetch('_data/videos.json')
+                            .then(r => r.json())
+                            .then(data => buildVideos(data.videos))
+                            .catch(() => {});
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            const firstStat = document.querySelector('.stat-number');
+            if (firstStat) observer.observe(firstStat);
+
+            // ==========================================
+            // Filtros de Noticias y Campañas
+            // ==========================================
+            const filtros = document.querySelectorAll('.filtro-btn');
+            const tarjetas = document.querySelectorAll('.noticia-card');
+
+            filtros.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filtros.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const tipo = btn.dataset.filtro;
+                    tarjetas.forEach(card => {
+                        const mostrar = tipo === 'todos' || card.dataset.tipo === tipo;
+                        card.style.display = mostrar ? 'flex' : 'none';
+                    });
+                });
+            });
+
+            // ==========================================
+            // Modal "Leer más" de Noticias
+            // ==========================================
+            const noticias = {
+                1: { tag: 'Actividad', tagClass: 'tag-actividad', fecha: '10 Abr 2026', titulo: 'Jornada de salud comunitaria en el barrio norte', img: 'img/noticias/actividades/actividad1.jpg', texto: 'Más de 200 personas recibieron atención médica y psicológica gratuita durante nuestra jornada mensual de salud. El equipo de la Fundación Allinkay se desplazó al barrio norte para brindar consultas, orientación y acompañamiento a familias vulnerables. Esta actividad forma parte de nuestro programa mensual de salud comunitaria.' },
+                2: { tag: 'Historia de impacto', tagClass: 'tag-historia', fecha: '2 Abr 2026', titulo: '"Recuperé mi vida gracias al acompañamiento de Allinkay"', img: 'img/noticias/historias/historia1.jpg', texto: 'María, de 34 años, comparte cómo el programa de acompañamiento en adicciones transformó su vida y la de su familia. Después de dos años de proceso terapéutico, hoy trabaja, cuida a sus hijos y es voluntaria en la fundación. Su historia es un testimonio del poder del acompañamiento profesional y humano.' },
+                3: { tag: 'Evento', tagClass: 'tag-evento', fecha: '5 May 2026', titulo: 'Feria de bienestar y salud mental 2026', img: 'img/noticias/eventos/evento1.jpg', texto: 'Te invitamos a nuestra feria anual con talleres, charlas y actividades para toda la familia. Habrá stands de información, actividades para niños, presentaciones artísticas y atención psicológica gratuita. Entrada libre para toda la comunidad. Lugar: Lino Curima OE6-60, sector Barrionuevo, Quito.' },
+                4: { tag: 'Actividad', tagClass: 'tag-actividad', fecha: '18 Mar 2026', titulo: 'Taller de crianza positiva para padres y madres', img: 'img/noticias/actividades/actividad2.jpg', texto: 'Realizamos un taller con 60 familias sobre herramientas de comunicación y manejo emocional en el hogar. Los participantes aprendieron técnicas de escucha activa, resolución de conflictos y fortalecimiento del vínculo afectivo con sus hijos. El taller fue facilitado por nuestro equipo de psicólogos.' },
+                5: { tag: 'Historia de impacto', tagClass: 'tag-historia', fecha: '25 Feb 2026', titulo: 'Lucas volvió a sonreír: psicopedagogía que cambia vidas', img: 'img/noticias/historias/historia2.jpg', texto: 'Con 8 años y dificultades de aprendizaje, Lucas encontró en nuestro equipo el apoyo que necesitaba para avanzar. Gracias al trabajo psicopedagógico personalizado, hoy lee con fluidez y participa activamente en clases. Su maestra reporta una transformación notable en su confianza y rendimiento escolar.' },
+                6: { tag: 'Evento', tagClass: 'tag-evento', fecha: '20 May 2026', titulo: 'Campaña "Un aporte, mil sonrisas" — Mayo 2026', img: 'img/noticias/eventos/evento2.jpg', texto: 'Únete a nuestra campaña de recaudación anual. Cada donación financia atención directa a familias vulnerables. Este año nuestra meta es recaudar $5,000 para cubrir 250 consultas psicológicas gratuitas. Puedes donar desde $5 y marcar la diferencia en la vida de alguien que lo necesita.' }
+            };
+
+            const noticiaModal = document.getElementById('noticiaModal');
+            const noticiaModalClose = document.getElementById('noticiaModalClose');
+
+            function openNoticiaModal(id) {
+                const n = noticias[id];
+                document.getElementById('noticiaModalImg').src = n.img;
+                document.getElementById('noticiaModalTag').textContent = n.tag;
+                document.getElementById('noticiaModalTag').className = 'noticia-modal-tag ' + n.tagClass;
+                document.getElementById('noticiaModalFecha').textContent = n.fecha;
+                document.getElementById('noticiaModalTitulo').textContent = n.titulo;
+                document.getElementById('noticiaModalTexto').textContent = n.texto;
+                noticiaModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            document.querySelectorAll('.noticia-leer').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    e.preventDefault();
+                    openNoticiaModal(btn.dataset.noticia);
+                });
+            });
+
+            noticiaModalClose.addEventListener('click', () => {
+                noticiaModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            noticiaModal.addEventListener('click', e => {
+                if (e.target === noticiaModal) {
+                    noticiaModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // ==========================================
+            // Lightbox fotos de Noticias
+            // ==========================================
+            const noticiaLightbox = document.getElementById('noticiaLightbox');
+            const noticiaLightboxImg = document.getElementById('noticiaLightboxImg');
+            const closeNoticiaLightbox = document.getElementById('closeNoticiaLightbox');
+
+            document.querySelectorAll('.noticia-img-click').forEach(wrap => {
+                wrap.addEventListener('click', () => {
+                    noticiaLightboxImg.src = wrap.dataset.src;
+                    noticiaLightbox.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            closeNoticiaLightbox.addEventListener('click', () => {
+                noticiaLightbox.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            });
+            noticiaLightbox.addEventListener('click', e => {
+                if (e.target === noticiaLightbox) {
+                    noticiaLightbox.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        function handleContacto(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+
+            // Animación del botón a 'Enviando...'
+            const btn = form.querySelector('.cf-btn');
+            const originalBtnHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+
+            fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    access_key: "ba3a23ec-1790-4246-847e-0d924581a914",
+                    subject: "Nuevo mensaje de Contacto - Allinkay",
+                    from_name: "Allinkay Web",
+                    name: formData.get("nombre"),
+                    email: formData.get("email"),
+                    asunto: formData.get("asunto"),
+                    message: formData.get("mensaje")
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('cf-success').classList.add('visible');
+                        form.reset();
+                        setTimeout(() => document.getElementById('cf-success').classList.remove('visible'), 4000);
+                    } else {
+                        throw new Error(data.message || "Error desconocido");
+                    }
+                })
+                .catch(error => {
+                    alert("Hubo un error al enviar tu mensaje. Por favor inténtalo de nuevo.");
+                    console.error("Web3Forms error:", error);
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalBtnHtml;
+                });
+        }
+    </script>
+    <!-- Botones flotantes -->
+    <div class="fab-container">
+        <a href="https://wa.me/593988282747?text=Hola%20Fundaci%C3%B3n%20Allinkay%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n"
+            target="_blank" rel="noopener" class="fab fab-whatsapp" aria-label="Contactar por WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="fab-tooltip">WhatsApp</span>
+        </a>
+        <a href="donar.html" class="fab fab-donar" aria-label="Hacer una donación">
+            <i class="fa-solid fa-heart"></i>
+            <span class="fab-tooltip">¡Donar!</span>
+        </a>
+    </div>
+    <!-- AOS Script -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- Netlify Identity redirect -->
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+    </script>
+
+    <script>
+        AOS.init({
+            duration: 700,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 80
+        });
+    </script>
+
+</body>
+
+</html>

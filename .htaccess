@@ -1,0 +1,67 @@
+# Seguridad avanzada para el panel de administración
+# Renombrar a .htaccess y subir al servidor cuando esté en producción
+
+# Bloqueo de acceso al panel.html desde IPs no autorizadas (opcional)
+# comentado para que funcione sin restricción de IP por ahora
+# <Limit GET POST>
+#   order deny,allow
+#   deny from all
+#   allow from 127.0.0.1
+# </Limit>
+
+# Protección contra inyección de código
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Prevenir acceso a archivos sensibles
+    <FilesMatch "\.(sql|log|md|git|env|config|bak)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    
+    # Prevenir script injection
+    RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} proc/self/environ [NC]
+    RewriteRule ^(.*)$ - [F,L]
+</IfModule>
+
+# Protección contra clickjacking
+Header always set X-Frame-Options "DENY"
+
+# Protección contra MIME-type sniffing
+Header always set X-Content-Type-Options "nosniff"
+
+# Política de seguridad de contenido (CSP)
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://*.google.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' https://* data:; connect-src 'self' https://*.google.com; font-src 'self' https://fonts.gstatic.com; frame-ancestors 'none';"
+
+# Prevenir caching de contenido sensible
+Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+Header always set Pragma "no-cache"
+Header always set Expires "0"
+
+# Protección contra XSS
+Header always set X-XSS-Protection "1; mode=block"
+
+# Referrer Policy
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+# Limitar métodos HTTP
+<LimitExcept GET POST HEAD>
+    Deny from all
+</LimitExcept>
+
+# Bloqueo de acceso al archivo .htaccess
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Bloqueo de acceso al panel.html desde dominios externos (hotlinking)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^https://(www\.)?allinkay\.com [NC]
+    RewriteRule ^panel\.html$ - [F,L]
+</IfModule>

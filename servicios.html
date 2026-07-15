@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/general/logo.jpg" type="image/jpeg">
+    <title>Servicios - Allinkay web</title>
+    <meta name="description" content="Servicios de atención psicológica, médica y psicopedagógica de Fundación Allinkay en Quito.">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZTVS4B7K2"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HZTVS4B7K2');</script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <nav>
+            <a href="index.html" class="nav-logo"><img src="img/general/logo.jpg" alt="Logo Fundación Allinkay"></a>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="navMenu">
+                <li><a href="index.html" data-color="rgba(26, 188, 156, 0.5)">Inicio</a></li>
+                <li><a href="quienes-somos.html" data-color="rgba(52, 152, 219, 0.5)">Quienes somos</a></li>
+                <li><a href="servicios.html" data-color="rgba(46, 204, 113, 0.5)">Servicios</a></li>
+                <li><a href="programas.html" data-color="rgba(241, 196, 15, 0.5)">Programas</a></li>
+                <li><a href="donar.html" data-color="rgba(231, 76, 60, 0.7)">Donar ahora</a></li>
+                <li><a href="alianzas.html" data-color="rgba(241, 196, 15, 0.5)">Empresas aliadas</a></li>
+                <li><a href="apadrinar.html" data-color="rgba(230, 126, 34, 0.5)">Apadrinar</a></li>
+                <li><a href="index.html#contacto" data-color="rgba(149, 165, 166, 0.5)">Contactos</a></li>
+                <li class="lavalamp"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="servicios-page">
+        <div class="servicios-intro">
+            <h1>Nuestros Servicios</h1>
+            <p>Ofrecemos atención integral para promover el bienestar de las comunidades.</p>
+        </div>
+
+        <div class="servicios-grid" id="serviciosGrid">
+            <!-- Servicio 1 -->
+            <div class="servicio-card" data-servicio="1">
+                <img src="img/servicios/psicologia.jpg" alt="Atención psicológica individual y grupal" class="servicio-img">
+                <div class="servicio-content">
+                    <h3>Atención psicológica individual y grupal</h3>
+                    <p>Apoyo emocional profesional para todas las edades.</p>
+                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Servicio 2 -->
+            <div class="servicio-card" data-servicio="2">
+                <img src="img/servicios/medicina.jpg" alt="Atención médica general" class="servicio-img">
+                <div class="servicio-content">
+                    <h3>Atención médica general</h3>
+                    <p>Consultas médicas accesibles para la comunidad.</p>
+                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Servicio 3 -->
+            <div class="servicio-card" data-servicio="3">
+                <img src="img/servicios/psicopedagogia.jpg" alt="Terapias para niños, adolescentes y adultos" class="servicio-img">
+                <div class="servicio-content">
+                    <h3>Terapias para niños, adolescentes y adultos</h3>
+                    <p>Terapias especializadas según cada etapa de vida.</p>
+                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Servicio 4 -->
+            <div class="servicio-card" data-servicio="4">
+                <img src="img/galeria/galeria1.jpg" alt="Intervención en violencia intrafamiliar" class="servicio-img">
+                <div class="servicio-content">
+                    <h3>Intervención en violencia intrafamiliar</h3>
+                    <p>Protección y acompañamiento a víctimas.</p>
+                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Servicio 5 -->
+            <div class="servicio-card" data-servicio="5">
+                <img src="img/galeria/galeria2.jpg" alt="Acompañamiento en adicciones" class="servicio-img">
+                <div class="servicio-content">
+                    <h3>Acompañamiento en adicciones</h3>
+                    <p>Recuperación guiada con profesionales.</p>
+                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <!-- Servicio 6 -->
+            <div class="servicio-card" data-servicio="6">
+                <img src="img/galeria/galeria3.jpg" alt="Talleres psicoeducativos" class="servicio-img">
+                <div class="servicio-content">
+                    <h3>Talleres psicoeducativos</h3>
+                    <p>Formación y prevención para la comunidad.</p>
+                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal informativo de servicios -->
+    <div id="servicioModal" class="servicio-modal-overlay">
+        <div class="servicio-modal">
+            <button class="servicio-modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+            <div class="servicio-modal-img-wrap">
+                <img id="modalImg" src="" alt="">
+            </div>
+            <div class="servicio-modal-body">
+                <span class="servicio-modal-tag" id="modalTag"></span>
+                <h2 id="modalTitle"></h2>
+                <p id="modalDesc"></p>
+                <ul id="modalList" class="servicio-modal-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Fundación Integral Allin Kay. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hamburger menu
+            const hamburger = document.getElementById('hamburger');
+            const navMenuEl = document.getElementById('navMenu');
+            if (hamburger && navMenuEl) {
+                hamburger.addEventListener('click', () => {
+                    navMenuEl.classList.toggle('open');
+                    hamburger.classList.toggle('active');
+                });
+                navMenuEl.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        navMenuEl.classList.remove('open');
+                        hamburger.classList.remove('active');
+                    });
+                });
+            }
+
+            // Lavalamp
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const lavalamp = document.querySelector('.lavalamp');
+            const navUl = document.querySelector('nav ul');
+
+            function moveLavalamp(el) {
+                const linkRect = el.getBoundingClientRect();
+                const ulRect = navUl.getBoundingClientRect();
+                lavalamp.style.width = `${linkRect.width}px`;
+                lavalamp.style.height = `${linkRect.height}px`;
+                lavalamp.style.left = `${linkRect.left - ulRect.left}px`;
+                lavalamp.style.top = `${linkRect.top - ulRect.top}px`;
+                lavalamp.style.opacity = '1';
+                if (el.dataset.color) lavalamp.style.backgroundColor = el.dataset.color;
+            }
+
+            const activeItem = navLinks[2];
+            setTimeout(() => moveLavalamp(activeItem), 50);
+            navLinks.forEach(link => link.addEventListener('mouseenter', e => moveLavalamp(e.target)));
+            navUl.addEventListener('mouseleave', () => moveLavalamp(activeItem));
+            window.addEventListener('resize', () => moveLavalamp(activeItem));
+
+            // ==========================================
+            // Datos de cada servicio
+            // ==========================================
+            const servicios = {
+                1: {
+                    tag: 'Salud Mental',
+                    titulo: 'Atención psicológica individual y grupal',
+                    img: 'img/servicios/psicologia.jpg',
+                    desc: 'Brindamos acompañamiento psicológico profesional adaptado a las necesidades de cada persona. Nuestro equipo trabaja con un enfoque humanista e integral para promover el bienestar emocional y mental.',
+                    items: [
+                        'Consultas individuales con psicólogos certificados',
+                        'Sesiones grupales de apoyo emocional',
+                        'Atención a niños, jóvenes y adultos',
+                        'Seguimiento continuo del proceso terapéutico'
+                    ]
+                },
+                2: {
+                    tag: 'Salud Física',
+                    titulo: 'Atención médica general',
+                    img: 'img/servicios/medicina.jpg',
+                    desc: 'Ofrecemos consultas médicas de calidad a bajo costo para que toda la comunidad tenga acceso a una atención primaria digna. Contamos con médicos generales y especialistas comprometidos con tu salud.',
+                    items: [
+                        'Consultas médicas generales',
+                        'Control y seguimiento de enfermedades crónicas',
+                        'Atención preventiva y chequeos de rutina',
+                        'Derivación a especialistas cuando se requiere'
+                    ]
+                },
+                3: {
+                    tag: 'Terapias',
+                    titulo: 'Terapias para niños, adolescentes y adultos',
+                    img: 'img/servicios/psicopedagogia.jpg',
+                    desc: 'Diseñamos terapias especializadas según la etapa de vida de cada persona. Trabajamos con metodologías actualizadas para abordar dificultades emocionales, conductuales y de aprendizaje.',
+                    items: [
+                        'Terapia de juego para niños',
+                        'Orientación vocacional para adolescentes',
+                        'Terapia cognitivo-conductual para adultos',
+                        'Psicopedagogía y apoyo escolar'
+                    ]
+                },
+                4: {
+                    tag: 'Protección',
+                    titulo: 'Intervención en violencia intrafamiliar',
+                    img: 'img/galeria/galeria1.jpg',
+                    desc: 'Acompañamos y protegemos a personas que han vivido situaciones de violencia dentro del hogar. Ofrecemos un espacio seguro, confidencial y libre de juicios para iniciar el proceso de recuperación.',
+                    items: [
+                        'Atención en crisis y contención emocional',
+                        'Asesoría legal y orientación en derechos',
+                        'Grupos de apoyo para víctimas',
+                        'Trabajo con familias para prevenir la reincidencia'
+                    ]
+                },
+                5: {
+                    tag: 'Recuperación',
+                    titulo: 'Acompañamiento en adicciones',
+                    img: 'img/galeria/galeria2.jpg',
+                    desc: 'Guiamos a personas y familias afectadas por el consumo de sustancias a través de un proceso de recuperación integral, con respeto, empatía y sin estigmas.',
+                    items: [
+                        'Evaluación y diagnóstico personalizado',
+                        'Terapia individual y grupal de recuperación',
+                        'Apoyo a familiares y red de contención',
+                        'Seguimiento post-tratamiento'
+                    ]
+                },
+                6: {
+                    tag: 'Educación',
+                    titulo: 'Talleres psicoeducativos',
+                    img: 'img/galeria/galeria3.jpg',
+                    desc: 'Realizamos talleres formativos en escuelas, empresas y comunidades para promover la salud mental, la convivencia sana y la prevención de problemáticas sociales.',
+                    items: [
+                        'Talleres de manejo del estrés y ansiedad',
+                        'Charlas sobre crianza positiva',
+                        'Formación en habilidades socioemocionales',
+                        'Programas de prevención del bullying'
+                    ]
+                }
+            };
+
+            // ==========================================
+            // Lógica del Modal
+            // ==========================================
+            const modal = document.getElementById('servicioModal');
+            const modalClose = document.getElementById('modalClose');
+            const modalImg = document.getElementById('modalImg');
+            const modalTag = document.getElementById('modalTag');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            const modalList = document.getElementById('modalList');
+
+            function openModal(id) {
+                const s = servicios[id];
+                modalImg.src = s.img;
+                modalImg.alt = s.titulo;
+                modalTag.textContent = s.tag;
+                modalTitle.textContent = s.titulo;
+                modalDesc.textContent = s.desc;
+                modalList.innerHTML = s.items.map(i => `<li><i class="fa-solid fa-circle-check"></i> ${i}</li>`).join('');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            document.querySelectorAll('.servicio-card').forEach(card => {
+                card.addEventListener('click', () => openModal(card.dataset.servicio));
+            });
+
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+        });
+    </script>
+
+    <!-- Botones flotantes -->
+    <div class="fab-container">
+        <a href="https://wa.me/593988282747?text=Hola%20Fundaci%C3%B3n%20Allinkay%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n" 
+           target="_blank" rel="noopener" class="fab fab-whatsapp" aria-label="Contactar por WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="fab-tooltip">WhatsApp</span>
+        </a>
+        <a href="donar.html" class="fab fab-donar" aria-label="Hacer una donación">
+            <i class="fa-solid fa-heart"></i>
+            <span class="fab-tooltip">¡Donar!</span>
+        </a>
+    </div>
+
+</body>
+
+</html>
+

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/general/logo.jpg" type="image/jpeg">
+    <title>Alianzas Empresariales - Allinkay web</title>
+    <meta name="description" content="Súmate como aliado estratégico de Fundación Allinkay. Donaciones, insumos y responsabilidad social.">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZTVS4B7K2"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HZTVS4B7K2');</script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <nav>
+            <a href="index.html" class="nav-logo"><img src="img/general/logo.jpg" alt="Logo Fundación Allinkay"></a>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="navMenu">
+                <li><a href="index.html" data-color="rgba(26, 188, 156, 0.5)">Inicio</a></li>
+                <li><a href="quienes-somos.html" data-color="rgba(52, 152, 219, 0.5)">Quienes somos</a></li>
+                <li><a href="servicios.html" data-color="rgba(46, 204, 113, 0.5)">Servicios</a></li>
+                <li><a href="programas.html" data-color="rgba(241, 196, 15, 0.5)">Programas</a></li>
+                <li><a href="donar.html" data-color="rgba(231, 76, 60, 0.7)">Donar ahora</a></li>
+                <li><a href="alianzas.html" data-color="rgba(241, 196, 15, 0.5)">Empresas aliadas</a></li>
+                <li><a href="apadrinar.html" data-color="rgba(230, 126, 34, 0.5)">Apadrinar</a></li>
+                <li><a href="index.html#contacto" data-color="rgba(149, 165, 166, 0.5)">Contactos</a></li>
+                <li class="lavalamp"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="alianzas-page">
+        <div class="alianzas-container">
+            <!-- Columna Izquierda: Mensaje y Opciones -->
+            <div class="alianzas-info">
+                <div class="alianzas-info-content">
+                    <h1>Súmate como aliado estratégico</h1>
+                    <p class="alianzas-intro">Las empresas son un pilar fundamental en la construcción de un futuro más justo. Conoce las formas de generar un impacto positivo junto a nosotros:</p>
+                    
+                    <ul class="alianzas-options">
+                        <li>
+                            <div class="option-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            <div class="option-text">
+                                <h3>Donación económica</h3>
+                                <p>Apoyo financiero para potenciar el alcance de nuestros programas.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="option-icon"><i class="fa-solid fa-briefcase-medical"></i></div>
+                            <div class="option-text">
+                                <h3>Donación de insumos médicos</h3>
+                                <p>Materiales y equipamiento esencial para atención comunitaria.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="option-icon"><i class="fa-solid fa-users-gear"></i></div>
+                            <div class="option-text">
+                                <h3>Responsabilidad social</h3>
+                                <p>Programas de voluntariado corporativo y desarrollo sostenible.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Formulario Corporativo -->
+            <div class="alianzas-form-container">
+                <h2 class="form-title">Inicia una Alianza</h2>
+                <form id="alianzaForm" name="alianza" class="alianzas-form">
+                    <input type="hidden" name="access_key" value="ba3a23ec-1790-4246-847e-0d924581a914">
+                    <input type="hidden" name="subject" value="Nueva propuesta de Alianza - Allinkay">
+                    <input type="hidden" name="from_name" value="Allinkay Web - Formulario de Alianzas">
+                    
+                    <!-- Datos de la Empresa -->
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label for="nombreEmpresa">Nombre de la empresa</label>
+                            <input type="text" id="nombreEmpresa" name="nombreEmpresa" class="form-input" placeholder="Razón social o Nombre comercial" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label for="personaContacto">Persona de contacto</label>
+                            <input type="text" id="personaContacto" name="personaContacto" class="form-input" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="correoEmpresa">Correo institucional</label>
+                            <input type="email" id="correoEmpresa" name="correoEmpresa" class="form-input" placeholder="contacto@empresa.com" required>
+                        </div>
+                    </div>
+
+                    <!-- Tipo de apoyo -->
+                    <div class="form-group">
+                        <label>Tipo de apoyo interesado</label>
+                        <select id="tipoApoyo" name="tipoApoyo" class="form-input select-input" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="economica">Donación económica</option>
+                            <option value="insumos">Donación de insumos médicos</option>
+                            <option value="responsabilidad">Programas de responsabilidad social</option>
+                            <option value="otro">Otro tipo de alianza</option>
+                        </select>
+                    </div>
+
+                    <!-- Mensaje -->
+                    <div class="form-group">
+                        <label for="mensajeAlianza">Mensaje</label>
+                        <textarea id="mensajeAlianza" name="mensajeAlianza" class="form-input textarea-input" rows="4" placeholder="Cuéntanos cómo te gustaría colaborar o si tienes alguna propuesta específica..." required></textarea>
+                    </div>
+
+                    <!-- Botón Enviar -->
+                    <button type="submit" class="btn-submit-alianza">Quiero ser aliado</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Fundación Integral Allin Kay. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const navMenuEl = document.getElementById('navMenu');
+            if (hamburger && navMenuEl) {
+                hamburger.addEventListener('click', () => { navMenuEl.classList.toggle('open'); hamburger.classList.toggle('active'); });
+                navMenuEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { navMenuEl.classList.remove('open'); hamburger.classList.remove('active'); }));
+            }
+            // ==========================================
+            // Lógica de Lavalamp (Menú)
+            // ==========================================
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const lavalamp = document.querySelector('.lavalamp');
+            const navUl = document.querySelector('nav ul');
+
+            function moveLavalamp(el) {
+                const linkRect = el.getBoundingClientRect();
+                const ulRect = navUl.getBoundingClientRect();
+                lavalamp.style.width = `${linkRect.width}px`;
+                lavalamp.style.height = `${linkRect.height}px`;
+                lavalamp.style.left = `${linkRect.left - ulRect.left}px`;
+                lavalamp.style.top = `${linkRect.top - ulRect.top}px`;
+                lavalamp.style.opacity = '1';
+
+                if (el.dataset.color) {
+                    lavalamp.style.backgroundColor = el.dataset.color;
+                }
+            }
+
+            const activeItem = navLinks[5]; // Empresas aliadas es el índice 5
+            setTimeout(() => {
+                moveLavalamp(activeItem);
+            }, 50);
+
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', (e) => {
+                    moveLavalamp(e.target);
+                });
+            });
+
+            navUl.addEventListener('mouseleave', () => {
+                moveLavalamp(activeItem); 
+            });
+
+            window.addEventListener('resize', () => {
+                moveLavalamp(activeItem);
+            });
+
+            // Lógica de envío de formulario de Alianzas con Web3Forms
+            const alianzaForm = document.getElementById('alianzaForm');
+            alianzaForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = new FormData(alianzaForm);
+                const btn = alianzaForm.querySelector('.btn-submit-alianza');
+                const originalText = btn.textContent;
+
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+
+                fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        access_key: "ba3a23ec-1790-4246-847e-0d924581a914",
+                        subject: "Nueva propuesta de Alianza - Allinkay",
+                        from_name: "Allinkay Web",
+                        empresa: formData.get("nombreEmpresa"),
+                        contacto: formData.get("personaContacto"),
+                        email: formData.get("correoEmpresa"),
+                        tipo_apoyo: formData.get("tipoApoyo"),
+                        message: formData.get("mensajeAlianza")
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        btn.innerHTML = '<i class="fa-solid fa-check"></i> ¡Enviado!';
+                        btn.style.background = '#27ae60';
+                        alianzaForm.reset();
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.style.background = '';
+                        }, 4000);
+                    } else {
+                        throw new Error(data.message || 'Error desconocido');
+                    }
+                })
+                .catch(error => {
+                    alert('Hubo un error al procesar tu solicitud. Por favor intenta de nuevo.');
+                    console.error('Web3Forms error:', error);
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                });
+            });
+        });
+    </script>
+
+    <!-- Botones flotantes -->
+    <div class="fab-container">
+        <a href="https://wa.me/593988282747?text=Hola%20Fundaci%C3%B3n%20Allinkay%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n" 
+           target="_blank" rel="noopener" class="fab fab-whatsapp" aria-label="Contactar por WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="fab-tooltip">WhatsApp</span>
+        </a>
+        <a href="donar.html" class="fab fab-donar" aria-label="Hacer una donación">
+            <i class="fa-solid fa-heart"></i>
+            <span class="fab-tooltip">¡Donar!</span>
+        </a>
+    </div>
+
+</body>
+
+</html>
+

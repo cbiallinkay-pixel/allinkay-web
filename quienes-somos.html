@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/general/logo.jpg" type="image/jpeg">
+    <title>Quiénes Somos - Allinkay</title>
+    <meta name="description" content="Conoce la misión, visión y valores de Fundación Integral Allin Kay en Quito, Ecuador.">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZTVS4B7K2"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HZTVS4B7K2');</script>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- FontAwesome para los íconos (Misión, Visión, Valores) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Encabezado con menú fijo igual que el index -->
+    <header class="main-header">
+        <nav>
+            <a href="index.html" class="nav-logo"><img src="img/general/logo.jpg" alt="Logo Fundación Allinkay"></a>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="navMenu">
+                <li><a href="index.html" data-color="rgba(26, 188, 156, 0.5)">Inicio</a></li>
+                <li><a href="quienes-somos.html" data-color="rgba(52, 152, 219, 0.5)">Quienes somos</a></li>
+                <li><a href="servicios.html" data-color="rgba(46, 204, 113, 0.5)">Servicios</a></li>
+                <li><a href="programas.html" data-color="rgba(241, 196, 15, 0.5)">Programas</a></li>
+                <li><a href="donar.html" data-color="rgba(231, 76, 60, 0.7)">Donar ahora</a></li>
+                <li><a href="alianzas.html" data-color="rgba(241, 196, 15, 0.5)">Empresas aliadas</a></li>
+                <li><a href="apadrinar.html" data-color="rgba(230, 126, 34, 0.5)">Apadrinar</a></li>
+                <li><a href="index.html#contacto" data-color="rgba(149, 165, 166, 0.5)">Contactos</a></li>
+                <li class="lavalamp"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="quienes-somos-page">
+        <!-- Título e Introducción -->
+        <section class="qs-intro">
+            <h1>Quiénes Somos</h1>
+            <p>Somos una organización comprometida con brindar atención médica y psicológica a poblaciones en situación de vulnerabilidad, promoviendo el bienestar integral en todas las etapas de la vida.</p>
+        </section>
+
+        <!-- Tarjetas Misión y Visión -->
+        <section class="qs-cards-container">
+            <div class="qs-card card-mision">
+                <div class="card-header">
+                    <div class="icon-circle icon-blue">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h2>Misión</h2>
+                </div>
+                <p>Brindar atención segura, personalizada e integral, con calidad humana, que promueva el bienestar físico, emocional y social, fortaleciendo las habilidades de aprendizaje y el desarrollo integral de niñas, niños, adolescentes, jóvenes, personas adultas y adultos mayores en situación de vulnerabilidad, mediante un acompañamiento humano, profesional y comprometido, que contribuya a mejorar su calidad de vida y la de sus familias.</p>
+            </div>
+
+            <div class="qs-card card-vision">
+                <div class="card-header">
+                    <div class="icon-circle icon-green">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h2>Visión</h2>
+                </div>
+                <p>Ser una fundación referente en atención integral y apoyo a poblaciones vulnerables, reconocida por transformar vidas, por su profesionalismo, compromiso social, calidad humana y contribución al bienestar, la inclusión y el desarrollo de las personas y comunidades.</p>
+            </div>
+        </section>
+
+        <!-- Tarjeta Nuestros Valores -->
+        <section class="qs-valores">
+            <div class="qs-card card-valores">
+                <div class="icon-heart">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+                <h2>Nuestros Valores</h2>
+                <p>Los principios que guían cada acción de nuestra fundación.</p>
+                <ul class="valores-list">
+                    <li>Compromiso social</li>
+                    <li>Respeto</li>
+                    <li>Solidaridad</li>
+                    <li>Empatía</li>
+                    <li>Honestidad</li>
+                    <li>Responsabilidad</li>
+                    <li>Equidad</li>
+                    <li>Ética</li>
+                    <li>Profesionalismo</li>
+                    <li>Calidad humana</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Fundación Integral Allin Kay. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Script del menú Lavalamp -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const navMenuEl = document.getElementById('navMenu');
+            if (hamburger && navMenuEl) {
+                hamburger.addEventListener('click', () => { navMenuEl.classList.toggle('open'); hamburger.classList.toggle('active'); });
+                navMenuEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { navMenuEl.classList.remove('open'); hamburger.classList.remove('active'); }));
+            }
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const lavalamp = document.querySelector('.lavalamp');
+            const navUl = document.querySelector('nav ul');
+
+            function moveLavalamp(el) {
+                const linkRect = el.getBoundingClientRect();
+                const ulRect = navUl.getBoundingClientRect();
+                lavalamp.style.width = `${linkRect.width}px`;
+                lavalamp.style.height = `${linkRect.height}px`;
+                lavalamp.style.left = `${linkRect.left - ulRect.left}px`;
+                lavalamp.style.top = `${linkRect.top - ulRect.top}px`;
+                lavalamp.style.opacity = '1';
+
+                if (el.dataset.color) {
+                    lavalamp.style.backgroundColor = el.dataset.color;
+                }
+            }
+
+            // Seleccionar el elemento activo por defecto (Quienes somos)
+            const activeItem = navLinks[1]; // Índice 1 es 'Quienes somos'
+            setTimeout(() => {
+                moveLavalamp(activeItem);
+            }, 50);
+
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', (e) => {
+                    moveLavalamp(e.target);
+                });
+            });
+
+            navUl.addEventListener('mouseleave', () => {
+                moveLavalamp(activeItem); // Vuelve a 'Quienes somos'
+            });
+
+            window.addEventListener('resize', () => {
+                moveLavalamp(activeItem);
+            });
+        });
+    </script>
+
+    <!-- Botones flotantes -->
+    <div class="fab-container">
+        <a href="https://wa.me/593988282747?text=Hola%20Fundaci%C3%B3n%20Allinkay%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n" 
+           target="_blank" rel="noopener" class="fab fab-whatsapp" aria-label="Contactar por WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="fab-tooltip">WhatsApp</span>
+        </a>
+        <a href="donar.html" class="fab fab-donar" aria-label="Hacer una donación">
+            <i class="fa-solid fa-heart"></i>
+            <span class="fab-tooltip">¡Donar!</span>
+        </a>
+    </div>
+
+</body>
+
+</html>
+

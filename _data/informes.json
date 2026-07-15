@@ -1,0 +1,14 @@
+{
+  "informes": [
+    {
+      "titulo": "Informe de Impacto",
+      "descripcion": "Resultados, proyectos y uso de recursos",
+      "url": "https://github.com/cbiallinkay-pixel/allinkay-web/blob/main/docs/INFORME.pdf"
+    },
+    {
+      "titulo": "Reporte de beneficiarios",
+      "descripcion": "Detalle de personas atendidas y servicios brindados",
+      "url": "https://github.com/cbiallinkay-pixel/allinkay-web/blob/main/docs/REPORTE.pdf"
+    }
+  ]
+}

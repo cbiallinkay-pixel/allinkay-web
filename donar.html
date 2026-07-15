@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/general/logo.jpg" type="image/jpeg">
+    <title>Donar - Allinkay web</title>
+    <meta name="description" content="Dona a Fundación Allinkay. Apoya la salud mental y bienestar de comunidades vulnerables en Quito, Ecuador.">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZTVS4B7K2"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-HZTVS4B7K2');</script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <nav>
+            <a href="index.html" class="nav-logo"><img src="img/general/logo.jpg" alt="Logo Fundación Allinkay"></a>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="navMenu">
+                <li><a href="index.html" data-color="rgba(26, 188, 156, 0.5)">Inicio</a></li>
+                <li><a href="quienes-somos.html" data-color="rgba(52, 152, 219, 0.5)">Quienes somos</a></li>
+                <li><a href="servicios.html" data-color="rgba(46, 204, 113, 0.5)">Servicios</a></li>
+                <li><a href="programas.html" data-color="rgba(241, 196, 15, 0.5)">Programas</a></li>
+                <li><a href="donar.html" data-color="rgba(231, 76, 60, 0.7)">Donar ahora</a></li>
+                <li><a href="alianzas.html" data-color="rgba(241, 196, 15, 0.5)">Empresas aliadas</a></li>
+                <li><a href="apadrinar.html" data-color="rgba(230, 126, 34, 0.5)">Apadrinar</a></li>
+                <li><a href="index.html#contacto" data-color="rgba(149, 165, 166, 0.5)">Contactos</a></li>
+                <li class="lavalamp"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="donar-page">
+        <div class="donar-container">
+            <!-- Columna Izquierda: Mensaje Inspirador -->
+            <div class="donar-info">
+                <div class="donar-info-content">
+                    <h1>Tu aporte permite cambiar vidas…</h1>
+                    <p>Con tu donación, nos ayudas a seguir brindando apoyo psicológico, educación y prevención a
+                        quienes más lo necesitan. ¡Gracias por ser parte del cambio!</p>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Formulario -->
+            <div class="donar-form-container">
+                <h2 class="form-title">Realiza tu donación</h2>
+                <form id="donarForm" class="donar-form">
+
+                    <!-- Tipo de donación -->
+                    <div class="form-group">
+                        <label>Tipo de donación</label>
+                        <div class="donation-type-group">
+                            <button type="button" class="btn-type active" data-type="unica">Única</button>
+                            <button type="button" class="btn-type" data-type="mensual">Mensual</button>
+                        </div>
+                    </div>
+
+                    <!-- Monto -->
+                    <div class="form-group">
+                        <label>Monto a donar (USD)</label>
+                        <div class="donation-amount-group">
+                            <button type="button" class="btn-amount" data-amount="10">$10</button>
+                            <button type="button" class="btn-amount active" data-amount="20">$20</button>
+                            <button type="button" class="btn-amount" data-amount="50">$50</button>
+                            <input type="number" id="otroMonto" placeholder="Otro monto" min="1"
+                                class="input-otro-monto">
+                        </div>
+                    </div>
+
+                    <!-- Datos Personales -->
+                    <div class="form-group">
+                        <label for="nombreCompleto">Nombre completo</label>
+                        <input type="text" id="nombreCompleto" class="form-input" placeholder="Ej: Juan Pérez" required>
+                    </div>
+
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label for="correo">Correo electrónico</label>
+                            <input type="email" id="correo" class="form-input" placeholder="ejemplo@correo.com"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" class="form-input" placeholder="+593 99 999 9999" required>
+                        </div>
+                    </div>
+
+                    <!-- Método de Pago -->
+                    <div class="form-group">
+                        <label>¿Cómo prefieres realizar tu donación?</label>
+                        <div class="payment-method-group">
+                            <button type="button" class="btn-payment active" data-method="paypal">
+                                <i class="fa-brands fa-paypal"></i> PayPal
+                            </button>
+                            <button type="button" class="btn-payment" data-method="tarjeta">
+                                <i class="fa-solid fa-credit-card"></i> Tarjeta
+                            </button>
+                            <button type="button" class="btn-payment" data-method="qr">
+                                <i class="fa-solid fa-qrcode"></i> QR / Banco
+                            </button>
+                            <button type="button" class="btn-payment" data-method="efectivo">
+                                <i class="fa-solid fa-money-bill-wave"></i> Efectivo
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PayPal (activo cuando el cliente tenga Client ID) -->
+                    <div id="details-paypal" class="payment-details active">
+                        <div class="gateway-box gateway-paypal">
+                            <div class="gateway-logo">
+                                <i class="fa-brands fa-paypal"></i> PayPal
+                                <span class="coming-soon-badge">Próximamente</span>
+                            </div>
+                            <p>Dona desde cualquier parte del mundo con tu cuenta PayPal o tarjeta de crédito/débito
+                                internacional. Ideal para donantes en el exterior.</p>
+                            <div class="paypal-preview">
+                                <div class="paypal-btn-demo">
+                                    <i class="fa-brands fa-paypal"></i> Donar con PayPal
+                                </div>
+                                <p class="gateway-note"><i class="fa-solid fa-circle-info"></i> Se activará cuando la
+                                    fundación configure su cuenta PayPal. Nota: PayPal no admite pago diferido a cuotas.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta (PayPhone) -->
+                    <div id="details-tarjeta" class="payment-details">
+                        <div class="gateway-box gateway-payphone">
+                            <div class="gateway-logo">
+                                <i class="fa-solid fa-credit-card"></i> Tarjeta de crédito / débito
+                                <span class="coming-soon-badge">Próximamente</span>
+                            </div>
+                            <p>Paga con tu tarjeta Visa o Mastercard. Podrás elegir pago
+                                <strong>corriente</strong> o <strong>diferido</strong> a 3, 6, 9 o 12 meses según tu banco.</p>
+                            <div class="diferir-options">
+                                <span class="diferir-chip">Corriente</span>
+                                <span class="diferir-chip">3 meses</span>
+                                <span class="diferir-chip">6 meses</span>
+                                <span class="diferir-chip">9 meses</span>
+                                <span class="diferir-chip">12 meses</span>
+                            </div>
+                            <div class="payphone-btn-demo">
+                                <i class="fa-solid fa-credit-card"></i> Pagar con tarjeta
+                            </div>
+                            <p class="gateway-note"><i class="fa-solid fa-shield-halved"></i> Procesado por PayPhone Ecuador.
+                                Se activará cuando la fundación complete su afiliación.</p>
+                        </div>
+                    </div>
+
+                    <!-- QR Bancario -->
+                    <div id="details-qr" class="payment-details">
+                        <div class="gateway-box gateway-qr">
+                            <div class="gateway-logo">
+                                <i class="fa-solid fa-building-columns"></i> Transferencia Bancaria
+                                <span class="active-badge">Activo</span>
+                            </div>
+                            <p>Usa los datos bancarios para realizar tu transferencia desde cualquier banco o app. Sin comisiones.</p>
+                            <div class="qr-preview">
+                                <div class="qr-col-datos">
+                                    <p><i class="fa-solid fa-landmark" style="color:#16a34a"></i> <strong>Banco Pichincha</strong></p>
+                                    <p><strong>Tipo:</strong> Cuenta Corriente</p>
+                                    <p><strong>N.º:</strong> 2100344270</p>
+                                    <p><strong>Titular:</strong> Fundación Integral Allin Kay</p>
+                                    <p><strong>RUC:</strong> 1793232002001</p>
+                                    <button type="button" class="btn-copy-bank" id="copyBankData" style="margin-top:14px">
+                                        <i class="fa-solid fa-copy"></i> Copiar datos
+                                    </button>
+                                </div>
+                                <div class="qr-col-qr">
+                                    <p class="qr-label"><i class="fa-solid fa-qrcode"></i> QR de respaldo</p>
+                                    <div class="qr-placeholder qr-code-box" id="qrCodeContainer"></div>
+                                    <p class="qr-note">Para apps bancarias compatibles con QR</p>
+                                </div>
+                            </div>
+                            <p class="gateway-note"><i class="fa-solid fa-circle-info"></i> Después de transferir, usa el botón de abajo para enviar tu comprobante por WhatsApp.</p>
+                        </div>
+                    </div>
+
+                    <!-- Efectivo -->
+                    <div id="details-efectivo" class="payment-details">
+                        <div class="bank-info-box">
+                            <p><i class="fa-solid fa-location-dot"></i> <strong>Dirección:</strong> Lino Curima OE6-60 y
+                                Joaquín Tipantuña, sector Barrionuevo, Quito</p>
+                            <p class="bank-note" style="margin-top:10px"><i class="fa-solid fa-circle-info"></i> Al
+                                hacer clic en el botón te abriremos WhatsApp para coordinar la entrega en persona.</p>
+                        </div>
+                    </div>
+
+                    <!-- Botón Enviar -->
+                    <button type="submit" class="btn-submit-donar" id="btnDonar" disabled style="opacity:0.6;cursor:not-allowed;">
+                        <i class="fa-brands fa-paypal"></i> Donar con PayPal (próximamente)
+                    </button>
+                    <p style="text-align:center; color:#66788a; font-size:0.85rem; margin-top:10px;">
+                        <i class="fa-solid fa-lock"></i> Tus datos solo se usan para coordinar tu donación
+                    </p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Fundación Integral Allin Kay. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bankTransferData = {
+                bank: 'Banco Pichincha',
+                accountType: 'Corriente',
+                accountNumber: '2100344270',
+                holder: 'Fundación Integral Allin Kay',
+                ruc: '1793232002001'
+            };
+
+            const bankTransferText = [
+                `Banco: ${bankTransferData.bank}`,
+                `Tipo de cuenta: ${bankTransferData.accountType}`,
+                `N.º de cuenta: ${bankTransferData.accountNumber}`,
+                `Titular: ${bankTransferData.holder}`,
+                `RUC: ${bankTransferData.ruc}`
+            ].join('\n');
+
+            const qrContainer = document.getElementById('qrCodeContainer');
+            if (qrContainer) {
+                try {
+                    qrContainer.innerHTML = '';
+                    const img = document.createElement('img');
+                    img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent(bankTransferText);
+                    img.alt = 'Código QR con datos bancarios de la fundación';
+                    img.width = 144;
+                    img.height = 144;
+                    qrContainer.appendChild(img);
+                } catch (err) {
+                    console.error('No se pudo generar el QR:', err);
+                }
+            }
+
+            const copyBankDataBtn = document.getElementById('copyBankData');
+            if (copyBankDataBtn) {
+                copyBankDataBtn.addEventListener('click', async () => {
+                    try {
+                        await navigator.clipboard.writeText(bankTransferText);
+                        copyBankDataBtn.innerHTML = '<i class="fa-solid fa-check"></i> Datos copiados';
+                        setTimeout(() => {
+                            copyBankDataBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copiar datos bancarios';
+                        }, 2000);
+                    } catch (error) {
+                        alert('No se pudieron copiar los datos bancarios. Puedes seleccionarlos manualmente en la sección QR.');
+                    }
+                });
+            }
+
+            // Hamburger menu
+            const hamburger = document.getElementById('hamburger');
+            const navMenuEl = document.getElementById('navMenu');
+            if (hamburger && navMenuEl) {
+                hamburger.addEventListener('click', () => { navMenuEl.classList.toggle('open'); hamburger.classList.toggle('active'); });
+                navMenuEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { navMenuEl.classList.remove('open'); hamburger.classList.remove('active'); }));
+            }
+            // ==========================================
+            // Lógica de Lavalamp (Menú)
+            // ==========================================
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const lavalamp = document.querySelector('.lavalamp');
+            const navUl = document.querySelector('nav ul');
+
+            function moveLavalamp(el) {
+                const linkRect = el.getBoundingClientRect();
+                const ulRect = navUl.getBoundingClientRect();
+                lavalamp.style.width = `${linkRect.width}px`;
+                lavalamp.style.height = `${linkRect.height}px`;
+                lavalamp.style.left = `${linkRect.left - ulRect.left}px`;
+                lavalamp.style.top = `${linkRect.top - ulRect.top}px`;
+                lavalamp.style.opacity = '1';
+
+                if (el.dataset.color) {
+                    lavalamp.style.backgroundColor = el.dataset.color;
+                }
+            }
+
+            const activeItem = navLinks[4]; // Donar ahora es el índice 4
+            setTimeout(() => {
+                moveLavalamp(activeItem);
+            }, 50);
+
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', (e) => {
+                    moveLavalamp(e.target);
+                });
+            });
+
+            navUl.addEventListener('mouseleave', () => {
+                moveLavalamp(activeItem);
+            });
+
+            window.addEventListener('resize', () => {
+                moveLavalamp(activeItem);
+            });
+
+            // ==========================================
+            // Lógica del Formulario de Donación
+            // ==========================================
+
+            // Tipo de donación
+            const btnTypes = document.querySelectorAll('.btn-type');
+            btnTypes.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btnTypes.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // Montos
+            const btnAmounts = document.querySelectorAll('.btn-amount');
+            const inputOtroMonto = document.getElementById('otroMonto');
+
+            btnAmounts.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btnAmounts.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    inputOtroMonto.value = ''; // Limpiar "Otro monto" al seleccionar uno predefinido
+                });
+            });
+
+            inputOtroMonto.addEventListener('input', () => {
+                if (inputOtroMonto.value.trim() !== '') {
+                    btnAmounts.forEach(b => b.classList.remove('active'));
+                }
+            });
+
+            // Método de pago — 4 opciones
+            const btnPayments = document.querySelectorAll('.btn-payment');
+            const allDetails = document.querySelectorAll('.payment-details');
+            const btnDonar = document.getElementById('btnDonar');
+
+            const btnLabels = {
+                paypal:   '<i class="fa-brands fa-paypal"></i> Donar con PayPal (próximamente)',
+                tarjeta:  '<i class="fa-solid fa-credit-card"></i> Pago con tarjeta (próximamente)',
+                qr:       '<i class="fa-solid fa-qrcode"></i> Coordinar transferencia por WhatsApp',
+                efectivo: '<i class="fa-brands fa-whatsapp"></i> Coordinar entrega por WhatsApp'
+            };
+
+            const metodosDemo = ['paypal', 'tarjeta'];
+
+            btnPayments.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btnPayments.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    allDetails.forEach(d => d.classList.remove('active'));
+                    const target = document.getElementById('details-' + btn.dataset.method);
+                    if (target) target.classList.add('active');
+                    // Cambiar texto del botón
+                    if (btnDonar && btnLabels[btn.dataset.method]) {
+                        btnDonar.innerHTML = btnLabels[btn.dataset.method];
+                        const esDemo = metodosDemo.includes(btn.dataset.method);
+                        btnDonar.disabled = esDemo;
+                        btnDonar.style.opacity = esDemo ? '0.6' : '1';
+                        btnDonar.style.cursor = esDemo ? 'not-allowed' : 'pointer';
+                    }
+                });
+            });
+
+            // ==========================================
+            // Envío por WhatsApp
+            // ==========================================
+            document.getElementById('donarForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Obtener monto
+                const btnActivo = document.querySelector('.btn-amount.active');
+                const otroMonto = document.getElementById('otroMonto').value;
+                const monto = btnActivo ? btnActivo.dataset.amount : otroMonto;
+
+                if (!monto || monto <= 0) {
+                    alert('Por favor selecciona o ingresa un monto de donación.');
+                    return;
+                }
+
+                // Obtener datos
+                const tipo = document.querySelector('.btn-type.active')?.dataset.type === 'mensual' ? 'Mensual' : 'Única';
+                const nombre = document.getElementById('nombreCompleto').value;
+                const correo = document.getElementById('correo').value;
+                const telefono = document.getElementById('telefono').value;
+                const metodoActivo = document.querySelector('.btn-payment.active')?.dataset.method || 'efectivo';
+
+                // Línea final según el método de pago
+                let lineaMetodo = '';
+                let formaPago = '';
+                if (metodoActivo === 'efectivo') {
+                    formaPago = 'Efectivo (entrega en persona)';
+                    lineaMetodo = 'Quisiera coordinar la *entrega en efectivo* en sus oficinas (Lino Curima OE6-60, sector Barrionuevo, Quito). ¿Qué horario tienen disponible?';
+                } else if (metodoActivo === 'qr') {
+                    formaPago = 'Transferencia / QR bancario';
+                    lineaMetodo = 'Voy a realizar una *transferencia bancaria* a la cuenta de la fundación. Les enviaré el comprobante por aquí. ¿Está bien?';
+                } else {
+                    formaPago = 'Coordinar por WhatsApp';
+                    lineaMetodo = 'Por favor indíquenme los pasos a seguir para completar mi donación. ¡Gracias!';
+                }
+
+                // Armar mensaje
+                const mensaje =
+                    `¡Hola Fundación Allinkay! 👋 Quiero realizar una donación.
+
+💰 *Monto:* $${monto} USD
+🔄 *Tipo:* ${tipo}
+💳 *Forma de pago:* ${formaPago}
+
+👤 *Nombre:* ${nombre}
+📧 *Correo:* ${correo}
+📱 *Teléfono:* ${telefono}
+
+${lineaMetodo}`;
+
+                const url = `https://wa.me/593988282747?text=${encodeURIComponent(mensaje)}`;
+                window.open(url, '_blank');
+            });
+        });
+    </script>
+
+    <!-- Botones flotantes -->
+    <div class="fab-container">
+        <a href="https://wa.me/593988282747?text=Hola%20Fundaci%C3%B3n%20Allinkay%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n"
+            target="_blank" rel="noopener" class="fab fab-whatsapp" aria-label="Contactar por WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="fab-tooltip">WhatsApp</span>
+        </a>
+        <a href="donar.html" class="fab fab-donar" aria-label="Hacer una donación">
+            <i class="fa-solid fa-heart"></i>
+            <span class="fab-tooltip">¡Donar!</span>
+        </a>
+    </div>
+
+</body>
+
+</html>

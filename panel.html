@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Panel de Administración — Allinkay</title>
+    <!-- Security Headers emulated via meta tags -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://identity.netlify.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' https://* data:; connect-src 'self' https://identity.netlify.com https://api.netlify.com; frame-src https://identity.netlify.com; frame-ancestors 'none';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://www.google.com">
+    <link rel="dns-prefetch" href="https://drive.google.com">
+    <link rel="dns-prefetch" href="https://sheets.google.com">
+    <link rel="dns-prefetch" href="https://mail.google.com">
+    <link rel="dns-prefetch" href="https://analytics.google.com">
+    <link rel="icon" href="img/general/logo.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Netlify Identity: autenticación real validada por Netlify (git-gateway), no en el cliente -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Roboto,sans-serif; background:#f1f5f9; min-height:100vh; display:flex; justify-content:center; align-items:center; }
+
+        /* Login */
+        .login-screen { text-align:center; padding:40px; }
+        .login-screen img { width:80px; border-radius:50%; margin-bottom:16px; border:3px solid #1a9e90; }
+        .login-screen h1 { font-size:1.6rem; color:#1a202c; margin-bottom:8px; }
+        .login-screen p { color:#66788a; margin-bottom:24px; font-size:0.95rem; }
+        .login-input { padding:12px 16px; border:1.5px solid #e2e8f0; border-radius:10px; font-size:1rem; width:260px; text-align:center; }
+        .login-input:focus { outline:none; border-color:#1a9e90; box-shadow:0 0 0 3px rgba(26,158,144,0.15); }
+        .login-btn { margin-top:14px; padding:12px 32px; background:#1a9e90; color:#fff; border:none; border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer; transition:background 0.2s; }
+        .login-btn:hover { background:#0f766e; }
+        .login-error { color:#e53e3e; font-size:0.85rem; margin-top:10px; display:none; }
+
+        /* Panel */
+        .panel { display:none; max-width:700px; width:100%; padding:40px 24px; }
+        .panel-header { text-align:center; margin-bottom:40px; }
+        .panel-header img { width:70px; border-radius:50%; border:3px solid #1a9e90; }
+        .panel-header h1 { font-size:1.8rem; color:#1a202c; margin-top:12px; }
+        .panel-header p { color:#66788a; font-size:0.95rem; }
+
+        .panel-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+
+        .panel-card { background:#fff; border-radius:16px; padding:28px 20px; text-align:center; border:1px solid #e2e8f0; box-shadow:0 4px 12px rgba(0,0,0,0.05); transition:transform 0.2s, box-shadow 0.2s; text-decoration:none; color:inherit; }
+        .panel-card:hover { transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,0.1); }
+        .panel-card i { font-size:2.2rem; margin-bottom:14px; display:block; }
+        .panel-card h3 { font-size:1.1rem; font-weight:700; color:#1a202c; margin-bottom:6px; }
+        .panel-card p { font-size:0.85rem; color:#66788a; line-height:1.4; }
+
+        .card-sheets i { color:#0f9d58; }
+        .card-drive i { color:#4285f4; }
+        .card-gmail i { color:#ea4335; }
+        .card-analytics i { color:#f9ab00; }
+
+        .panel-footer { text-align:center; margin-top:32px; color:#a0aec0; font-size:0.8rem; }
+
+        /* Medidas de seguridad adicionales */
+        .secure-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 158, 144, 0.95);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .secure-overlay.active { display: flex; }
+
+        .secure-overlay i { font-size: 4rem; margin-bottom: 20px; }
+        .secure-overlay h2 { font-size: 2rem; margin-bottom: 10px; }
+        .secure-overlay p { font-size: 1.1rem; max-width: 600px; line-height: 1.6; }
+
+        @media (max-width:500px) {
+            .panel-grid { grid-template-columns:1fr; }
+            .login-input { width:100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pantalla de Login -->
+    <div class="login-screen" id="loginScreen">
+        <img src="img/general/logo.jpg" alt="Logo Allinkay">
+        <h1>Panel de Administración</h1>
+        <p>Acceso exclusivo para el equipo de Allinkay</p>
+        <button type="button" class="login-btn" id="loginBtn"><i class="fa-solid fa-lock-open"></i> Iniciar sesión</button>
+        <p class="login-error" id="loginError">No se pudo iniciar sesión. Inténtalo de nuevo.</p>
+    </div>
+
+    <!-- Panel Principal -->
+    <div class="panel" id="panelMain">
+        <div class="panel-header">
+            <img src="img/general/logo.jpg" alt="Logo Allinkay">
+            <h1>Panel de Administración</h1>
+            <p>Gestiona el contenido del sitio web de Fundación Allinkay</p>
+        </div>
+
+        <div class="panel-grid">
+            <a href="https://docs.google.com/spreadsheets/d/1iNvNtBOiLa6OuIQdsBxNhW56sJfAuCAjQgxhJzRkTA/edit" target="_blank" class="panel-card card-sheets" onclick="trackClick(this.href)">
+                <i class="fa-solid fa-table"></i>
+                <h3>Actualizar contenido</h3>
+                <p>Estadísticas, informes, videos y perfiles de apadrinamiento</p>
+            </a>
+
+            <a href="https://drive.google.com/drive/my-drive" target="_blank" class="panel-card card-drive" onclick="trackClick(this.href)">
+                <i class="fa-brands fa-google-drive"></i>
+                <h3>Subir archivos</h3>
+                <p>Fotos, PDFs de informes y documentos</p>
+            </a>
+
+            <a href="https://mail.google.com/mail/u/?authuser=cbiallinkay@gmail.com" target="_blank" class="panel-card card-gmail" onclick="trackClick(this.href)">
+                <i class="fa-solid fa-envelope"></i>
+                <h3>Ver mensajes</h3>
+                <p>Correos de contacto, alianzas y donaciones</p>
+            </a>
+
+            <a href="https://analytics.google.com" target="_blank" class="panel-card card-analytics" onclick="trackClick(this.href)">
+                <i class="fa-solid fa-chart-line"></i>
+                <h3>Ver estadísticas web</h3>
+                <p>Visitas, páginas más vistas y origen del tráfico</p>
+            </a>
+        </div>
+
+        <!-- Botón de logout -->
+        <div style="text-align:center; margin-top:30px;">
+            <button onclick="logout()" class="login-btn" style="background:#e53e3e; font-size:0.95rem; padding:10px 24px;">
+                <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+            </button>
+        </div>
+
+        <p class="panel-footer"><i class="fa-solid fa-shield-halved"></i> Acceso privado — No compartir esta URL</p>
+    </div>
+
+    <!-- Overlay de seguridad -->
+    <div class="secure-overlay" id="secureOverlay">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <h2>Acceso Restringido</h2>
+        <p>Esta página es privada y está protegida con autenticación.</p>
+    </div>
+
+    <script>
+        // ==========================================
+        // Autenticación real vía Netlify Identity (git-gateway)
+        // La validación de credenciales ocurre en el servidor de Netlify,
+        // nunca en este archivo. No hay contraseñas ni secretos en el cliente.
+        // ==========================================
+
+        function trackClick(href) {
+            console.log('Click en enlace externo:', href);
+        }
+
+        function showPanel() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('panelMain').style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('panelMain').style.display = 'none';
+        }
+
+        function showLoginError(msg) {
+            const err = document.getElementById('loginError');
+            err.innerText = msg || 'No se pudo iniciar sesión. Inténtalo de nuevo.';
+            err.style.display = 'block';
+            setTimeout(() => { err.style.display = 'none'; }, 4000);
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            // Redirigir a HTTPS en producción
+            if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+                return;
+            }
+
+            if (!window.netlifyIdentity) {
+                showLoginError('No se pudo cargar el sistema de autenticación.');
+                return;
+            }
+
+            netlifyIdentity.on('init', user => {
+                if (user) {
+                    showPanel();
+                } else {
+                    showLogin();
+                }
+            });
+
+            netlifyIdentity.on('login', user => {
+                showPanel();
+                netlifyIdentity.close();
+            });
+
+            netlifyIdentity.on('logout', () => {
+                showLogin();
+            });
+
+            netlifyIdentity.on('error', err => {
+                console.error('Netlify Identity error:', err);
+                showLoginError();
+            });
+
+            document.getElementById('loginBtn').addEventListener('click', () => {
+                netlifyIdentity.open('login');
+            });
+
+            netlifyIdentity.init();
+        });
+
+        function logout() {
+            if (confirm('¿Estás seguro de cerrar sesión?')) {
+                netlifyIdentity.logout();
+            }
+        }
+    </script>
+
+</body>
+</html>
