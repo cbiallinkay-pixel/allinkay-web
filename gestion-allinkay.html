@@ -129,15 +129,17 @@
     <!-- TAB VIDEOS -->
     <div class="tab-content" id="tab-videos">
         <div class="section-card">
-            <h3><i class="fa-brands fa-facebook"></i> Videos de Facebook</h3>
-            <p style="color:#66788a;font-size:0.88rem;margin-bottom:12px;">Muestra videos de Facebook o Reels en tu página de inicio.</p>
+            <h3><i class="fa-solid fa-video"></i> Videos (Facebook, TikTok, Instagram)</h3>
+            <p style="color:#66788a;font-size:0.88rem;margin-bottom:12px;">Muestra videos de cualquier red social en tu pagina de inicio.</p>
             <div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:10px;padding:14px 18px;margin-bottom:20px;">
-                <p style="color:#1e40af;font-size:0.85rem;font-weight:600;margin-bottom:8px;"><i class="fa-solid fa-circle-info"></i> ¿Cómo obtener el enlace?</p>
+                <p style="color:#1e40af;font-size:0.85rem;font-weight:600;margin-bottom:8px;"><i class="fa-solid fa-circle-info"></i> ¿Como obtener el enlace?</p>
                 <ol style="color:#1e40af;font-size:0.82rem;line-height:1.7;padding-left:18px;margin:0;">
-                    <li>Abre el video o reel en <strong>Facebook</strong></li>
-                    <li>Haz clic en <strong>"Compartir"</strong> → <strong>"Copiar enlace"</strong></li>
-                    <li>Pega el enlace aquí abajo y haz clic en "Guardar videos"</li>
+                    <li><strong>Facebook:</strong> Abrir video → Compartir → Copiar enlace</li>
+                    <li><strong>TikTok:</strong> Abrir video → Compartir → Copiar enlace</li>
+                    <li><strong>Instagram:</strong> Abrir reel/video → los 3 puntos (...) → Copiar enlace</li>
+                    <li>Pegar el enlace aqui abajo y hacer clic en "Guardar videos"</li>
                 </ol>
+                <p style="color:#1e40af;font-size:0.8rem;margin-top:8px;"><i class="fa-solid fa-wand-magic-sparkles"></i> El sistema detecta automaticamente la plataforma.</p>
             </div>
             <div class="item-list" id="videosList"></div>
             <button class="btn-add" onclick="addVideo()"><i class="fa-solid fa-plus"></i> Agregar video</button>
@@ -439,7 +441,7 @@ function renderVideos(videos) {
     list.innerHTML = videos.map(function(v, i) {
         return '<div class="item-row">' +
             '<input type="text" placeholder="Título" value="' + (v.titulo || '') + '" data-field="titulo">' +
-            '<input type="text" placeholder="URL de Facebook" value="' + (v.url || '') + '" data-field="url" style="flex:2;">' +
+            '<input type="text" placeholder="Enlace de Facebook, TikTok o Instagram" value="' + (v.url || '') + '" data-field="url" style="flex:2;">' +
             '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>' +
             '</div>';
     }).join('');
@@ -449,7 +451,7 @@ function addVideo() {
     var list = document.getElementById('videosList');
     list.innerHTML += '<div class="item-row">' +
         '<input type="text" placeholder="Título" data-field="titulo">' +
-        '<input type="text" placeholder="URL de Facebook" data-field="url" style="flex:2;">' +
+        '<input type="text" placeholder="Enlace de Facebook, TikTok o Instagram" data-field="url" style="flex:2;">' +
         '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>' +
         '</div>';
 }
