@@ -1,0 +1,52 @@
+{
+  "perfiles": [
+    {
+      "nombre": "Sofia, 8 anos",
+      "edad": "6-12",
+      "tipo": "psicologia",
+      "ubicacion": "norte",
+      "historia": "Necesita acompanamiento psicologico por situacion de violencia intrafamiliar.",
+      "monto": 20
+    },
+    {
+      "nombre": "Mateo, 10 anos",
+      "edad": "6-12",
+      "tipo": "medica",
+      "ubicacion": "sur",
+      "historia": "Requiere control medico mensual y seguimiento nutricional.",
+      "monto": 15
+    },
+    {
+      "nombre": "Valentina, 15 anos",
+      "edad": "13-17",
+      "tipo": "psicologia",
+      "ubicacion": "centro",
+      "historia": "Adolescente con ansiedad severa que necesita terapia psicologica continua.",
+      "monto": 20
+    },
+    {
+      "nombre": "Familia Quispe",
+      "edad": "18+",
+      "tipo": "taller",
+      "ubicacion": "norte",
+      "historia": "Familia de 4 personas que necesita participar en talleres de crianza positiva.",
+      "monto": 10
+    },
+    {
+      "nombre": "Lucas, 4 anos",
+      "edad": "0-5",
+      "tipo": "integral",
+      "ubicacion": "valles",
+      "historia": "Nino con retraso en el desarrollo que necesita atencion medica, psicologica y psicopedagogica.",
+      "monto": 25
+    },
+    {
+      "nombre": "Andres, 14 anos",
+      "edad": "13-17",
+      "tipo": "medica",
+      "ubicacion": "sur",
+      "historia": "Adolescente con condicion cronica que requiere controles medicos mensuales.",
+      "monto": 15
+    }
+  ]
+}

@@ -87,6 +87,7 @@
         <button class="tab-btn" data-tab="videos"><i class="fa-solid fa-video"></i> Videos</button>
         <button class="tab-btn" data-tab="galeria"><i class="fa-solid fa-images"></i> Galería</button>
         <button class="tab-btn" data-tab="noticias"><i class="fa-solid fa-newspaper"></i> Noticias</button>
+        <button class="tab-btn" data-tab="apadrinar"><i class="fa-solid fa-hand-holding-heart"></i> Apadrinar</button>
         <button class="tab-btn" data-tab="enlaces"><i class="fa-solid fa-link"></i> Enlaces</button>
     </div>
 
@@ -189,6 +190,29 @@
             <button class="btn-add" onclick="addNoticia()"><i class="fa-solid fa-plus"></i> Agregar noticia</button>
             <br><br>
             <button class="save-btn" onclick="saveNoticias()"><i class="fa-solid fa-floppy-disk"></i> Guardar noticias</button>
+        </div>
+    </div>
+
+    <!-- TAB APADRINAR -->
+    <div class="tab-content" id="tab-apadrinar">
+        <div class="section-card">
+            <h3><i class="fa-solid fa-hand-holding-heart"></i> Perfiles de apadrinamiento</h3>
+            <p style="color:#66788a;font-size:0.88rem;margin-bottom:12px;">Administra los perfiles de personas que necesitan ser apadrinadas.</p>
+            <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:10px;padding:14px 18px;margin-bottom:20px;">
+                <p style="color:#92400e;font-size:0.85rem;font-weight:600;margin-bottom:8px;"><i class="fa-solid fa-circle-info"></i> Campos de cada perfil:</p>
+                <ul style="color:#92400e;font-size:0.82rem;line-height:1.7;padding-left:18px;margin:0;">
+                    <li><strong>Nombre:</strong> Nombre y edad (ej: Sofia, 8 anos)</li>
+                    <li><strong>Edad:</strong> Rango de edad</li>
+                    <li><strong>Tipo:</strong> Tipo de ayuda que necesita</li>
+                    <li><strong>Ubicacion:</strong> Sector de Quito</li>
+                    <li><strong>Historia:</strong> Descripcion de la situacion</li>
+                    <li><strong>Monto:</strong> Aporte mensual desde (USD)</li>
+                </ul>
+            </div>
+            <div class="item-list" id="apadrinarList"></div>
+            <button class="btn-add" onclick="addPerfil()"><i class="fa-solid fa-plus"></i> Agregar perfil</button>
+            <br><br>
+            <button class="save-btn" onclick="saveApadrinar()"><i class="fa-solid fa-floppy-disk"></i> Guardar perfiles</button>
         </div>
     </div>
 
@@ -368,6 +392,13 @@ async function initPanel() {
     if (noti) {
         noticiasSha = noti.sha;
         renderNoticias(noti.content.noticias || []);
+    }
+
+    // Cargar apadrinar
+    var apad = await readFile('_data/apadrinar.json');
+    if (apad) {
+        apadrinarSha = apad.sha;
+        renderApadrinar(apad.content.perfiles || []);
     }
 }
 
@@ -685,6 +716,80 @@ async function saveNoticias() {
     });
     var ok = await writeFile('_data/noticias.json', { noticias: noticias }, noticiasSha);
     if (ok) { showToast('Noticias guardadas'); var u = await readFile('_data/noticias.json'); if (u) noticiasSha = u.sha; }
+    else { showToast('Error al guardar', true); }
+}
+
+// ==========================================
+// APADRINAR
+// ==========================================
+let apadrinarSha = null;
+
+function renderApadrinar(perfiles) {
+    var list = document.getElementById('apadrinarList');
+    list.innerHTML = perfiles.map(function(p) {
+        return '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
+            '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
+            '<input type="text" placeholder="Nombre y edad" value="' + (p.nombre || '') + '" data-field="nombre" style="flex:2;min-width:150px;">' +
+            '<select data-field="edad" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
+            '<option value="0-5"' + (p.edad==='0-5'?' selected':'') + '>0-5 anos</option>' +
+            '<option value="6-12"' + (p.edad==='6-12'?' selected':'') + '>6-12 anos</option>' +
+            '<option value="13-17"' + (p.edad==='13-17'?' selected':'') + '>13-17 anos</option>' +
+            '<option value="18+"' + (p.edad==='18+'?' selected':'') + '>18+ anos</option></select>' +
+            '<select data-field="tipo" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
+            '<option value="psicologia"' + (p.tipo==='psicologia'?' selected':'') + '>Psicologia</option>' +
+            '<option value="medica"' + (p.tipo==='medica'?' selected':'') + '>Atencion medica</option>' +
+            '<option value="taller"' + (p.tipo==='taller'?' selected':'') + '>Talleres</option>' +
+            '<option value="integral"' + (p.tipo==='integral'?' selected':'') + '>Apoyo integral</option></select>' +
+            '<select data-field="ubicacion" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
+            '<option value="norte"' + (p.ubicacion==='norte'?' selected':'') + '>Quito Norte</option>' +
+            '<option value="sur"' + (p.ubicacion==='sur'?' selected':'') + '>Quito Sur</option>' +
+            '<option value="centro"' + (p.ubicacion==='centro'?' selected':'') + '>Quito Centro</option>' +
+            '<option value="valles"' + (p.ubicacion==='valles'?' selected':'') + '>Valles</option></select>' +
+            '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button></div>' +
+            '<div style="display:flex;gap:8px;align-items:center;">' +
+            '<input type="text" placeholder="Historia / situacion" value="' + (p.historia || '') + '" data-field="historia" style="flex:1;">' +
+            '<input type="number" placeholder="Monto USD" value="' + (p.monto || 15) + '" data-field="monto" style="width:80px;" min="1">' +
+            '</div></div>';
+    }).join('');
+}
+
+function addPerfil() {
+    var list = document.getElementById('apadrinarList');
+    list.innerHTML += '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
+        '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
+        '<input type="text" placeholder="Nombre y edad" data-field="nombre" style="flex:2;min-width:150px;">' +
+        '<select data-field="edad" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
+        '<option value="0-5">0-5 anos</option><option value="6-12">6-12 anos</option>' +
+        '<option value="13-17">13-17 anos</option><option value="18+">18+ anos</option></select>' +
+        '<select data-field="tipo" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
+        '<option value="psicologia">Psicologia</option><option value="medica">Atencion medica</option>' +
+        '<option value="taller">Talleres</option><option value="integral">Apoyo integral</option></select>' +
+        '<select data-field="ubicacion" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
+        '<option value="norte">Quito Norte</option><option value="sur">Quito Sur</option>' +
+        '<option value="centro">Quito Centro</option><option value="valles">Valles</option></select>' +
+        '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button></div>' +
+        '<div style="display:flex;gap:8px;align-items:center;">' +
+        '<input type="text" placeholder="Historia / situacion" data-field="historia" style="flex:1;">' +
+        '<input type="number" placeholder="Monto USD" value="15" data-field="monto" style="width:80px;" min="1">' +
+        '</div></div>';
+}
+
+async function saveApadrinar() {
+    var fresh = await readFile('_data/apadrinar.json');
+    if (fresh) apadrinarSha = fresh.sha;
+    var rows = document.querySelectorAll('#apadrinarList .item-row');
+    var perfiles = [];
+    rows.forEach(function(row) {
+        var nombre = row.querySelector('[data-field="nombre"]').value.trim();
+        var edad = row.querySelector('[data-field="edad"]').value;
+        var tipo = row.querySelector('[data-field="tipo"]').value;
+        var ubicacion = row.querySelector('[data-field="ubicacion"]').value;
+        var historia = row.querySelector('[data-field="historia"]').value.trim();
+        var monto = Number(row.querySelector('[data-field="monto"]').value) || 15;
+        if (nombre) perfiles.push({ nombre:nombre, edad:edad, tipo:tipo, ubicacion:ubicacion, historia:historia, monto:monto });
+    });
+    var ok = await writeFile('_data/apadrinar.json', { perfiles: perfiles }, apadrinarSha);
+    if (ok) { showToast('Perfiles guardados'); var u = await readFile('_data/apadrinar.json'); if (u) apadrinarSha = u.sha; }
     else { showToast('Error al guardar', true); }
 }
 </script>
