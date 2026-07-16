@@ -1,0 +1,16 @@
+{
+  "fotos": [
+    { "imagen": "img/galeria/galeria1.jpg", "descripcion": "Galeria 1" },
+    { "imagen": "img/galeria/galeria2.jpg", "descripcion": "Galeria 2" },
+    { "imagen": "img/galeria/galeria3.jpg", "descripcion": "Galeria 3" },
+    { "imagen": "img/galeria/galeria4.jpg", "descripcion": "Galeria 4" },
+    { "imagen": "img/galeria/galeria5.jpg", "descripcion": "Galeria 5" },
+    { "imagen": "img/galeria/galeria6.jpg", "descripcion": "Galeria 6" },
+    { "imagen": "img/galeria/galeria7.jpg", "descripcion": "Galeria 7" },
+    { "imagen": "img/galeria/galeria8.jpg", "descripcion": "Galeria 8" },
+    { "imagen": "img/galeria/galeria9.jpg", "descripcion": "Galeria 9" },
+    { "imagen": "img/galeria/galeria10.jpg", "descripcion": "Galeria 10" },
+    { "imagen": "img/galeria/galeria11.jpg", "descripcion": "Galeria 11" },
+    { "imagen": "img/galeria/galeria12.jpg", "descripcion": "Galeria 12" }
+  ]
+}

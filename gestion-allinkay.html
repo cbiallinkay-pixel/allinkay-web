@@ -84,7 +84,9 @@
     <div class="tabs">
         <button class="tab-btn active" data-tab="estadisticas"><i class="fa-solid fa-chart-bar"></i> Estadísticas</button>
         <button class="tab-btn" data-tab="informes"><i class="fa-solid fa-file-pdf"></i> Informes</button>
-        <button class="tab-btn" data-tab="videos"><i class="fa-brands fa-facebook"></i> Videos</button>
+        <button class="tab-btn" data-tab="videos"><i class="fa-solid fa-video"></i> Videos</button>
+        <button class="tab-btn" data-tab="galeria"><i class="fa-solid fa-images"></i> Galería</button>
+        <button class="tab-btn" data-tab="noticias"><i class="fa-solid fa-newspaper"></i> Noticias</button>
         <button class="tab-btn" data-tab="enlaces"><i class="fa-solid fa-link"></i> Enlaces</button>
     </div>
 
@@ -145,6 +147,48 @@
             <button class="btn-add" onclick="addVideo()"><i class="fa-solid fa-plus"></i> Agregar video</button>
             <br><br>
             <button class="save-btn" onclick="saveVideos()"><i class="fa-solid fa-floppy-disk"></i> Guardar videos</button>
+        </div>
+    </div>
+
+    <!-- TAB GALERÍA -->
+    <div class="tab-content" id="tab-galeria">
+        <div class="section-card">
+            <h3><i class="fa-solid fa-images"></i> Galeria de fotos</h3>
+            <p style="color:#66788a;font-size:0.88rem;margin-bottom:12px;">Administra las fotos de la galeria en la pagina de inicio.</p>
+            <div style="background:#faf5ff;border:1px solid #c4b5fd;border-radius:10px;padding:14px 18px;margin-bottom:20px;">
+                <p style="color:#6d28d9;font-size:0.85rem;font-weight:600;margin-bottom:8px;"><i class="fa-solid fa-circle-info"></i> ¿Como agregar fotos?</p>
+                <ol style="color:#6d28d9;font-size:0.82rem;line-height:1.7;padding-left:18px;margin:0;">
+                    <li>Haz clic en <strong>"Agregar foto"</strong></li>
+                    <li>Selecciona la imagen desde tu computadora (JPG o PNG)</li>
+                    <li>Escribe una descripcion corta</li>
+                    <li>Haz clic en <strong>"Guardar galeria"</strong></li>
+                </ol>
+            </div>
+            <div class="item-list" id="galeriaList"></div>
+            <button class="btn-add" onclick="addGaleriaFoto()"><i class="fa-solid fa-plus"></i> Agregar foto</button>
+            <br><br>
+            <button class="save-btn" onclick="saveGaleria()"><i class="fa-solid fa-floppy-disk"></i> Guardar galeria</button>
+        </div>
+    </div>
+
+    <!-- TAB NOTICIAS -->
+    <div class="tab-content" id="tab-noticias">
+        <div class="section-card">
+            <h3><i class="fa-solid fa-newspaper"></i> Noticias y Campanas</h3>
+            <p style="color:#66788a;font-size:0.88rem;margin-bottom:12px;">Administra las noticias que aparecen en la pagina de inicio.</p>
+            <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:14px 18px;margin-bottom:20px;">
+                <p style="color:#c05621;font-size:0.85rem;font-weight:600;margin-bottom:8px;"><i class="fa-solid fa-circle-info"></i> ¿Como agregar noticias?</p>
+                <ol style="color:#c05621;font-size:0.82rem;line-height:1.7;padding-left:18px;margin:0;">
+                    <li>Haz clic en <strong>"Agregar noticia"</strong></li>
+                    <li>Llena titulo, fecha, categoria y resumen</li>
+                    <li>Sube una imagen para la noticia</li>
+                    <li>Haz clic en <strong>"Guardar noticias"</strong></li>
+                </ol>
+            </div>
+            <div class="item-list" id="noticiasList"></div>
+            <button class="btn-add" onclick="addNoticia()"><i class="fa-solid fa-plus"></i> Agregar noticia</button>
+            <br><br>
+            <button class="save-btn" onclick="saveNoticias()"><i class="fa-solid fa-floppy-disk"></i> Guardar noticias</button>
         </div>
     </div>
 
@@ -311,6 +355,20 @@ async function initPanel() {
         videosSha = vid.sha;
         renderVideos(vid.content.videos || []);
     }
+
+    // Cargar galeria
+    var gal = await readFile('_data/galeria.json');
+    if (gal) {
+        galeriaSha = gal.sha;
+        renderGaleria(gal.content.fotos || []);
+    }
+
+    // Cargar noticias
+    var noti = await readFile('_data/noticias.json');
+    if (noti) {
+        noticiasSha = noti.sha;
+        renderNoticias(noti.content.noticias || []);
+    }
 }
 
 // ==========================================
@@ -474,6 +532,160 @@ async function saveVideos() {
     } else {
         showToast('Error al guardar', true);
     }
+}
+
+// ==========================================
+// GALERIA
+// ==========================================
+let galeriaSha = null;
+
+function renderGaleria(fotos) {
+    var list = document.getElementById('galeriaList');
+    list.innerHTML = fotos.map(function(f) {
+        var imgPrev = f.imagen ? '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + f.imagen + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">' : '';
+        return '<div class="item-row">' + imgPrev +
+            '<input type="text" placeholder="Descripcion" value="' + (f.descripcion || '') + '" data-field="descripcion">' +
+            '<input type="hidden" value="' + (f.imagen || '') + '" data-field="imagen">' +
+            '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Cambiar<input type="file" accept="image/*" onchange="uploadGaleriaImg(this)" style="display:none;"></label>' +
+            '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button></div>';
+    }).join('');
+}
+
+function addGaleriaFoto() {
+    var list = document.getElementById('galeriaList');
+    list.innerHTML += '<div class="item-row">' +
+        '<input type="text" placeholder="Descripcion de la foto" data-field="descripcion">' +
+        '<input type="hidden" value="" data-field="imagen">' +
+        '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Subir foto<input type="file" accept="image/*" onchange="uploadGaleriaImg(this)" style="display:none;"></label>' +
+        '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button></div>';
+}
+
+async function uploadGaleriaImg(fileInput) {
+    var file = fileInput.files[0];
+    if (!file) return;
+    var token = getToken();
+    if (!token) return;
+    showToast('Subiendo imagen...');
+    var reader = new FileReader();
+    reader.onload = async function() {
+        var base64 = reader.result.split(',')[1];
+        var filename = 'galeria-' + Date.now() + '.' + file.name.split('.').pop();
+        var path = 'img/galeria/' + filename;
+        var body = { message: 'Subir galeria: ' + filename, content: base64, branch: BRANCH };
+        var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+            method: 'PUT',
+            headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        if (res.ok) {
+            var row = fileInput.closest('.item-row');
+            row.querySelector('[data-field="imagen"]').value = path;
+            showToast('Foto subida');
+        } else { showToast('Error al subir', true); }
+    };
+    reader.readAsDataURL(file);
+}
+
+async function saveGaleria() {
+    var fresh = await readFile('_data/galeria.json');
+    if (fresh) galeriaSha = fresh.sha;
+    var rows = document.querySelectorAll('#galeriaList .item-row');
+    var fotos = [];
+    rows.forEach(function(row) {
+        var imagen = row.querySelector('[data-field="imagen"]').value.trim();
+        var descripcion = row.querySelector('[data-field="descripcion"]').value.trim();
+        if (imagen) fotos.push({ imagen: imagen, descripcion: descripcion });
+    });
+    var ok = await writeFile('_data/galeria.json', { fotos: fotos }, galeriaSha);
+    if (ok) { showToast('Galeria guardada'); var u = await readFile('_data/galeria.json'); if (u) galeriaSha = u.sha; }
+    else { showToast('Error al guardar', true); }
+}
+
+// ==========================================
+// NOTICIAS
+// ==========================================
+let noticiasSha = null;
+
+function renderNoticias(noticias) {
+    var list = document.getElementById('noticiasList');
+    list.innerHTML = noticias.map(function(n) {
+        return '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
+            '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
+            '<input type="text" placeholder="Titulo" value="' + (n.titulo || '') + '" data-field="titulo" style="flex:2;min-width:150px;">' +
+            '<input type="text" placeholder="Fecha" value="' + (n.fecha || '') + '" data-field="fecha" style="width:120px;">' +
+            '<select data-field="categoria" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
+            '<option value="actividad"' + (n.categoria==='actividad'?' selected':'') + '>Actividad</option>' +
+            '<option value="historia"' + (n.categoria==='historia'?' selected':'') + '>Historia</option>' +
+            '<option value="evento"' + (n.categoria==='evento'?' selected':'') + '>Evento</option></select>' +
+            '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button></div>' +
+            '<div style="display:flex;gap:8px;align-items:center;">' +
+            '<input type="text" placeholder="Resumen corto" value="' + (n.resumen || '') + '" data-field="resumen" style="flex:1;">' +
+            '<input type="hidden" value="' + (n.imagen || '') + '" data-field="imagen">' +
+            '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadNoticiaImg(this)" style="display:none;"></label></div>' +
+            '<input type="text" placeholder="Contenido completo" value="' + (n.contenido || '') + '" data-field="contenido">' +
+            '</div>';
+    }).join('');
+}
+
+function addNoticia() {
+    var list = document.getElementById('noticiasList');
+    list.innerHTML += '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
+        '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
+        '<input type="text" placeholder="Titulo" data-field="titulo" style="flex:2;min-width:150px;">' +
+        '<input type="text" placeholder="Fecha" data-field="fecha" style="width:120px;">' +
+        '<select data-field="categoria" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
+        '<option value="actividad">Actividad</option><option value="historia">Historia</option><option value="evento">Evento</option></select>' +
+        '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button></div>' +
+        '<div style="display:flex;gap:8px;align-items:center;">' +
+        '<input type="text" placeholder="Resumen corto" data-field="resumen" style="flex:1;">' +
+        '<input type="hidden" value="" data-field="imagen">' +
+        '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadNoticiaImg(this)" style="display:none;"></label></div>' +
+        '<input type="text" placeholder="Contenido completo" data-field="contenido">' +
+        '</div>';
+}
+
+async function uploadNoticiaImg(fileInput) {
+    var file = fileInput.files[0];
+    if (!file) return;
+    var token = getToken();
+    if (!token) return;
+    showToast('Subiendo imagen...');
+    var reader = new FileReader();
+    reader.onload = async function() {
+        var base64 = reader.result.split(',')[1];
+        var filename = 'noticia-' + Date.now() + '.' + file.name.split('.').pop();
+        var path = 'img/noticias/' + filename;
+        var body = { message: 'Subir noticia: ' + filename, content: base64, branch: BRANCH };
+        var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+            method: 'PUT',
+            headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        if (res.ok) {
+            fileInput.closest('.item-row').querySelector('[data-field="imagen"]').value = path;
+            showToast('Foto subida');
+        } else { showToast('Error al subir', true); }
+    };
+    reader.readAsDataURL(file);
+}
+
+async function saveNoticias() {
+    var fresh = await readFile('_data/noticias.json');
+    if (fresh) noticiasSha = fresh.sha;
+    var rows = document.querySelectorAll('#noticiasList .item-row');
+    var noticias = [];
+    rows.forEach(function(row) {
+        var titulo = row.querySelector('[data-field="titulo"]').value.trim();
+        var fecha = row.querySelector('[data-field="fecha"]').value.trim();
+        var categoria = row.querySelector('[data-field="categoria"]').value;
+        var resumen = row.querySelector('[data-field="resumen"]').value.trim();
+        var imagen = row.querySelector('[data-field="imagen"]').value.trim();
+        var contenido = row.querySelector('[data-field="contenido"]').value.trim();
+        if (titulo) noticias.push({ titulo:titulo, fecha:fecha, categoria:categoria, imagen:imagen, resumen:resumen, contenido:contenido });
+    });
+    var ok = await writeFile('_data/noticias.json', { noticias: noticias }, noticiasSha);
+    if (ok) { showToast('Noticias guardadas'); var u = await readFile('_data/noticias.json'); if (u) noticiasSha = u.sha; }
+    else { showToast('Error al guardar', true); }
 }
 </script>
 </body>

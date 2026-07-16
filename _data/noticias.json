@@ -1,0 +1,52 @@
+{
+  "noticias": [
+    {
+      "titulo": "Jornada de salud comunitaria en el barrio norte",
+      "fecha": "10 Abr 2026",
+      "categoria": "actividad",
+      "imagen": "img/noticias/actividades/actividad1.jpg",
+      "resumen": "Mas de 200 personas recibieron atencion medica y psicologica gratuita durante nuestra jornada mensual de salud.",
+      "contenido": "Mas de 200 personas recibieron atencion medica y psicologica gratuita durante nuestra jornada mensual de salud. El equipo de la Fundacion Allinkay se desplazo al barrio norte para brindar consultas, orientacion y acompanamiento a familias vulnerables."
+    },
+    {
+      "titulo": "Recupere mi vida gracias al acompanamiento de Allinkay",
+      "fecha": "2 Abr 2026",
+      "categoria": "historia",
+      "imagen": "img/noticias/historias/historia1.jpg",
+      "resumen": "Maria, de 34 anos, comparte como el programa de acompanamiento en adicciones transformo su vida y la de su familia.",
+      "contenido": "Maria, de 34 anos, comparte como el programa de acompanamiento en adicciones transformo su vida y la de su familia. Despues de dos anos de proceso terapeutico, hoy trabaja, cuida a sus hijos y es voluntaria en la fundacion."
+    },
+    {
+      "titulo": "Feria de bienestar y salud mental 2026",
+      "fecha": "5 May 2026",
+      "categoria": "evento",
+      "imagen": "img/noticias/eventos/evento1.jpg",
+      "resumen": "Te invitamos a nuestra feria anual con talleres, charlas y actividades para toda la familia. Entrada libre!",
+      "contenido": "Te invitamos a nuestra feria anual con talleres, charlas y actividades para toda la familia. Habra stands de informacion, actividades para ninos, presentaciones artisticas y atencion psicologica gratuita."
+    },
+    {
+      "titulo": "Taller de crianza positiva para padres y madres",
+      "fecha": "18 Mar 2026",
+      "categoria": "actividad",
+      "imagen": "img/noticias/actividades/actividad2.jpg",
+      "resumen": "Realizamos un taller con 60 familias sobre herramientas de comunicacion y manejo emocional en el hogar.",
+      "contenido": "Realizamos un taller con 60 familias sobre herramientas de comunicacion y manejo emocional en el hogar. Los participantes aprendieron tecnicas de escucha activa, resolucion de conflictos y fortalecimiento del vinculo afectivo."
+    },
+    {
+      "titulo": "Lucas volvio a sonreir: psicopedagogia que cambia vidas",
+      "fecha": "25 Feb 2026",
+      "categoria": "historia",
+      "imagen": "img/noticias/historias/historia2.jpg",
+      "resumen": "Con 8 anos y dificultades de aprendizaje, Lucas encontro en nuestro equipo el apoyo que necesitaba para avanzar.",
+      "contenido": "Con 8 anos y dificultades de aprendizaje, Lucas encontro en nuestro equipo el apoyo que necesitaba para avanzar. Gracias al trabajo psicopedagogico personalizado, hoy lee con fluidez y participa activamente en clases."
+    },
+    {
+      "titulo": "Campana Un aporte, mil sonrisas - Mayo 2026",
+      "fecha": "20 May 2026",
+      "categoria": "evento",
+      "imagen": "img/noticias/eventos/evento2.jpg",
+      "resumen": "Unete a nuestra campana de recaudacion anual. Cada donacion financia atencion directa a familias vulnerables.",
+      "contenido": "Unete a nuestra campana de recaudacion anual. Cada donacion financia atencion directa a familias vulnerables. Este ano nuestra meta es recaudar $5,000 para cubrir 250 consultas psicologicas gratuitas."
+    }
+  ]
+}
