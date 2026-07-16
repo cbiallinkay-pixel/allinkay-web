@@ -48,6 +48,8 @@
         .btn-remove:hover { background: #e53e3e; color: #fff; }
         .btn-add { padding: 10px 18px; background: #ebf8ff; color: #2b6cb0; border: 2px dashed #93c5fd; border-radius: 10px; font-size: 0.88rem; font-weight: 600; cursor: pointer; margin-top: 12px; }
         .btn-add:hover { background: #2b6cb0; color: #fff; border-color: #2b6cb0; }
+        .btn-upload { padding: 7px 12px; background: #f0fdf4; color: #16a34a; border: 1.5px solid #86efac; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s; }
+        .btn-upload:hover { background: #16a34a; color: #fff; border-color: #16a34a; }
         .links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
         .link-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; text-align: center; text-decoration: none; color: inherit; transition: transform 0.2s; }
         .link-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
@@ -320,10 +322,13 @@ async function saveEstadisticas() {
 function renderInformes(informes) {
     var list = document.getElementById('informesList');
     list.innerHTML = informes.map(function(inf, i) {
-        return '<div class="item-row">' +
+        return '<div class="item-row" style="flex-wrap:wrap;">' +
             '<input type="text" placeholder="Título" value="' + (inf.titulo || '') + '" data-field="titulo">' +
             '<input type="text" placeholder="Descripción" value="' + (inf.descripcion || '') + '" data-field="descripcion">' +
-            '<input type="text" placeholder="URL del PDF" value="' + (inf.url || '') + '" data-field="url" style="flex:2;">' +
+            '<div style="display:flex;gap:6px;flex:2;min-width:200px;align-items:center;">' +
+            '<input type="text" placeholder="URL del PDF" value="' + (inf.url || '') + '" data-field="url" style="flex:1;">' +
+            '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Subir<input type="file" accept=".pdf" onchange="uploadPDF(this)" style="display:none;"></label>' +
+            '</div>' +
             '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>' +
             '</div>';
     }).join('');
@@ -331,12 +336,61 @@ function renderInformes(informes) {
 
 function addInforme() {
     var list = document.getElementById('informesList');
-    list.innerHTML += '<div class="item-row">' +
+    list.innerHTML += '<div class="item-row" style="flex-wrap:wrap;">' +
         '<input type="text" placeholder="Título" data-field="titulo">' +
         '<input type="text" placeholder="Descripción" data-field="descripcion">' +
-        '<input type="text" placeholder="URL del PDF" data-field="url" style="flex:2;">' +
+        '<div style="display:flex;gap:6px;flex:2;min-width:200px;align-items:center;">' +
+        '<input type="text" placeholder="URL del PDF" data-field="url" style="flex:1;">' +
+        '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Subir<input type="file" accept=".pdf" onchange="uploadPDF(this)" style="display:none;"></label>' +
+        '</div>' +
         '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>' +
         '</div>';
+}
+
+async function uploadPDF(fileInput) {
+    var file = fileInput.files[0];
+    if (!file) return;
+    if (!file.name.endsWith('.pdf')) { showToast('Solo archivos PDF', true); return; }
+    var token = getToken();
+    if (!token) return;
+
+    showToast('Subiendo PDF...');
+    var reader = new FileReader();
+    reader.onload = async function() {
+        var base64 = reader.result.split(',')[1];
+        var path = 'docs/' + file.name.replace(/\s+/g, '-');
+        
+        // Verificar si ya existe
+        var existing = null;
+        try {
+            var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path + '?ref=' + BRANCH, {
+                headers: { 'Authorization': 'token ' + token }
+            });
+            if (res.ok) existing = await res.json();
+        } catch(e) {}
+
+        var body = {
+            message: 'Subir PDF: ' + file.name,
+            content: base64,
+            branch: BRANCH
+        };
+        if (existing) body.sha = existing.sha;
+
+        var res2 = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+            method: 'PUT',
+            headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+
+        if (res2.ok) {
+            var urlField = fileInput.closest('.item-row').querySelector('[data-field="url"]');
+            urlField.value = 'https://github.com/' + REPO + '/blob/' + BRANCH + '/' + path;
+            showToast('PDF subido correctamente');
+        } else {
+            showToast('Error al subir PDF', true);
+        }
+    };
+    reader.readAsDataURL(file);
 }
 
 async function saveInformes() {
