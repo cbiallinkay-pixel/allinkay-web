@@ -88,6 +88,7 @@
         <button class="tab-btn" data-tab="galeria"><i class="fa-solid fa-images"></i> Galería</button>
         <button class="tab-btn" data-tab="noticias"><i class="fa-solid fa-newspaper"></i> Noticias</button>
         <button class="tab-btn" data-tab="apadrinar"><i class="fa-solid fa-hand-holding-heart"></i> Apadrinar</button>
+        <button class="tab-btn" data-tab="servicios"><i class="fa-solid fa-briefcase-medical"></i> Servicios</button>
         <button class="tab-btn" data-tab="enlaces"><i class="fa-solid fa-link"></i> Enlaces</button>
     </div>
 
@@ -213,6 +214,26 @@
             <button class="btn-add" onclick="addPerfil()"><i class="fa-solid fa-plus"></i> Agregar perfil</button>
             <br><br>
             <button class="save-btn" onclick="saveApadrinar()"><i class="fa-solid fa-floppy-disk"></i> Guardar perfiles</button>
+        </div>
+    </div>
+
+    <!-- TAB SERVICIOS -->
+    <div class="tab-content" id="tab-servicios">
+        <div class="section-card">
+            <h3><i class="fa-solid fa-briefcase-medical"></i> Servicios</h3>
+            <p style="color:#66788a;font-size:0.88rem;margin-bottom:12px;">Administra los servicios y sus fotos en la pagina de Servicios.</p>
+            <div style="background:#e6fffa;border:1px solid #99f6e4;border-radius:10px;padding:14px 18px;margin-bottom:20px;">
+                <p style="color:#0f766e;font-size:0.85rem;font-weight:600;margin-bottom:8px;"><i class="fa-solid fa-circle-info"></i> Cada servicio tiene:</p>
+                <ul style="color:#0f766e;font-size:0.82rem;line-height:1.7;padding-left:18px;margin:0;">
+                    <li><strong>Titulo:</strong> Nombre del servicio</li>
+                    <li><strong>Descripcion:</strong> Texto corto</li>
+                    <li><strong>Foto:</strong> Imagen del servicio (subir con boton verde)</li>
+                </ul>
+            </div>
+            <div class="item-list" id="serviciosList"></div>
+            <button class="btn-add" onclick="addServicio()"><i class="fa-solid fa-plus"></i> Agregar servicio</button>
+            <br><br>
+            <button class="save-btn" onclick="saveServicios()"><i class="fa-solid fa-floppy-disk"></i> Guardar servicios</button>
         </div>
     </div>
 
@@ -399,6 +420,13 @@ async function initPanel() {
     if (apad) {
         apadrinarSha = apad.sha;
         renderApadrinar(apad.content.perfiles || []);
+    }
+
+    // Cargar servicios
+    var serv = await readFile('_data/servicios.json');
+    if (serv) {
+        serviciosSha = serv.sha;
+        renderServicios(serv.content.servicios || []);
     }
 }
 
@@ -790,6 +818,79 @@ async function saveApadrinar() {
     });
     var ok = await writeFile('_data/apadrinar.json', { perfiles: perfiles }, apadrinarSha);
     if (ok) { showToast('Perfiles guardados'); var u = await readFile('_data/apadrinar.json'); if (u) apadrinarSha = u.sha; }
+    else { showToast('Error al guardar', true); }
+}
+
+// ==========================================
+// SERVICIOS
+// ==========================================
+let serviciosSha = null;
+
+function renderServicios(servicios) {
+    var list = document.getElementById('serviciosList');
+    list.innerHTML = servicios.map(function(s) {
+        var imgPrev = s.imagen ? '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + s.imagen + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">' : '';
+        return '<div class="item-row" style="flex-wrap:wrap;">' + imgPrev +
+            '<input type="text" placeholder="Titulo del servicio" value="' + (s.titulo || '') + '" data-field="titulo" style="flex:1;min-width:150px;">' +
+            '<input type="text" placeholder="Descripcion corta" value="' + (s.descripcion || '') + '" data-field="descripcion" style="flex:1;min-width:150px;">' +
+            '<input type="hidden" value="' + (s.imagen || '') + '" data-field="imagen">' +
+            '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadServicioImg(this)" style="display:none;"></label>' +
+            '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button></div>';
+    }).join('');
+}
+
+function addServicio() {
+    var list = document.getElementById('serviciosList');
+    list.innerHTML += '<div class="item-row" style="flex-wrap:wrap;">' +
+        '<input type="text" placeholder="Titulo del servicio" data-field="titulo" style="flex:1;min-width:150px;">' +
+        '<input type="text" placeholder="Descripcion corta" data-field="descripcion" style="flex:1;min-width:150px;">' +
+        '<input type="hidden" value="" data-field="imagen">' +
+        '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadServicioImg(this)" style="display:none;"></label>' +
+        '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button></div>';
+}
+
+async function uploadServicioImg(fileInput) {
+    var file = fileInput.files[0];
+    if (!file) return;
+    var token = getToken();
+    if (!token) return;
+    showToast('Subiendo imagen...');
+    var reader = new FileReader();
+    reader.onload = async function() {
+        var base64 = reader.result.split(',')[1];
+        var filename = 'servicio-' + Date.now() + '.' + file.name.split('.').pop();
+        var path = 'img/servicios/' + filename;
+        var body = { message: 'Subir servicio: ' + filename, content: base64, branch: BRANCH };
+        var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+            method: 'PUT',
+            headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        if (res.ok) {
+            var row = fileInput.closest('.item-row');
+            row.querySelector('[data-field="imagen"]').value = path;
+            var existingImg = row.querySelector('img');
+            if (existingImg) existingImg.src = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path;
+            else row.insertAdjacentHTML('afterbegin', '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">');
+            showToast('Foto subida');
+        } else { showToast('Error al subir', true); }
+    };
+    reader.readAsDataURL(file);
+}
+
+async function saveServicios() {
+    var fresh = await readFile('_data/servicios.json');
+    if (fresh) serviciosSha = fresh.sha;
+    var rows = document.querySelectorAll('#serviciosList .item-row');
+    var servicios = [];
+    rows.forEach(function(row) {
+        var titulo = row.querySelector('[data-field="titulo"]').value.trim();
+        var descripcion = row.querySelector('[data-field="descripcion"]').value.trim();
+        var imagen = row.querySelector('[data-field="imagen"]').value.trim();
+        if (titulo) servicios.push({ titulo: titulo, descripcion: descripcion, imagen: imagen });
+    });
+    var ok = await writeFile('_data/servicios.json', { servicios: servicios }, serviciosSha);
+    if (ok) { showToast('Servicios guardados'); var u = await readFile('_data/servicios.json'); if (u) serviciosSha = u.sha; }
     else { showToast('Error al guardar', true); }
 }
 </script>

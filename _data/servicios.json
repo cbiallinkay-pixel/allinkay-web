@@ -1,0 +1,34 @@
+{
+  "servicios": [
+    {
+      "titulo": "Atencion psicologica individual y grupal",
+      "descripcion": "Apoyo emocional profesional para todas las edades.",
+      "imagen": "img/servicios/psicologia.jpg"
+    },
+    {
+      "titulo": "Atencion medica general",
+      "descripcion": "Consultas medicas accesibles para la comunidad.",
+      "imagen": "img/servicios/medicina.jpg"
+    },
+    {
+      "titulo": "Terapias para ninos, adolescentes y adultos",
+      "descripcion": "Terapias especializadas segun cada etapa de vida.",
+      "imagen": "img/servicios/psicopedagogia.jpg"
+    },
+    {
+      "titulo": "Intervencion en violencia intrafamiliar",
+      "descripcion": "Proteccion y acompanamiento a victimas.",
+      "imagen": "img/galeria/galeria1.jpg"
+    },
+    {
+      "titulo": "Acompanamiento en adicciones",
+      "descripcion": "Recuperacion guiada con profesionales.",
+      "imagen": "img/galeria/galeria2.jpg"
+    },
+    {
+      "titulo": "Talleres psicoeducativos",
+      "descripcion": "Formacion y prevencion para la comunidad.",
+      "imagen": "img/galeria/galeria3.jpg"
+    }
+  ]
+}
