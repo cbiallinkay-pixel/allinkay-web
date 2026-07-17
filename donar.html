@@ -109,21 +109,18 @@
                         </div>
                     </div>
 
-                    <!-- PayPal (activo cuando el cliente tenga Client ID) -->
+                    <!-- PayPal (ACTIVO) -->
                     <div id="details-paypal" class="payment-details active">
                         <div class="gateway-box gateway-paypal">
                             <div class="gateway-logo">
                                 <i class="fa-brands fa-paypal"></i> PayPal
-                                <span class="coming-soon-badge">Próximamente</span>
+                                <span class="active-badge">Activo</span>
                             </div>
                             <p>Dona desde cualquier parte del mundo con tu cuenta PayPal o tarjeta de crédito/débito
                                 internacional. Ideal para donantes en el exterior.</p>
-                            <div class="paypal-preview">
-                                <div class="paypal-btn-demo">
-                                    <i class="fa-brands fa-paypal"></i> Donar con PayPal
-                                </div>
-                                <p class="gateway-note"><i class="fa-solid fa-circle-info"></i> Se activará cuando la
-                                    fundación configure su cuenta PayPal. Nota: PayPal no admite pago diferido a cuotas.</p>
+                            <div class="paypal-preview" style="margin-top:16px;">
+                                <div id="paypal-button-container"></div>
+                                <p class="gateway-note" style="margin-top:12px;"><i class="fa-solid fa-circle-info"></i> Pago seguro procesado por PayPal. No admite pago diferido a cuotas.</p>
                             </div>
                         </div>
                     </div>
@@ -434,6 +431,59 @@ ${lineaMetodo}`;
             <span class="fab-tooltip">¡Donar!</span>
         </a>
     </div>
+
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AWtLA54catzdEFTSNf0msE8CBR4poVN3iojipzzkrCi1u2CtBvLlu8K5l36olRtI1ArnxOMWj5Z50dzM&currency=USD&intent=capture&components=buttons&disable-funding=credit,card"></script>
+    <script>
+    // Obtener monto seleccionado
+    function getSelectedAmount() {
+        var activeBtn = document.querySelector('.btn-amount.active');
+        if (activeBtn) return parseFloat(activeBtn.textContent.replace('$', ''));
+        var otroInput = document.querySelector('.input-otro-monto');
+        if (otroInput && otroInput.value) return parseFloat(otroInput.value);
+        return 10; // monto por defecto
+    }
+
+    // Renderizar botón PayPal
+    if (document.getElementById('paypal-button-container')) {
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                color: 'blue',
+                shape: 'rect',
+                label: 'donate',
+                height: 45
+            },
+            createOrder: function(data, actions) {
+                var amount = getSelectedAmount();
+                if (!amount || amount <= 0) {
+                    alert('Por favor selecciona un monto para donar.');
+                    return;
+                }
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: { value: amount.toFixed(2), currency_code: 'USD' },
+                        description: 'Donacion a Fundacion Allinkay',
+                        payee: { email_address: 'fundacionallinkay_uio@outlook.com' }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    var nombre = details.payer.name.given_name || 'Donante';
+                    alert('¡Gracias ' + nombre + '! Tu donacion fue procesada exitosamente. Fundacion Allinkay te lo agradece.');
+                    // Enviar notificación por WhatsApp
+                    var msg = 'Nueva donacion recibida via PayPal: $' + getSelectedAmount() + ' USD de ' + nombre;
+                    window.open('https://wa.me/593988282747?text=' + encodeURIComponent(msg), '_blank');
+                });
+            },
+            onError: function(err) {
+                alert('Hubo un error con el pago. Por favor intenta de nuevo.');
+                console.error('PayPal Error:', err);
+            }
+        }).render('#paypal-button-container');
+    }
+    </script>
 
 </body>
 
