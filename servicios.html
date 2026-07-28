@@ -42,65 +42,7 @@
         </div>
 
         <div class="servicios-grid" id="serviciosGrid">
-            <!-- Servicio 1 -->
-            <div class="servicio-card" data-servicio="1">
-                <img src="img/servicios/psicologia.jpg" alt="Atención psicológica individual y grupal" class="servicio-img">
-                <div class="servicio-content">
-                    <h3>Atención psicológica individual y grupal</h3>
-                    <p>Apoyo emocional profesional para todas las edades.</p>
-                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-            </div>
-
-            <!-- Servicio 2 -->
-            <div class="servicio-card" data-servicio="2">
-                <img src="img/servicios/medicina.jpg" alt="Atención médica general" class="servicio-img">
-                <div class="servicio-content">
-                    <h3>Atención médica general</h3>
-                    <p>Consultas médicas accesibles para la comunidad.</p>
-                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-            </div>
-
-            <!-- Servicio 3 -->
-            <div class="servicio-card" data-servicio="3">
-                <img src="img/servicios/psicopedagogia.jpg" alt="Terapias para niños, adolescentes y adultos" class="servicio-img">
-                <div class="servicio-content">
-                    <h3>Terapias para niños, adolescentes y adultos</h3>
-                    <p>Terapias especializadas según cada etapa de vida.</p>
-                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-            </div>
-
-            <!-- Servicio 4 -->
-            <div class="servicio-card" data-servicio="4">
-                <img src="img/galeria/galeria1.jpg" alt="Intervención en violencia intrafamiliar" class="servicio-img">
-                <div class="servicio-content">
-                    <h3>Intervención en violencia intrafamiliar</h3>
-                    <p>Protección y acompañamiento a víctimas.</p>
-                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-            </div>
-
-            <!-- Servicio 5 -->
-            <div class="servicio-card" data-servicio="5">
-                <img src="img/galeria/galeria2.jpg" alt="Acompañamiento en adicciones" class="servicio-img">
-                <div class="servicio-content">
-                    <h3>Acompañamiento en adicciones</h3>
-                    <p>Recuperación guiada con profesionales.</p>
-                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-            </div>
-
-            <!-- Servicio 6 -->
-            <div class="servicio-card" data-servicio="6">
-                <img src="img/galeria/galeria3.jpg" alt="Talleres psicoeducativos" class="servicio-img">
-                <div class="servicio-content">
-                    <h3>Talleres psicoeducativos</h3>
-                    <p>Formación y prevención para la comunidad.</p>
-                    <span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-            </div>
+            <!-- Los servicios se cargan dinámicamente desde GitHub -->
         </div>
     </main>
 
@@ -126,6 +68,28 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Cargar servicios desde GitHub
+            const GITHUB_SERV_URL = 'https://api.github.com/repos/cbiallinkay-pixel/allinkay-web/contents/_data/servicios.json?ref=main';
+            
+            fetch(GITHUB_SERV_URL + '&t=' + Date.now())
+                .then(r => r.json())
+                .then(data => {
+                    const content = JSON.parse(atob(data.content));
+                    const grid = document.getElementById('serviciosGrid');
+                    if (grid && content.servicios && content.servicios.length > 0) {
+                        grid.innerHTML = content.servicios.map((s, idx) => {
+                            return '<div class="servicio-card" data-servicio="' + (idx+1) + '">' +
+                                '<img src="' + s.imagen + '" alt="' + s.titulo + '" class="servicio-img">' +
+                                '<div class="servicio-content">' +
+                                '<h3>' + s.titulo + '</h3>' +
+                                '<p>' + s.descripcion + '</p>' +
+                                '<span class="servicio-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></span>' +
+                                '</div></div>';
+                        }).join('');
+                    }
+                })
+                .catch(() => {});
+
             // Hamburger menu
             const hamburger = document.getElementById('hamburger');
             const navMenuEl = document.getElementById('navMenu');
