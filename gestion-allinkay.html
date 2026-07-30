@@ -755,8 +755,10 @@ let apadrinarSha = null;
 function renderApadrinar(perfiles) {
     var list = document.getElementById('apadrinarList');
     list.innerHTML = perfiles.map(function(p) {
+        var imgPrev = p.imagen ? '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + p.imagen + '" style="width:50px;height:50px;object-fit:cover;border-radius:50%;">' : '';
         return '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
             '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
+            imgPrev +
             '<input type="text" placeholder="Nombre y edad" value="' + (p.nombre || '') + '" data-field="nombre" style="flex:2;min-width:150px;">' +
             '<select data-field="edad" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
             '<option value="0-5"' + (p.edad==='0-5'?' selected':'') + '>0-5 anos</option>' +
@@ -777,6 +779,8 @@ function renderApadrinar(perfiles) {
             '<div style="display:flex;gap:8px;align-items:center;">' +
             '<input type="text" placeholder="Historia / situacion" value="' + (p.historia || '') + '" data-field="historia" style="flex:1;">' +
             '<input type="number" placeholder="Monto USD" value="' + (p.monto || 15) + '" data-field="monto" style="width:80px;" min="1">' +
+            '<input type="hidden" value="' + (p.imagen || '') + '" data-field="imagen">' +
+            '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadApadrinarImg(this)" style="display:none;"></label>' +
             '</div></div>';
     }).join('');
 }
