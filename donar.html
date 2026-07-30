@@ -452,7 +452,7 @@ ${lineaMetodo}`;
     function openPayPal() {
         var amount = getSelectedAmount();
         if (!amount || amount <= 0) { alert('Selecciona un monto para donar.'); return; }
-        var paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=fundacionallinkay_uio%40outlook.com&item_name=Donacion+Fundacion+Allinkay&amount=' + amount.toFixed(2) + '&currency_code=USD&no_note=1&return=https://fundacionintegralallinkay.org/donar.html';
+        var paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=fundacionallinkay_uio%40outlook.com&item_name=Aporte+Fundacion+Allinkay&amount=' + amount.toFixed(2) + '&currency_code=USD&no_shipping=1&return=https://fundacionintegralallinkay.org/donar.html';
         window.open(paypalUrl, '_blank');
     }
     </script>
