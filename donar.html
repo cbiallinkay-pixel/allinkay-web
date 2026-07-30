@@ -432,8 +432,7 @@ ${lineaMetodo}`;
         </a>
     </div>
 
-    <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AWtLA54catzdEFTSNf0msE8CBR4poVN3iojipzzkrCi1u2CtBvLlu8K5l36olRtI1ArnxOMWj5Z50dzM&currency=USD&intent=capture&components=buttons&disable-funding=credit,card"></script>
+    <!-- PayPal Donación directa (sin SDK) -->
     <script>
     // Obtener monto seleccionado
     function getSelectedAmount() {
@@ -441,47 +440,20 @@ ${lineaMetodo}`;
         if (activeBtn) return parseFloat(activeBtn.textContent.replace('$', ''));
         var otroInput = document.querySelector('.input-otro-monto');
         if (otroInput && otroInput.value) return parseFloat(otroInput.value);
-        return 10; // monto por defecto
+        return 10;
     }
 
-    // Renderizar botón PayPal
-    if (document.getElementById('paypal-button-container')) {
-        paypal.Buttons({
-            style: {
-                layout: 'vertical',
-                color: 'blue',
-                shape: 'rect',
-                label: 'donate',
-                height: 45
-            },
-            createOrder: function(data, actions) {
-                var amount = getSelectedAmount();
-                if (!amount || amount <= 0) {
-                    alert('Por favor selecciona un monto para donar.');
-                    return;
-                }
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: { value: amount.toFixed(2), currency_code: 'USD' },
-                        description: 'Donacion a Fundacion Allinkay',
-                        payee: { email_address: 'fundacionallinkay_uio@outlook.com' }
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    var nombre = details.payer.name.given_name || 'Donante';
-                    alert('¡Gracias ' + nombre + '! Tu donacion fue procesada exitosamente. Fundacion Allinkay te lo agradece.');
-                    // Enviar notificación por WhatsApp
-                    var msg = 'Nueva donacion recibida via PayPal: $' + getSelectedAmount() + ' USD de ' + nombre;
-                    window.open('https://wa.me/593988282747?text=' + encodeURIComponent(msg), '_blank');
-                });
-            },
-            onError: function(err) {
-                alert('Hubo un error con el pago. Por favor intenta de nuevo.');
-                console.error('PayPal Error:', err);
-            }
-        }).render('#paypal-button-container');
+    // Configurar botón PayPal directo
+    var paypalContainer = document.getElementById('paypal-button-container');
+    if (paypalContainer) {
+        paypalContainer.innerHTML = '<a id="paypal-donate-link" href="#" onclick="openPayPal()" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#003087;color:#fff;padding:14px 28px;border-radius:8px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:all 0.2s;"><i class="fa-brands fa-paypal" style="font-size:1.3rem;"></i> Donar con PayPal</a>';
+    }
+
+    function openPayPal() {
+        var amount = getSelectedAmount();
+        if (!amount || amount <= 0) { alert('Selecciona un monto para donar.'); return; }
+        var paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=fundacionallinkay_uio%40outlook.com&item_name=Donacion+Fundacion+Allinkay&amount=' + amount.toFixed(2) + '&currency_code=USD&no_note=1&return=https://fundacionintegralallinkay.org/donar.html';
+        window.open(paypalUrl, '_blank');
     }
     </script>
 
