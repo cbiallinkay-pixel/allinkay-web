@@ -2173,8 +2173,9 @@ nav ul li.lavalamp {
     }
 
     .hero-img {
-        min-height: 180px;
+        min-height: 200px;
         object-fit: cover;
+        object-position: center;
     }
 
     .programas-title {
@@ -2991,7 +2992,8 @@ nav ul li.lavalamp {
     /* Header */
     .main-header {
         padding: 0.8rem 0;
-        position: relative;
+        position: sticky;
+        top: 0;
     }
 
     nav {
