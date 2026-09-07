@@ -1,9 +1,3 @@
 {
-  "informes": [
-    {
-      "titulo": "PRUEBA",
-      "descripcion": "PRUEBA",
-      "url": "https://github.com/cbiallinkay-pixel/allinkay-web/blob/main/docs/INFORME.pdf"
-    }
-  ]
+  "informes": []
 }
