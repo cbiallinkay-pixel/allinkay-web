@@ -2,18 +2,18 @@
   "servicios": [
     {
       "titulo": "Atencion psicologica individual y grupal",
-      "descripcion": "Brindamos atención psicológica",
+      "descripcion": "Brindamos atención integral a ninas, niños, adolescentes, personas adultas, adultas mayores y familias, en un espacio profesional, confidencial y seguro. Acompañamos procesos relacionados con ansiedad, estrés, dificultades emocionales y conductuales, autoestima, duelo, conflictos familiares, violencia intrafamiliar, bullying, crisis emocionales y otras situaciones que afectan el bienestar y la salud mental. Ofrecemos evaluación psicológica, atención individual, orientación familiar, prevención y promoción de la salud mental, articulando nuestro trabajo con Medicina, Psicopedagogía y Trabajo Social cuando cada caso lo requiere.",
       "imagen": "img/servicios/psicologia.jpg"
     },
     {
-      "titulo": "Atencion medica general",
-      "descripcion": "Consultas medicas accesibles para la comunidad.",
+      "titulo": "Atención Medicina General",
+      "descripcion": "Brindamos atencion medica integral a ninas, ninos, adolescentes, personas adultas y adultas mayores, orientada a la prevencion, diagnostico, tratamiento y seguimiento de diferentes condiciones de salud.  Realizamos consulta medica general, valoracion del estado de salud, control y seguimiento, orientacion preventiva y promocion de habitos saludables, considerando las necesidades particulares de cada persona.  Trabajamos desde un enfoque humano, preventivo e integral, articulando con otras areas cuando cada caso lo requiere.",
       "imagen": "img/servicios/medicina.jpg"
     },
     {
-      "titulo": "Terapias para ninos, adolescentes y adultos",
-      "descripcion": "Terapias especializadas segun cada etapa de vida.",
-      "imagen": "img/servicios/psicopedagogia.jpg"
+      "titulo": "Atención Psicopedagogía",
+      "descripcion": "Psicopedagogia  Brindamos atencion psicopedagogica a ninas, ninos y adolescentes, orientada a identificar y fortalecer sus habilidades y procesos de aprendizaje.  Realizamos evaluaciones psicopedagogicas, intervencion y acompanamiento en dificultades de aprendizaje, atencion, memoria, lectoescritura, razonamiento y desarrollo de estrategias de estudio, de acuerdo con las necesidades de cada persona.  Trabajamos desde un enfoque integral e individualizado, articulando con la familia, la institucion educativa y otras areas profesionales cuando el caso lo requiere.",
+      "imagen": "img/servicios/servicio-1789493265231.png"
     },
     {
       "titulo": "Intervencion en violencia intrafamiliar",
