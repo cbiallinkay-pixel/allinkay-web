@@ -7,27 +7,27 @@
     },
     {
       "titulo": "AtenciÃ³n Medicina General",
-      "descripcion": "Brindamos atención medica integral a ninas, ninos, adolescentes, personas adultas y adultas mayores, orientada a la prevencion, diagnostico, tratamiento y seguimiento de diferentes condiciones de salud.  Realizamos consulta medica general, valoracion del estado de salud, control y seguimiento, orientacion preventiva y promocion de habitos saludables, considerando las necesidades particulares de cada persona.  Trabajamos desde un enfoque humano, preventivo e integral, articulando con otras areas cuando cada caso lo requiere.",
+      "descripcion": "Brindamos atencion medica integral a ninas, ninos, adolescentes, personas adultas y adultas mayores, orientada a la prevencion, diagnostico, tratamiento y seguimiento de diferentes condiciones de salud.  Realizamos consulta medica general, valoracion del estado de salud, control y seguimiento, orientacion preventiva y promocion de habitos saludables, considerando las necesidades particulares de cada persona.  Trabajamos desde un enfoque humano, preventivo e integral, articulando con otras areas cuando cada caso lo requiere.",
       "imagen": "img/servicios/medicina.jpg"
     },
     {
       "titulo": "AtenciÃ³n PsicopedagogÃ­a",
-      "descripcion": "Psicopedagogia  Brindamos atención psicopedagogica a ninas, ninos y adolescentes, orientada a identificar y fortalecer sus habilidades y procesos de aprendizaje.  Realizamos evaluaciones psicopedagogicas, intervencion y acompanamiento en dificultades de aprendizaje, atencion, memoria, lectoescritura, razonamiento y desarrollo de estrategias de estudio, de acuerdo con las necesidades de cada persona.  Trabajamos desde un enfoque integral e individualizado, articulando con la familia, la institucion educativa y otras areas profesionales cuando el caso lo requiere.",
+      "descripcion": "Psicopedagogia  Brindamos atencion psicopedagogica a ninas, ninos y adolescentes, orientada a identificar y fortalecer sus habilidades y procesos de aprendizaje.  Realizamos evaluaciones psicopedagogicas, intervencion y acompanamiento en dificultades de aprendizaje, atencion, memoria, lectoescritura, razonamiento y desarrollo de estrategias de estudio, de acuerdo con las necesidades de cada persona.  Trabajamos desde un enfoque integral e individualizado, articulando con la familia, la institucion educativa y otras areas profesionales cuando el caso lo requiere.",
       "imagen": "img/servicios/servicio-1789493265231.png"
     },
     {
       "titulo": "Intervencion en violencia intrafamiliar",
-      "descripcion": "Protección y acompanamiento a victimas.",
+      "descripcion": "Proteccion y acompanamiento a victimas.",
       "imagen": "img/galeria/galeria1.jpg"
     },
     {
       "titulo": "Acompanamiento en adicciones",
-      "descripcion": "Recuperación guiada con profesionales.",
+      "descripcion": "Recuperacion guiada con profesionales.",
       "imagen": "img/galeria/galeria2.jpg"
     },
     {
       "titulo": "Talleres psicoeducativos",
-      "descripcion": "Formación y prevención para la comunidad.",
+      "descripcion": "Formacion y prevencion para la comunidad.",
       "imagen": "img/galeria/galeria3.jpg"
     }
   ]
