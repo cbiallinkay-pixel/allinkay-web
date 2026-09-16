@@ -331,6 +331,24 @@ function showToast(msg, isError) {
 // ==========================================
 // GITHUB API
 // ==========================================
+function decodeBase64Utf8(base64) {
+    var binary = atob((base64 || '').replace(/\s/g, ''));
+    var bytes = Uint8Array.from(binary, function(ch) {
+        return ch.charCodeAt(0);
+    });
+    return new TextDecoder('utf-8').decode(bytes);
+}
+
+function encodeBase64Utf8(value) {
+    var text = (typeof value === 'string') ? value : JSON.stringify(value, null, 2);
+    var bytes = new TextEncoder().encode(text);
+    var binary = '';
+    bytes.forEach(function(byte) {
+        binary += String.fromCharCode(byte);
+    });
+    return btoa(binary);
+}
+
 function getToken() {
     var token = localStorage.getItem(TOKEN_KEY);
     if (!token) {
@@ -349,7 +367,7 @@ async function readFile(path) {
         });
         if (!res.ok) { showToast('Error al leer ' + path, true); return null; }
         var data = await res.json();
-        var content = JSON.parse(atob(data.content));
+        var content = JSON.parse(decodeBase64Utf8(data.content));
         return { content: content, sha: data.sha };
     } catch (e) {
         showToast('Error de conexión', true);
@@ -363,7 +381,7 @@ async function writeFile(path, content, sha) {
     try {
         var body = {
             message: 'Actualizar ' + path + ' desde panel',
-            content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))),
+            content: encodeBase64Utf8(content),
             sha: sha,
             branch: BRANCH
         };

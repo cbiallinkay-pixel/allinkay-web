@@ -757,13 +757,19 @@
                 }
             }
 
+            function decodeBase64Utf8(base64) {
+                const binary = atob((base64 || '').replace(/\s/g, ''));
+                const bytes = Uint8Array.from(binary, ch => ch.charCodeAt(0));
+                return new TextDecoder('utf-8').decode(bytes);
+            }
+
             // ==========================================
             // Cargar datos desde GitHub API (actualización instantánea)
             // ==========================================
             function fetchJSON(filename) {
                 return fetch(GITHUB_API + '/' + filename + '?ref=main&t=' + Date.now())
                     .then(r => r.json())
-                    .then(data => JSON.parse(atob(data.content)));
+                    .then(data => JSON.parse(decodeBase64Utf8(data.content)));
             }
 
             const observer = new IntersectionObserver((entries) => {

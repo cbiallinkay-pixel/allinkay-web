@@ -1,33 +1,33 @@
 {
   "servicios": [
     {
-      "titulo": "Atencion psicologica individual y grupal",
-      "descripcion": "Brindamos atencón integral a ninas, niÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±os, adolescentes, personas adultas, adultas mayores y familias, en un espacio profesional, confidencial y seguro. AcompaÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±amos procesos relacionados con ansiedad, estrÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©s, dificultades emocionales y conductuales, autoestima, duelo, conflictos familiares, violencia intrafamiliar, bullying, crisis emocionales y otras situaciones que afectan el bienestar y la salud mental. Ofrecemos evaluaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n psicolÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³gica, atenciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n individual, orientaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n familiar, prevenciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n y promociÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n de la salud mental, articulando nuestro trabajo con Medicina, PsicopedagogÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­a y Trabajo Social cuando cada caso lo requiere.",
+      "titulo": "Atención psicológica individual y grupal",
+      "descripcion": "Brindamos atención integral a niñas, niños, adolescentes, personas adultas, adultas mayores y familias, en un espacio profesional, confidencial y seguro. Acompañamos procesos relacionados con ansiedad, estrés, dificultades emocionales y conductuales, autoestima, duelo, conflictos familiares, violencia intrafamiliar, bullying, crisis emocionales y otras situaciones que afectan el bienestar y la salud mental. Ofrecemos evaluación psicológica, atención individual, orientación familiar, prevención y promoción de la salud mental, articulando nuestro trabajo con Medicina, Psicopedagogía y Trabajo Social cuando cada caso lo requiere.",
       "imagen": "img/servicios/psicologia.jpg"
     },
     {
-      "titulo": "AtenciÃ³n Medicina General",
-      "descripcion": "Brindamos atencion medica integral a ninas, ninos, adolescentes, personas adultas y adultas mayores, orientada a la prevencion, diagnostico, tratamiento y seguimiento de diferentes condiciones de salud.  Realizamos consulta medica general, valoracion del estado de salud, control y seguimiento, orientacion preventiva y promocion de habitos saludables, considerando las necesidades particulares de cada persona.  Trabajamos desde un enfoque humano, preventivo e integral, articulando con otras areas cuando cada caso lo requiere.",
+      "titulo": "Atención Medicina General",
+      "descripcion": "Brindamos atención médica integral a niñas, niños, adolescentes, personas adultas y adultas mayores, orientada a la prevención, diagnóstico, tratamiento y seguimiento de diferentes condiciones de salud. Realizamos consulta médica general, valoración del estado de salud, control y seguimiento, orientación preventiva y promoción de hábitos saludables, considerando las necesidades particulares de cada persona. Trabajamos desde un enfoque humano, preventivo e integral, articulando con otras áreas cuando cada caso lo requiere.",
       "imagen": "img/servicios/medicina.jpg"
     },
     {
-      "titulo": "AtenciÃ³n Psicopedagoga",
-      "descripcion": "Psicopedagogia  Brindamos atencion psicopedagogica a ninas, ninos y adolescentes, orientada a identificar y fortalecer sus habilidades y procesos de aprendizaje.  Realizamos evaluaciones psicopedagogicas, intervencion y acompanamiento en dificultades de aprendizaje, atencion, memoria, lectoescritura, razonamiento y desarrollo de estrategias de estudio, de acuerdo con las necesidades de cada persona.  Trabajamos desde un enfoque integral e individualizado, articulando con la familia, la institucion educativa y otras areas profesionales cuando el caso lo requiere.",
+      "titulo": "Atención Psicopedagogía",
+      "descripcion": "Psicopedagogía. Brindamos atención psicopedagógica a niñas, niños y adolescentes, orientada a identificar y fortalecer sus habilidades y procesos de aprendizaje. Realizamos evaluaciones psicopedagógicas, intervención y acompañamiento en dificultades de aprendizaje, atención, memoria, lectoescritura, razonamiento y desarrollo de estrategias de estudio, de acuerdo con las necesidades de cada persona. Trabajamos desde un enfoque integral e individualizado, articulando con la familia, la institución educativa y otras áreas profesionales cuando el caso lo requiere.",
       "imagen": "img/servicios/servicio-1789493265231.png"
     },
     {
-      "titulo": "Intervencion en violencia intrafamiliar",
-      "descripcion": "Proteccion y acompanamiento a victimas.",
+      "titulo": "Intervención en violencia intrafamiliar",
+      "descripcion": "Protección y acompañamiento a víctimas.",
       "imagen": "img/galeria/galeria1.jpg"
     },
     {
-      "titulo": "Acompanamiento en adicciones",
-      "descripcion": "Recuperacion guiada con profesionales.",
+      "titulo": "Acompañamiento en adicciones",
+      "descripcion": "Recuperación guiada con profesionales.",
       "imagen": "img/galeria/galeria2.jpg"
     },
     {
       "titulo": "Talleres psicoeducativos",
-      "descripcion": "Formacion y prevencion para la comunidad.",
+      "descripcion": "Formación y prevención para la comunidad.",
       "imagen": "img/galeria/galeria3.jpg"
     }
   ]

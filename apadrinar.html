@@ -305,10 +305,18 @@ Por favor indíquenme los pasos para comenzar. ¡Gracias!`;
                 '<i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp</a></div>';
         }
 
+        function decodeBase64Utf8(base64) {
+            var binary = atob((base64 || '').replace(/\s/g, ''));
+            var bytes = Uint8Array.from(binary, function(ch) {
+                return ch.charCodeAt(0);
+            });
+            return new TextDecoder('utf-8').decode(bytes);
+        }
+
         fetch(GITHUB_APAD_URL + '&t=' + Date.now())
             .then(function(r) { return r.json(); })
             .then(function(data) {
-                var content = JSON.parse(atob(data.content));
+                var content = JSON.parse(decodeBase64Utf8(data.content));
                 buildPerfiles(content.perfiles);
             })
             .catch(function() { /* Si falla, queda el mensaje de cargando */ });

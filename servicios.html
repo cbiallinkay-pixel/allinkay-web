@@ -67,6 +67,12 @@
     </footer>
 
     <script>
+        function decodeBase64Utf8(base64) {
+            const binary = atob((base64 || '').replace(/\s/g, ''));
+            const bytes = Uint8Array.from(binary, ch => ch.charCodeAt(0));
+            return new TextDecoder('utf-8').decode(bytes);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // Cargar servicios desde GitHub
             const GITHUB_SERV_URL = 'https://api.github.com/repos/cbiallinkay-pixel/allinkay-web/contents/_data/servicios.json?ref=main';
@@ -74,8 +80,7 @@
             fetch(GITHUB_SERV_URL + '&t=' + Date.now())
                 .then(r => r.json())
                 .then(data => {
-                    const content = JSON.parse(atob(data.content));
-                    const grid = document.getElementById('serviciosGrid');
+                    const content = JSON.parse(decodeBase64Utf8(data.content));
                     if (grid && content.servicios && content.servicios.length > 0) {
                         grid.innerHTML = content.servicios.map((s, idx) => {
                             return '<div class="servicio-card" data-servicio="' + (idx+1) + '">' +
