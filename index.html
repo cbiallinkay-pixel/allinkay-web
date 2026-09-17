@@ -839,18 +839,76 @@
             const firstStat = document.querySelector('.stat-number');
             if (firstStat) observer.observe(firstStat);
 
+            // Cargar noticias dinámicamente desde GitHub API
+            let currentNoticiasData = [];
+
+            function buildNoticias(noticiasList) {
+                const grid = document.querySelector('.noticias-grid');
+                if (!grid || !noticiasList || noticiasList.length === 0) return;
+
+                currentNoticiasData = noticiasList;
+
+                grid.innerHTML = noticiasList.map((n, idx) => {
+                    const cat = (n.categoria || 'actividad').toLowerCase();
+                    let tagLabel = 'Actividad';
+                    let tagClass = 'tag-actividad';
+                    if (cat === 'historia') {
+                        tagLabel = 'Historia de impacto';
+                        tagClass = 'tag-historia';
+                    } else if (cat === 'evento') {
+                        tagLabel = 'Evento';
+                        tagClass = 'tag-evento';
+                    }
+
+                    const img = n.imagen ? n.imagen : 'img/general/logo.jpg';
+                    const fecha = n.fecha ? n.fecha : 'Próximamente';
+                    const resumen = n.resumen || n.contenido || 'Conoce más sobre esta iniciativa de Fundación Allinkay.';
+                    const destacada = (idx === 0) ? ' noticia-destacada' : '';
+
+                    return `
+                        <article class="noticia-card${destacada}" data-tipo="${cat}">
+                            <div class="noticia-img-wrap noticia-img-click" data-src="${img}">
+                                <img src="${img}" alt="${n.titulo}">
+                                <span class="noticia-tag ${tagClass}">${tagLabel}</span>
+                                <div class="noticia-img-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                            </div>
+                            <div class="noticia-body">
+                                <span class="noticia-fecha"><i class="fa-regular fa-calendar"></i> ${fecha}</span>
+                                <h3>${n.titulo}</h3>
+                                <p>${resumen}</p>
+                                <button class="noticia-leer" data-noticia="${idx}">Leer más <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                        </article>`;
+                }).join('');
+
+                // Respetar filtro activo
+                const activeBtn = document.querySelector('.filtro-btn.active');
+                const tipo = activeBtn ? activeBtn.dataset.filtro : 'todos';
+                document.querySelectorAll('.noticia-card').forEach(card => {
+                    const mostrar = tipo === 'todos' || card.dataset.tipo === tipo;
+                    card.style.display = mostrar ? 'flex' : 'none';
+                });
+            }
+
+            // Llamar a noticias.json al cargar la página
+            fetchJSON('noticias.json')
+                .then(data => {
+                    if (data && data.noticias && data.noticias.length > 0) {
+                        buildNoticias(data.noticias);
+                    }
+                })
+                .catch(() => {});
+
             // ==========================================
             // Filtros de Noticias y Campañas
             // ==========================================
             const filtros = document.querySelectorAll('.filtro-btn');
-            const tarjetas = document.querySelectorAll('.noticia-card');
-
             filtros.forEach(btn => {
                 btn.addEventListener('click', () => {
                     filtros.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     const tipo = btn.dataset.filtro;
-                    tarjetas.forEach(card => {
+                    document.querySelectorAll('.noticia-card').forEach(card => {
                         const mostrar = tipo === 'todos' || card.dataset.tipo === tipo;
                         card.style.display = mostrar ? 'flex' : 'none';
                     });
@@ -858,7 +916,7 @@
             });
 
             // ==========================================
-            // Modal "Leer más" de Noticias
+            // Modal "Leer más" de Noticias & Lightbox
             // ==========================================
             const noticias = {
                 1: { tag: 'Actividad', tagClass: 'tag-actividad', fecha: '10 Abr 2026', titulo: 'Jornada de salud comunitaria en el barrio norte', img: 'img/noticias/actividades/actividad1.jpg', texto: 'Más de 200 personas recibieron atención médica y psicológica gratuita durante nuestra jornada mensual de salud. El equipo de la Fundación Allinkay se desplazó al barrio norte para brindar consultas, orientación y acompañamiento a familias vulnerables. Esta actividad forma parte de nuestro programa mensual de salud comunitaria.' },
@@ -871,25 +929,57 @@
 
             const noticiaModal = document.getElementById('noticiaModal');
             const noticiaModalClose = document.getElementById('noticiaModalClose');
+            const noticiaLightbox = document.getElementById('noticiaLightbox');
+            const noticiaLightboxImg = document.getElementById('noticiaLightboxImg');
+            const closeNoticiaLightbox = document.getElementById('closeNoticiaLightbox');
 
-            function openNoticiaModal(id) {
-                const n = noticias[id];
-                document.getElementById('noticiaModalImg').src = n.img;
-                document.getElementById('noticiaModalTag').textContent = n.tag;
-                document.getElementById('noticiaModalTag').className = 'noticia-modal-tag ' + n.tagClass;
-                document.getElementById('noticiaModalFecha').textContent = n.fecha;
-                document.getElementById('noticiaModalTitulo').textContent = n.titulo;
-                document.getElementById('noticiaModalTexto').textContent = n.texto;
+            function openNoticiaModalFromData(data) {
+                document.getElementById('noticiaModalImg').src = data.img || 'img/general/logo.jpg';
+                document.getElementById('noticiaModalTag').textContent = data.tag;
+                document.getElementById('noticiaModalTag').className = 'noticia-modal-tag ' + data.tagClass;
+                document.getElementById('noticiaModalFecha').textContent = data.fecha;
+                document.getElementById('noticiaModalTitulo').textContent = data.titulo;
+                document.getElementById('noticiaModalTexto').textContent = data.texto;
                 noticiaModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
 
-            document.querySelectorAll('.noticia-leer').forEach(btn => {
-                btn.addEventListener('click', e => {
-                    e.preventDefault();
-                    openNoticiaModal(btn.dataset.noticia);
+            const noticiasGrid = document.querySelector('.noticias-grid');
+            if (noticiasGrid) {
+                noticiasGrid.addEventListener('click', e => {
+                    const leerBtn = e.target.closest('.noticia-leer');
+                    if (leerBtn) {
+                        e.preventDefault();
+                        const id = leerBtn.dataset.noticia;
+                        if (currentNoticiasData && currentNoticiasData[id]) {
+                            const n = currentNoticiasData[id];
+                            const cat = (n.categoria || 'actividad').toLowerCase();
+                            let tagLabel = 'Actividad';
+                            let tagClass = 'tag-actividad';
+                            if (cat === 'historia') { tagLabel = 'Historia de impacto'; tagClass = 'tag-historia'; }
+                            else if (cat === 'evento') { tagLabel = 'Evento'; tagClass = 'tag-evento'; }
+                            openNoticiaModalFromData({
+                                img: n.imagen,
+                                tag: tagLabel,
+                                tagClass: tagClass,
+                                fecha: n.fecha || 'Reciente',
+                                titulo: n.titulo,
+                                texto: n.contenido || n.resumen || n.titulo
+                            });
+                        } else if (noticias[id]) {
+                            openNoticiaModalFromData(noticias[id]);
+                        }
+                        return;
+                    }
+
+                    const imgClick = e.target.closest('.noticia-img-click');
+                    if (imgClick) {
+                        noticiaLightboxImg.src = imgClick.dataset.src;
+                        noticiaLightbox.classList.add('show');
+                        document.body.style.overflow = 'hidden';
+                    }
                 });
-            });
+            }
 
             noticiaModalClose.addEventListener('click', () => {
                 noticiaModal.classList.remove('active');
@@ -900,21 +990,6 @@
                     noticiaModal.classList.remove('active');
                     document.body.style.overflow = 'auto';
                 }
-            });
-
-            // ==========================================
-            // Lightbox fotos de Noticias
-            // ==========================================
-            const noticiaLightbox = document.getElementById('noticiaLightbox');
-            const noticiaLightboxImg = document.getElementById('noticiaLightboxImg');
-            const closeNoticiaLightbox = document.getElementById('closeNoticiaLightbox');
-
-            document.querySelectorAll('.noticia-img-click').forEach(wrap => {
-                wrap.addEventListener('click', () => {
-                    noticiaLightboxImg.src = wrap.dataset.src;
-                    noticiaLightbox.classList.add('show');
-                    document.body.style.overflow = 'hidden';
-                });
             });
 
             closeNoticiaLightbox.addEventListener('click', () => {

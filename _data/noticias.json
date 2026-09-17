@@ -1,6 +1,14 @@
 {
   "noticias": [
     {
+      "titulo": "esta es una prueba de noticias en opcion evento",
+      "fecha": "17 Sep 2026",
+      "categoria": "evento",
+      "imagen": "img/noticias/noticia-1789678485535.jpg",
+      "resumen": "Esta es una prueba de noticias en opción evento para verificar la actualización en la página web.",
+      "contenido": "Esta es una publicación de prueba para verificar la actualización instantánea de noticias y eventos desde el panel de gestión de Fundación Allinkay."
+    },
+    {
       "titulo": "UNA HORA POR LA VIDA Taller de prevención del suicidio",
       "fecha": "10 Sep 2026",
       "categoria": "actividad",
@@ -9,12 +17,52 @@
       "contenido": ""
     },
     {
-      "titulo": "esta es una prueba de noticias en opcion evento",
-      "fecha": "",
+      "titulo": "Feria de bienestar y salud mental 2026",
+      "fecha": "5 May 2026",
       "categoria": "evento",
-      "imagen": "img/noticias/noticia-1789678485535.jpg",
-      "resumen": "",
-      "contenido": ""
+      "imagen": "img/noticias/eventos/evento1.jpg",
+      "resumen": "Te invitamos a nuestra feria anual con talleres, charlas y actividades para toda la familia. ¡Entrada libre!",
+      "contenido": "Habrá stands de información, actividades para niños, presentaciones artísticas y atención psicológica gratuita. Entrada libre para toda la comunidad. Lugar: Lino Curima OE6-60, sector Barrionuevo, Quito."
+    },
+    {
+      "titulo": "Campaña \"Un aporte, mil sonrisas\" — Mayo 2026",
+      "fecha": "20 May 2026",
+      "categoria": "evento",
+      "imagen": "img/noticias/eventos/evento2.jpg",
+      "resumen": "Únete a nuestra campaña de recaudación anual. Cada donación financia atención directa a familias vulnerables.",
+      "contenido": "Este año nuestra meta es recaudar $5,000 para cubrir 250 consultas psicológicas gratuitas. Puedes donar desde $5 y marcar la diferencia en la vida de alguien que lo necesita."
+    },
+    {
+      "titulo": "Jornada de salud comunitaria en el barrio norte",
+      "fecha": "10 Abr 2026",
+      "categoria": "actividad",
+      "imagen": "img/noticias/actividades/actividad1.jpg",
+      "resumen": "Más de 200 personas recibieron atención médica y psicológica gratuita durante nuestra jornada mensual de salud.",
+      "contenido": "El equipo de la Fundación Allinkay se desplazó al barrio norte para brindar consultas, orientación y acompañamiento a familias vulnerables. Esta actividad forma parte de nuestro programa mensual de salud comunitaria."
+    },
+    {
+      "titulo": "\"Recuperé mi vida gracias al acompañamiento de Allinkay\"",
+      "fecha": "2 Abr 2026",
+      "categoria": "historia",
+      "imagen": "img/noticias/historias/historia1.jpg",
+      "resumen": "María, de 34 años, comparte cómo el programa de acompañamiento en adicciones transformó su vida y la de su familia.",
+      "contenido": "Después de dos años de proceso terapéutico, hoy trabaja, cuida a sus hijos y es voluntaria en la fundación. Su historia es un testimonio del poder del acompañamiento profesional y humano."
+    },
+    {
+      "titulo": "Taller de crianza positiva para padres y madres",
+      "fecha": "18 Mar 2026",
+      "categoria": "actividad",
+      "imagen": "img/noticias/actividades/actividad2.jpg",
+      "resumen": "Realizamos un taller con 60 familias sobre herramientas de comunicación y manejo emocional en el hogar.",
+      "contenido": "Los participantes aprendieron técnicas de escucha activa, resolución de conflictos y fortalecimiento del vínculo afectivo con sus hijos. El taller fue facilitado por nuestro equipo de psicólogos."
+    },
+    {
+      "titulo": "Lucas volvió a sonreír: psicopedagogía que cambia vidas",
+      "fecha": "25 Feb 2026",
+      "categoria": "historia",
+      "imagen": "img/noticias/historias/historia2.jpg",
+      "resumen": "Con 8 años y dificultades de aprendizaje, Lucas encontró en nuestro equipo el apoyo que necesitaba para avanzar.",
+      "contenido": "Gracias al trabajo psicopedagógico personalizado, hoy lee con fluidez y participa activamente en clases. Su maestra reporta una transformación notable en su confianza y rendimiento escolar."
     }
   ]
 }

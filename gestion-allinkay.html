@@ -714,6 +714,7 @@ let noticiasSha = null;
 function renderNoticias(noticias) {
     var list = document.getElementById('noticiasList');
     list.innerHTML = noticias.map(function(n) {
+        var imgPrev = n.imagen ? '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + n.imagen + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0;">' : '';
         return '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
             '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
             '<input type="text" placeholder="Titulo" value="' + (n.titulo || '') + '" data-field="titulo" style="flex:2;min-width:150px;">' +
@@ -724,6 +725,7 @@ function renderNoticias(noticias) {
             '<option value="evento"' + (n.categoria==='evento'?' selected':'') + '>Evento</option></select>' +
             '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button></div>' +
             '<div style="display:flex;gap:8px;align-items:center;">' +
+            imgPrev +
             '<input type="text" placeholder="Resumen corto" value="' + (n.resumen || '') + '" data-field="resumen" style="flex:1;">' +
             '<input type="hidden" value="' + (n.imagen || '') + '" data-field="imagen">' +
             '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadNoticiaImg(this)" style="display:none;"></label></div>' +
@@ -767,7 +769,14 @@ async function uploadNoticiaImg(fileInput) {
             body: JSON.stringify(body)
         });
         if (res.ok) {
-            fileInput.closest('.item-row').querySelector('[data-field="imagen"]').value = path;
+            var row = fileInput.closest('.item-row');
+            row.querySelector('[data-field="imagen"]').value = path;
+            var existingImg = row.querySelector('img');
+            if (existingImg) existingImg.src = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path;
+            else {
+                var wrap = fileInput.closest('div');
+                wrap.insertAdjacentHTML('afterbegin', '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0;">');
+            }
             showToast('Foto subida');
         } else { showToast('Error al subir', true); }
     };
