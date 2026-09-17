@@ -7,6 +7,14 @@
       "imagen": "img/noticias/noticia-1789512774926.png",
       "resumen": "En conmemoración del 10 de septiembre, Día Mundial para la Prevención del Suicidio, la Fundación Integral Allin Kay desarrolló en el INEC el taller “Una Hora por la Vida”, dirigido a 40 participantes, promoviendo la sensibilización, la prevención y la importancia de escuchar, acompañar y actuar oportunamente.",
       "contenido": ""
+    },
+    {
+      "titulo": "PRUEBA NOTICIA",
+      "fecha": "17 Sep 2026",
+      "categoria": "evento",
+      "imagen": "",
+      "resumen": "esta es una prueba de historias en ocion evento",
+      "contenido": ""
     }
   ]
 }
