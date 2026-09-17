@@ -1,27 +1,27 @@
 {
   "perfiles": [
     {
-      "nombre": "Sofia, 8 anos",
+      "nombre": "Sofía, 8 años",
       "edad": "6-12",
       "tipo": "psicologia",
       "ubicacion": "norte",
-      "historia": "Necesita acompanamiento psicologico por situacion de violencia intrafamiliar.",
+      "historia": "Necesita acompañamiento psicológico por situación de violencia intrafamiliar.",
       "monto": 20
     },
     {
-      "nombre": "Mateo, 10 anos",
+      "nombre": "Mateo, 10 años",
       "edad": "6-12",
       "tipo": "medica",
       "ubicacion": "sur",
-      "historia": "Requiere control medico mensual y seguimiento nutricional.",
+      "historia": "Requiere control médico mensual y seguimiento nutricional.",
       "monto": 15
     },
     {
-      "nombre": "Valentina, 15 anos",
+      "nombre": "Valentina, 15 años",
       "edad": "13-17",
       "tipo": "psicologia",
       "ubicacion": "centro",
-      "historia": "Adolescente con ansiedad severa que necesita terapia psicologica continua.",
+      "historia": "Adolescente con ansiedad severa que necesita terapia psicológica continua.",
       "monto": 20
     },
     {
@@ -33,19 +33,19 @@
       "monto": 10
     },
     {
-      "nombre": "Lucas, 4 anos",
+      "nombre": "Lucas, 4 años",
       "edad": "0-5",
       "tipo": "integral",
       "ubicacion": "valles",
-      "historia": "Nino con retraso en el desarrollo que necesita atencion medica, psicologica y psicopedagogica.",
+      "historia": "Niño con retraso en el desarrollo que necesita atención médica, psicológica y psicopedagógica.",
       "monto": 25
     },
     {
-      "nombre": "Andres, 14 anos",
+      "nombre": "Andrés, 14 años",
       "edad": "13-17",
       "tipo": "medica",
       "ubicacion": "sur",
-      "historia": "Adolescente con condicion cronica que requiere controles medicos mensuales.",
+      "historia": "Adolescente con condición crónica que requiere controles médicos mensuales.",
       "monto": 15
     }
   ]

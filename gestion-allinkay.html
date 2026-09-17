@@ -331,6 +331,52 @@ function showToast(msg, isError) {
 // ==========================================
 // GITHUB API
 // ==========================================
+function fixMojibake(str) {
+    if (typeof str !== 'string') return str;
+    try {
+        var prev = '';
+        while (prev !== str && /[ÃÂâ]/.test(str)) {
+            prev = str;
+            try {
+                var candidate = decodeURIComponent(escape(str));
+                if (candidate && candidate !== str) {
+                    str = candidate;
+                    continue;
+                }
+            } catch (e) {}
+            break;
+        }
+    } catch (e) {}
+    return str
+        .replace(/Ã¡/g, 'á').replace(/Ã©/g, 'é').replace(/Ã­/g, 'í').replace(/Ã³/g, 'ó').replace(/Ãº/g, 'ú')
+        .replace(/Ã/g, 'Á').replace(/Ã‰/g, 'É').replace(/Ã/g, 'Í').replace(/Ã“/g, 'Ó').replace(/Ãš/g, 'Ú')
+        .replace(/Ã±/g, 'ñ').replace(/Ã‘/g, 'Ñ')
+        .replace(/Â¿/g, '¿').replace(/Â¡/g, '¡')
+        .replace(/â€œ/g, '“').replace(/â€/g, '”').replace(/â€”/g, '—').replace(/â€“/g, '–');
+}
+
+function decodeBase64Utf8(base64) {
+    var binary = atob((base64 || '').replace(/\s/g, ''));
+    var len = binary.length;
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+        bytes[i] = binary.charCodeAt(i);
+    }
+    var decoded = new TextDecoder('utf-8').decode(bytes);
+    return fixMojibake(decoded);
+}
+
+function encodeBase64Utf8(value) {
+    var text = (typeof value === 'string') ? value : JSON.stringify(value, null, 2);
+    var bytes = new TextEncoder().encode(text);
+    var binary = '';
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+}
+
 function getToken() {
     var token = localStorage.getItem(TOKEN_KEY);
     if (!token) {
@@ -349,7 +395,7 @@ async function readFile(path) {
         });
         if (!res.ok) { showToast('Error al leer ' + path, true); return null; }
         var data = await res.json();
-        var content = JSON.parse(atob(data.content));
+        var content = JSON.parse(decodeBase64Utf8(data.content));
         return { content: content, sha: data.sha };
     } catch (e) {
         showToast('Error de conexión', true);
@@ -363,7 +409,7 @@ async function writeFile(path, content, sha) {
     try {
         var body = {
             message: 'Actualizar ' + path + ' desde panel',
-            content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))),
+            content: encodeBase64Utf8(content),
             sha: sha,
             branch: BRANCH
         };
