@@ -9,11 +9,11 @@
       "contenido": ""
     },
     {
-      "titulo": "PRUEBA NOTICIA",
-      "fecha": "17 Sep 2026",
+      "titulo": "esta es una prueba de noticias en opcion evento",
+      "fecha": "",
       "categoria": "evento",
-      "imagen": "",
-      "resumen": "esta es una prueba de historias en ocion evento",
+      "imagen": "img/noticias/noticia-1789678485535.jpg",
+      "resumen": "",
       "contenido": ""
     }
   ]
