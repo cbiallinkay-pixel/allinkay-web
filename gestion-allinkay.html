@@ -711,14 +711,19 @@ async function saveGaleria() {
 // ==========================================
 let noticiasSha = null;
 
+function esc(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function renderNoticias(noticias) {
     var list = document.getElementById('noticiasList');
     list.innerHTML = noticias.map(function(n) {
         var imgPrev = n.imagen ? '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + n.imagen + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0;">' : '';
         return '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
             '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
-            '<input type="text" placeholder="Titulo" value="' + (n.titulo || '') + '" data-field="titulo" style="flex:2;min-width:150px;">' +
-            '<input type="text" placeholder="Fecha" value="' + (n.fecha || '') + '" data-field="fecha" style="width:120px;">' +
+            '<input type="text" placeholder="Titulo" value="' + esc(n.titulo) + '" data-field="titulo" style="flex:2;min-width:150px;">' +
+            '<input type="text" placeholder="Fecha" value="' + esc(n.fecha) + '" data-field="fecha" style="width:120px;">' +
             '<select data-field="categoria" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
             '<option value="actividad"' + (n.categoria==='actividad'?' selected':'') + '>Actividad</option>' +
             '<option value="historia"' + (n.categoria==='historia'?' selected':'') + '>Historia</option>' +
@@ -726,20 +731,20 @@ function renderNoticias(noticias) {
             '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button></div>' +
             '<div style="display:flex;gap:8px;align-items:center;">' +
             imgPrev +
-            '<input type="text" placeholder="Resumen corto" value="' + (n.resumen || '') + '" data-field="resumen" style="flex:1;">' +
-            '<input type="hidden" value="' + (n.imagen || '') + '" data-field="imagen">' +
+            '<input type="text" placeholder="Resumen corto" value="' + esc(n.resumen) + '" data-field="resumen" style="flex:1;">' +
+            '<input type="hidden" value="' + esc(n.imagen) + '" data-field="imagen">' +
             '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadNoticiaImg(this)" style="display:none;"></label></div>' +
-            '<input type="text" placeholder="Contenido completo" value="' + (n.contenido || '') + '" data-field="contenido">' +
+            '<input type="text" placeholder="Contenido completo" value="' + esc(n.contenido) + '" data-field="contenido">' +
             '</div>';
     }).join('');
 }
 
 function addNoticia() {
     var list = document.getElementById('noticiasList');
-    list.innerHTML += '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
+    var html = '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
         '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
         '<input type="text" placeholder="Titulo" data-field="titulo" style="flex:2;min-width:150px;">' +
-        '<input type="text" placeholder="Fecha" data-field="fecha" style="width:120px;">' +
+        '<input type="text" placeholder="Fecha (ej: 18 Sep 2026)" data-field="fecha" style="width:150px;">' +
         '<select data-field="categoria" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
         '<option value="actividad">Actividad</option><option value="historia">Historia</option><option value="evento">Evento</option></select>' +
         '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button></div>' +
@@ -747,8 +752,9 @@ function addNoticia() {
         '<input type="text" placeholder="Resumen corto" data-field="resumen" style="flex:1;">' +
         '<input type="hidden" value="" data-field="imagen">' +
         '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadNoticiaImg(this)" style="display:none;"></label></div>' +
-        '<input type="text" placeholder="Contenido completo" data-field="contenido">' +
+        '<input type="text" placeholder="Contenido completo (opcional)" data-field="contenido">' +
         '</div>';
+    list.insertAdjacentHTML('beforeend', html);
 }
 
 async function uploadNoticiaImg(fileInput) {
