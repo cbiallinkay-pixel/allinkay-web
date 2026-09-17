@@ -67,13 +67,43 @@
     </footer>
 
     <script>
+        function fixMojibake(str) {
+            if (typeof str !== 'string') return str;
+            try {
+                var prev = '';
+                while (prev !== str && /[ÃÂâ]/.test(str)) {
+                    prev = str;
+                    try {
+                        var candidate = decodeURIComponent(escape(str));
+                        if (candidate && candidate !== str) {
+                            str = candidate;
+                            continue;
+                        }
+                    } catch (e) {}
+                    break;
+                }
+            } catch (e) {}
+            return str
+                .replace(/Ã¡/g, 'á').replace(/Ã©/g, 'é').replace(/Ã­/g, 'í').replace(/Ã³/g, 'ó').replace(/Ãº/g, 'ú')
+                .replace(/Ã /g, 'Á').replace(/Ã‰/g, 'É').replace(/Ã /g, 'Í').replace(/Ã“/g, 'Ó').replace(/Ãš/g, 'Ú')
+                .replace(/Ã±/g, 'ñ').replace(/Ã‘/g, 'Ñ')
+                .replace(/Â¿/g, '¿').replace(/Â¡/g, '¡')
+                .replace(/â€œ/g, '“').replace(/â€ /g, '”').replace(/â€”/g, '—').replace(/â€“/g, '–');
+        }
+
         function decodeBase64Utf8(base64) {
             const binary = atob((base64 || '').replace(/\s/g, ''));
-            const bytes = Uint8Array.from(binary, ch => ch.charCodeAt(0));
-            return new TextDecoder('utf-8').decode(bytes);
+            const len = binary.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binary.charCodeAt(i);
+            }
+            const decoded = new TextDecoder('utf-8').decode(bytes);
+            return fixMojibake(decoded);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('serviciosGrid');
             // Cargar servicios desde GitHub
             const GITHUB_SERV_URL = 'https://api.github.com/repos/cbiallinkay-pixel/allinkay-web/contents/_data/servicios.json?ref=main';
             
