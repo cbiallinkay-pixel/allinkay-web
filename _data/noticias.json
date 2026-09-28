@@ -1,14 +1,6 @@
 {
   "noticias": [
     {
-      "titulo": "esta es una prueba de noticias en opcion evento",
-      "fecha": "17 Sep 2026",
-      "categoria": "evento",
-      "imagen": "img/noticias/noticia-1789678485535.jpg",
-      "resumen": "Esta es una prueba de noticias en opción evento para verificar la actualización en la página web.",
-      "contenido": "Esta es una publicación de prueba para verificar la actualización instantánea de noticias y eventos desde el panel de gestión de Fundación Allinkay."
-    },
-    {
       "titulo": "UNA HORA POR LA VIDA Taller de prevención del suicidio",
       "fecha": "10 Sep 2026",
       "categoria": "actividad",
@@ -55,14 +47,6 @@
       "imagen": "img/noticias/historias/historia2.jpg",
       "resumen": "Con 8 años y dificultades de aprendizaje, Lucas encontró en nuestro equipo el apoyo que necesitaba para avanzar.",
       "contenido": "Gracias al trabajo psicopedagógico personalizado, hoy lee con fluidez y participa activamente en clases. Su maestra reporta una transformación notable en su confianza y rendimiento escolar."
-    },
-    {
-      "titulo": "NUEVA PRUEBA EN HISTORIAS DE IMPACTO",
-      "fecha": "17- Sep-2026",
-      "categoria": "historia",
-      "imagen": "img/noticias/noticia-1789683715651.jpg",
-      "resumen": "",
-      "contenido": ""
     }
   ]
 }
