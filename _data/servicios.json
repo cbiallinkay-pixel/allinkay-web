@@ -13,7 +13,7 @@
     {
       "titulo": "Psicopedagogía",
       "descripcion": "Psicopedagogía. Brindamos atención psicopedagógica a niñas, niños y adolescentes, orientada a identificar y fortalecer sus habilidades y procesos de aprendizaje. Realizamos evaluaciones psicopedagógicas, intervención y acompañamiento en dificultades de aprendizaje, atención, memoria, lectoescritura, razonamiento y desarrollo de estrategias de estudio, de acuerdo con las necesidades de cada persona. Trabajamos desde un enfoque integral e individualizado, articulando con la familia, la institución educativa y otras áreas profesionales cuando el caso lo requiere.",
-      "imagen": "img/servicios/servicio-1790720513567.png"
+      "imagen": "img/servicios/servicio-1790721737246.png"
     },
     {
       "titulo": "Talleres Educativos y Psicoeducativos",
@@ -29,6 +29,11 @@
       "titulo": "Trabajo social",
       "descripcion": "Brindamos orientación, acompañamiento e intervención social a personas y familias en situación de vulnerabilidad, identificando necesidades, factores de riesgo y recursos que permitan fortalecer su bienestar y el ejercicio de sus derechos. Realizamos valoraciones y estudios socioeconómicos, orientación familiar, gestión y derivación de casos, articulación con instituciones y redes de apoyo, acompañamiento en situaciones de vulneración de derechos y seguimiento social. Nuestro trabajo se desarrolla desde un enfoque humano, integral y de derechos, promoviendo el fortalecimiento de las capacidades de las personas, familias y comunidades. Además, el área participa en acciones de prevención, promoción, trabajo comunitario y articulación interinstitucional.",
       "imagen": "img/servicios/servicio-1790720524930.png"
+    },
+    {
+      "titulo": "Convenios para una atención integral",
+      "descripcion": "Con el propósito de ampliar las alternativas de atención para nuestros pacientes y sus familias, la Fundación Integral Allin Kay mantiene convenios y alianzas con profesionales e instituciones especializadas. Estos acuerdos nos permiten facilitar el acceso a servicios complementarios de salud, fortaleciendo el acompañamiento integral y dando continuidad a las necesidades identificadas durante los procesos de atención. Servicios disponibles mediante convenios: - Laboratorio Clínico - Odontología - Optometría - Gastroenterología - Estudios Radiológicos - Medicina Alternativa A través de estas alianzas buscamos acercar diferentes servicios a nuestra comunidad, promoviendo una atención articulada, oportuna y con enfoque humano.",
+      "imagen": "img/servicios/servicio-1790721688281.png"
     }
   ]
 }
