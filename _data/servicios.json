@@ -2,7 +2,7 @@
   "servicios": [
     {
       "titulo": "Atención psicológica individual y grupal",
-      "descripcion": "Atención Psicológica",
+      "descripcion": "Brindamos atención psicológica a niñas, niños, adolescentes, personas adultas y familias, promoviendo el bienestar emocional, el fortalecimiento de recursos personales y familiares, y el desarrollo de herramientas para afrontar diferentes situaciones de la vida.  Realizamos procesos de evaluación, orientación, acompañamiento e intervención psicológica, de acuerdo con las necesidades particulares de cada persona, desde un enfoque humano, respetuoso y confidencial.  Nuestros servicios  Atención psicológica individual.  Acompañamiento a niñas, niños y adolescentes.  Orientación y acompañamiento familiar.  Evaluación psicológica.  Intervención en dificultades emocionales y conductuales.  Acompañamiento ante situaciones de violencia, duelo, crisis y vulnerabilidad.  Fortalecimiento de autoestima, habilidades sociales y manejo emocional.  Orientación a madres, padres y cuidadores.  Elaboración de informes y certificados, cuando el proceso y criterio profesional lo requieran.",
       "imagen": "img/servicios/psicologia.jpg"
     },
     {
@@ -16,19 +16,9 @@
       "imagen": "img/servicios/servicio-1789493265231.png"
     },
     {
-      "titulo": "Intervención en violencia intrafamiliar",
-      "descripcion": "Protección y acompañamiento a víctimas.",
-      "imagen": "img/galeria/galeria1.jpg"
-    },
-    {
-      "titulo": "Acompañamiento en adicciones",
-      "descripcion": "Recuperación guiada con profesionales.",
-      "imagen": "img/galeria/galeria2.jpg"
-    },
-    {
-      "titulo": "Talleres psicoeducativos",
-      "descripcion": "Formación y prevención para la comunidad.",
-      "imagen": "img/servicios/servicio-1790696891496.jpeg"
+      "titulo": "Talleres Educativos y Psicoeducativos",
+      "descripcion": "Desarrollamos talleres, charlas y capacitaciones dirigidos a empresas, instituciones educativas, organizaciones, familias y comunidad, diseñados de acuerdo con las necesidades de cada grupo.  Abordamos temas relacionados con salud mental y bienestar emocional, manejo del estrés, autocuidado, prevención de riesgos psicosociales, prevención de la violencia, habilidades socioemocionales, comunicación, convivencia, trabajo en equipo y fortalecimiento de entornos saludables.  En el ámbito empresarial, promovemos espacios que contribuyan al bienestar de los colaboradores, relaciones laborales saludables y prevención de factores que pueden afectar la salud emocional y el clima laboral.  Trabajamos con metodologías participativas, prácticas y reflexivas, adaptando los contenidos y actividades a la realidad y objetivos de cada empresa o institución..",
+      "imagen": "img/servicios/servicio-1790697031573.jpeg"
     }
   ]
 }
