@@ -250,6 +250,7 @@
                     <li><strong>Descripción:</strong> Texto explicativo</li>
                     <li><strong>Icono:</strong> Clase FontAwesome (ej: fa-shield-halved)</li>
                     <li><strong>Color:</strong> Tema de color de la tarjeta</li>
+                    <li><strong>Foto:</strong> Imagen ilustrativa opcional</li>
                 </ul>
             </div>
             <div class="item-list" id="programasList"></div>
@@ -1012,15 +1013,20 @@ function buildColorSelect(selected) {
 function renderProgramas(programas) {
     var list = document.getElementById('programasList');
     list.innerHTML = programas.map(function(p) {
-        return '<div class="item-row" style="flex-wrap:wrap;">' +
-            '<div style="display:flex;gap:6px;align-items:center;flex:2;min-width:200px;">' +
-            '<i class="fa-solid ' + (p.icono || 'fa-star') + '" style="color:#6366f1;font-size:1.4rem;flex-shrink:0;"></i>' +
+        var imgSrc = p.imagen ? (p.imagen.startsWith('http') ? p.imagen : 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + p.imagen) : '';
+        var imgPreview = p.imagen ? '<img src="' + imgSrc + '" style="width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0;flex-shrink:0;">' : '';
+        return '<div class="item-row" style="flex-wrap:wrap;align-items:center;gap:10px;">' +
+            imgPreview +
+            '<div style="display:flex;gap:6px;align-items:center;flex:2;min-width:180px;">' +
+            '<i class="fa-solid ' + (p.icono || 'fa-star') + ' prog-icon-prev" style="color:#6366f1;font-size:1.3rem;flex-shrink:0;width:24px;text-align:center;"></i>' +
             '<input type="text" placeholder="Título del programa" value="' + esc(p.titulo) + '" data-field="titulo" style="flex:1;">' +
             '</div>' +
-            '<input type="text" placeholder="Icono (ej: fa-shield-halved)" value="' + esc(p.icono) + '" data-field="icono" style="width:180px;" oninput="this.previousElementSibling.previousElementSibling && (this.closest(\'.item-row\').querySelector(\'.prog-icon-prev\').className=\'fa-solid prog-icon-prev \'+this.value)">' +
+            '<input type="text" placeholder="Icono (ej: fa-shield-halved)" value="' + esc(p.icono) + '" data-field="icono" style="width:160px;" oninput="this.closest(\'.item-row\').querySelector(\'.prog-icon-prev\').className=\'fa-solid prog-icon-prev \'+this.value">' +
             buildColorSelect(p.color) +
+            '<input type="hidden" value="' + esc(p.imagen || '') + '" data-field="imagen">' +
+            '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadProgramaImg(this)" style="display:none;"></label>' +
             '<input type="text" placeholder="Descripción del programa" value="' + esc(p.descripcion) + '" data-field="descripcion" style="flex:2;min-width:200px;">' +
-            '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>' +
+            '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button>' +
             '</div>';
     }).join('');
 }
@@ -1028,17 +1034,49 @@ function renderProgramas(programas) {
 function addPrograma() {
     var list = document.getElementById('programasList');
     list.insertAdjacentHTML('beforeend',
-        '<div class="item-row" style="flex-wrap:wrap;">' +
-        '<div style="display:flex;gap:6px;align-items:center;flex:2;min-width:200px;">' +
-        '<i class="fa-solid fa-star prog-icon-prev" style="color:#6366f1;font-size:1.4rem;flex-shrink:0;"></i>' +
+        '<div class="item-row" style="flex-wrap:wrap;align-items:center;gap:10px;">' +
+        '<div style="display:flex;gap:6px;align-items:center;flex:2;min-width:180px;">' +
+        '<i class="fa-solid fa-star prog-icon-prev" style="color:#6366f1;font-size:1.3rem;flex-shrink:0;width:24px;text-align:center;"></i>' +
         '<input type="text" placeholder="Título del programa" data-field="titulo" style="flex:1;">' +
         '</div>' +
-        '<input type="text" placeholder="Icono (ej: fa-shield-halved)" data-field="icono" value="fa-star" style="width:180px;">' +
+        '<input type="text" placeholder="Icono (ej: fa-shield-halved)" data-field="icono" value="fa-star" style="width:160px;" oninput="this.closest(\'.item-row\').querySelector(\'.prog-icon-prev\').className=\'fa-solid prog-icon-prev \'+this.value">' +
         buildColorSelect('blue') +
+        '<input type="hidden" value="" data-field="imagen">' +
+        '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadProgramaImg(this)" style="display:none;"></label>' +
         '<input type="text" placeholder="Descripción del programa" data-field="descripcion" style="flex:2;min-width:200px;">' +
-        '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>' +
+        '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button>' +
         '</div>'
     );
+}
+
+async function uploadProgramaImg(fileInput) {
+    var file = fileInput.files[0];
+    if (!file) return;
+    var token = getToken();
+    if (!token) return;
+    showToast('Subiendo foto...');
+    var reader = new FileReader();
+    reader.onload = async function() {
+        var base64 = reader.result.split(',')[1];
+        var filename = 'programa-' + Date.now() + '.' + file.name.split('.').pop();
+        var path = 'img/programas/' + filename;
+        var body = { message: 'Subir programa: ' + filename, content: base64, branch: BRANCH };
+        var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+            method: 'PUT',
+            headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        if (res.ok) {
+            var row = fileInput.closest('.item-row');
+            row.querySelector('[data-field="imagen"]').value = path;
+            var existingImg = row.querySelector('img');
+            var fullUrl = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path;
+            if (existingImg) existingImg.src = fullUrl;
+            else row.insertAdjacentHTML('afterbegin', '<img src="' + fullUrl + '" style="width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0;flex-shrink:0;">');
+            showToast('Foto subida');
+        } else { showToast('Error al subir', true); }
+    };
+    reader.readAsDataURL(file);
 }
 
 async function saveProgramas() {
@@ -1050,8 +1088,13 @@ async function saveProgramas() {
         var titulo = row.querySelector('[data-field="titulo"]').value.trim();
         var icono = row.querySelector('[data-field="icono"]').value.trim();
         var color = row.querySelector('[data-field="color"]').value;
+        var imagen = row.querySelector('[data-field="imagen"]') ? row.querySelector('[data-field="imagen"]').value.trim() : '';
         var descripcion = row.querySelector('[data-field="descripcion"]').value.trim();
-        if (titulo) programas.push({ titulo: titulo, descripcion: descripcion, icono: icono, color: color });
+        if (titulo) {
+            var p = { titulo: titulo, descripcion: descripcion, icono: icono, color: color };
+            if (imagen) p.imagen = imagen;
+            programas.push(p);
+        }
     });
     var ok = await writeFile('_data/programas.json', { programas: programas }, programasSha);
     if (ok) { showToast('Programas guardados'); var u = await readFile('_data/programas.json'); if (u) programasSha = u.sha; }

@@ -131,13 +131,25 @@
                 grid.innerHTML = programas.map(function(p) {
                     var theme = COLOR_MAP[p.color] || COLOR_MAP['blue'];
                     var icono = p.icono || 'fa-star';
-                    return '<div class="programa-card">' +
+                    var mediaHtml = '';
+                    var hasPhoto = Boolean(p.imagen && p.imagen.trim());
+                    if (hasPhoto) {
+                        var imgSrc = p.imagen.trim();
+                        var fullSrc = imgSrc.startsWith('http') ? imgSrc : 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + imgSrc;
+                        mediaHtml = '<div class="programa-card-media">' +
+                            '<img src="' + fullSrc + '" alt="' + (p.titulo || '') + '" class="programa-card-img" loading="lazy">' +
+                            '</div>';
+                    }
+                    return '<div class="programa-card' + (hasPhoto ? ' with-photo' : '') + '">' +
+                        mediaHtml +
+                        '<div class="programa-card-inner">' +
                         '<div class="programa-icon-container ' + theme.container + '">' +
                         '<i class="fa-solid ' + icono + '"></i>' +
                         '</div>' +
                         '<div class="programa-content">' +
                         '<h3 class="' + theme.title + '">' + (p.titulo || '') + '</h3>' +
                         '<p>' + (p.descripcion || '') + '</p>' +
+                        '</div>' +
                         '</div>' +
                         '</div>';
                 }).join('');

@@ -544,6 +544,50 @@ nav ul li.lavalamp {
 .icon-teal-theme { background-color: #e6fffa; color: #319795; }
 .title-teal-theme { color: #2c7a7b; }
 
+.icon-orange-theme { background-color: #fffaf0; color: #dd6b20; }
+.title-orange-theme { color: #c05621; }
+
+.icon-red-theme { background-color: #fff5f5; color: #e53e3e; }
+.title-red-theme { color: #c53030; }
+
+/* Tarjetas de programas con foto */
+.programa-card.with-photo {
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+}
+
+.programa-card-media {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #f1f5f9;
+    position: relative;
+}
+
+.programa-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.programa-card:hover .programa-card-img {
+    transform: scale(1.05);
+}
+
+.programa-card-inner {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.programa-card.with-photo .programa-card-inner {
+    padding: 24px;
+}
+
 /* Responsive para Programas */
 @media (max-width: 992px) {
     .programas-grid {
@@ -552,7 +596,8 @@ nav ul li.lavalamp {
 }
 
 @media (max-width: 768px) {
-    .programa-card {
+    .programa-card,
+    .programa-card-inner {
         flex-direction: column;
         align-items: center;
         text-align: center;
