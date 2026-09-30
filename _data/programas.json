@@ -1,7 +1,7 @@
 {
   "programas": [
     {
-      "titulo": "Prevención de violencia",
+      "titulo": "Prevención de violencia1",
       "descripcion": "Programas educativos y de intervención para prevenir la violencia en comunidades.",
       "icono": "fa-shield-halved",
       "color": "blue"
@@ -23,6 +23,12 @@
       "descripcion": "Soporte a familias en situación de vulnerabilidad.",
       "icono": "fa-people-roof",
       "color": "teal"
+    },
+    {
+      "titulo": "Prueba programa",
+      "descripcion": "esta es una prueba",
+      "icono": "fa-star",
+      "color": "blue"
     }
   ]
 }
