@@ -35,6 +35,13 @@
       "descripcion": "prueba2",
       "icono": "fa-star",
       "color": "blue"
+    },
+    {
+      "titulo": "prueba3",
+      "descripcion": "prueba3",
+      "icono": "fa-star",
+      "color": "blue",
+      "imagen": "img/programas/programa-1790807348377.jpg"
     }
   ]
 }
