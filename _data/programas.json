@@ -29,6 +29,12 @@
       "descripcion": "",
       "icono": "fa-star",
       "color": "blue"
+    },
+    {
+      "titulo": "prueba2",
+      "descripcion": "prueba2",
+      "icono": "fa-star",
+      "color": "blue"
     }
   ]
 }
