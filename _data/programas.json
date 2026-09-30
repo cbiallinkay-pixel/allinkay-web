@@ -1,13 +1,6 @@
 {
   "programas": [
     {
-      "titulo": "Prevención de violencia",
-      "descripcion": "Programas educativos y de intervención para prevenir la violencia en comunidades.",
-      "icono": "fa-shield-halved",
-      "color": "blue",
-      "imagen": "img/programas/programa-1790805428605.jpg"
-    },
-    {
       "titulo": "Salud mental comunitaria",
       "descripcion": "Atención psicológica accesible para fortalecer el bienestar emocional.",
       "icono": "fa-brain",
