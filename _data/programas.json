@@ -23,12 +23,6 @@
       "descripcion": "Soporte a familias en situación de vulnerabilidad.",
       "icono": "fa-people-roof",
       "color": "teal"
-    },
-    {
-      "titulo": "Prueba programas",
-      "descripcion": "Prueba",
-      "icono": "fa-star",
-      "color": "purple"
     }
   ]
 }
