@@ -4,7 +4,8 @@
       "titulo": "Salud mental comunitaria",
       "descripcion": "Atención psicológica accesible para fortalecer el bienestar emocional.",
       "icono": "fa-brain",
-      "color": "green"
+      "color": "green",
+      "imagen": "img/programas/programa-1790807625768.jpg"
     },
     {
       "titulo": "Atención a mujeres víctimas",
