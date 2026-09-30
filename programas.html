@@ -39,50 +39,9 @@
         <section class="programas-section">
             <h2 class="programas-title">Programas</h2>
             
-            <div class="programas-grid">
-                <!-- Programa 1 -->
-                <div class="programa-card">
-                    <div class="programa-icon-container icon-blue-theme">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <div class="programa-content">
-                        <h3 class="title-blue-theme">Prevención de violencia</h3>
-                        <p>Programas educativos y de intervención para prevenir la violencia en comunidades.</p>
-                    </div>
-                </div>
-
-                <!-- Programa 2 -->
-                <div class="programa-card">
-                    <div class="programa-icon-container icon-green-theme">
-                        <i class="fa-solid fa-brain"></i>
-                    </div>
-                    <div class="programa-content">
-                        <h3 class="title-green-theme">Salud mental comunitaria</h3>
-                        <p>Atención psicológica accesible para fortalecer el bienestar emocional.</p>
-                    </div>
-                </div>
-
-                <!-- Programa 3 -->
-                <div class="programa-card">
-                    <div class="programa-icon-container icon-purple-theme">
-                        <i class="fa-solid fa-hand-holding-heart"></i>
-                    </div>
-                    <div class="programa-content">
-                        <h3 class="title-purple-theme">Atención a mujeres víctimas</h3>
-                        <p>Acompañamiento integral a mujeres víctimas de violencia.</p>
-                    </div>
-                </div>
-
-                <!-- Programa 4 -->
-                <div class="programa-card">
-                    <div class="programa-icon-container icon-teal-theme">
-                        <i class="fa-solid fa-people-roof"></i>
-                    </div>
-                    <div class="programa-content">
-                        <h3 class="title-teal-theme">Apoyo a familias vulnerables</h3>
-                        <p>Soporte a familias en situación de vulnerabilidad.</p>
-                    </div>
-                </div>
+            <div class="programas-grid" id="programasGrid">
+                <!-- Cargando programas... -->
+                <p id="programas-loading" style="color:#66788a;text-align:center;grid-column:1/-1;padding:40px 0;">Cargando programas...</p>
             </div>
         </section>
     </main>
@@ -137,6 +96,53 @@
             });
         });
     </script>
+
+    <!-- Carga dinámica de Programas desde JSON -->
+    <script>
+        (function() {
+            var REPO = 'cbiallinkay-pixel/allinkay-web';
+            var BRANCH = 'main';
+            var COLOR_MAP = {
+                'blue':   { container: 'icon-blue-theme',   title: 'title-blue-theme' },
+                'green':  { container: 'icon-green-theme',  title: 'title-green-theme' },
+                'purple': { container: 'icon-purple-theme', title: 'title-purple-theme' },
+                'teal':   { container: 'icon-teal-theme',   title: 'title-teal-theme' },
+                'orange': { container: 'icon-orange-theme', title: 'title-orange-theme' },
+                'red':    { container: 'icon-red-theme',    title: 'title-red-theme' }
+            };
+
+            function renderProgramas(programas) {
+                var grid = document.getElementById('programasGrid');
+                if (!programas || !programas.length) {
+                    grid.innerHTML = '<p style="color:#66788a;text-align:center;grid-column:1/-1;padding:40px 0;">No hay programas disponibles.</p>';
+                    return;
+                }
+                grid.innerHTML = programas.map(function(p) {
+                    var theme = COLOR_MAP[p.color] || COLOR_MAP['blue'];
+                    var icono = p.icono || 'fa-star';
+                    return '<div class="programa-card">' +
+                        '<div class="programa-icon-container ' + theme.container + '">' +
+                        '<i class="fa-solid ' + icono + '"></i>' +
+                        '</div>' +
+                        '<div class="programa-content">' +
+                        '<h3 class="' + theme.title + '">' + (p.titulo || '') + '</h3>' +
+                        '<p>' + (p.descripcion || '') + '</p>' +
+                        '</div>' +
+                        '</div>';
+                }).join('');
+            }
+
+            var url = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/_data/programas.json?t=' + Date.now();
+            fetch(url)
+                .then(function(r) { return r.json(); })
+                .then(function(data) { renderProgramas(data.programas || []); })
+                .catch(function() {
+                    var grid = document.getElementById('programasGrid');
+                    if (grid) grid.innerHTML = '<p style="color:#66788a;text-align:center;grid-column:1/-1;padding:40px 0;">No se pudieron cargar los programas.</p>';
+                });
+        })();
+    </script>
+
 
     <!-- Botones flotantes -->
     <div class="fab-container">

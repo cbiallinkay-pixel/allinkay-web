@@ -89,6 +89,7 @@
         <button class="tab-btn" data-tab="noticias"><i class="fa-solid fa-newspaper"></i> Noticias</button>
         <button class="tab-btn" data-tab="apadrinar"><i class="fa-solid fa-hand-holding-heart"></i> Apadrinar</button>
         <button class="tab-btn" data-tab="servicios"><i class="fa-solid fa-briefcase-medical"></i> Servicios</button>
+        <button class="tab-btn" data-tab="programas"><i class="fa-solid fa-sitemap"></i> Programas</button>
         <button class="tab-btn" data-tab="enlaces"><i class="fa-solid fa-link"></i> Enlaces</button>
     </div>
 
@@ -234,6 +235,27 @@
             <button class="btn-add" onclick="addServicio()"><i class="fa-solid fa-plus"></i> Agregar servicio</button>
             <br><br>
             <button class="save-btn" onclick="saveServicios()"><i class="fa-solid fa-floppy-disk"></i> Guardar servicios</button>
+        </div>
+    </div>
+
+    <!-- TAB PROGRAMAS -->
+    <div class="tab-content" id="tab-programas">
+        <div class="section-card">
+            <h3><i class="fa-solid fa-sitemap"></i> Programas</h3>
+            <p style="color:#66788a;font-size:0.88rem;margin-bottom:12px;">Administra los programas que aparecen en la página de Programas.</p>
+            <div style="background:#eef2ff;border:1px solid #a5b4fc;border-radius:10px;padding:14px 18px;margin-bottom:20px;">
+                <p style="color:#3730a3;font-size:0.85rem;font-weight:600;margin-bottom:8px;"><i class="fa-solid fa-circle-info"></i> Cada programa tiene:</p>
+                <ul style="color:#3730a3;font-size:0.82rem;line-height:1.7;padding-left:18px;margin:0;">
+                    <li><strong>Título:</strong> Nombre del programa</li>
+                    <li><strong>Descripción:</strong> Texto explicativo</li>
+                    <li><strong>Icono:</strong> Clase FontAwesome (ej: fa-shield-halved)</li>
+                    <li><strong>Color:</strong> Tema de color de la tarjeta</li>
+                </ul>
+            </div>
+            <div class="item-list" id="programasList"></div>
+            <button class="btn-add" onclick="addPrograma()"><i class="fa-solid fa-plus"></i> Agregar programa</button>
+            <br><br>
+            <button class="save-btn" onclick="saveProgramas()"><i class="fa-solid fa-floppy-disk"></i> Guardar programas</button>
         </div>
     </div>
 
@@ -473,6 +495,13 @@ async function initPanel() {
     if (serv) {
         serviciosSha = serv.sha;
         renderServicios(serv.content.servicios || []);
+    }
+
+    // Cargar programas
+    var prog = await readFile('_data/programas.json');
+    if (prog) {
+        programasSha = prog.sha;
+        renderProgramas(prog.content.programas || []);
     }
 }
 
@@ -956,6 +985,76 @@ async function saveServicios() {
     });
     var ok = await writeFile('_data/servicios.json', { servicios: servicios }, serviciosSha);
     if (ok) { showToast('Servicios guardados'); var u = await readFile('_data/servicios.json'); if (u) serviciosSha = u.sha; }
+    else { showToast('Error al guardar', true); }
+}
+
+// ==========================================
+// PROGRAMAS
+// ==========================================
+let programasSha = null;
+
+var PROGRAMA_COLORES = [
+    { value: 'blue',   label: 'Azul' },
+    { value: 'green',  label: 'Verde' },
+    { value: 'purple', label: 'Morado' },
+    { value: 'teal',   label: 'Verde azulado' },
+    { value: 'orange', label: 'Naranja' },
+    { value: 'red',    label: 'Rojo' }
+];
+
+function buildColorSelect(selected) {
+    return '<select data-field="color" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
+        PROGRAMA_COLORES.map(function(c) {
+            return '<option value="' + c.value + '"' + (selected === c.value ? ' selected' : '') + '>' + c.label + '</option>';
+        }).join('') + '</select>';
+}
+
+function renderProgramas(programas) {
+    var list = document.getElementById('programasList');
+    list.innerHTML = programas.map(function(p) {
+        return '<div class="item-row" style="flex-wrap:wrap;">' +
+            '<div style="display:flex;gap:6px;align-items:center;flex:2;min-width:200px;">' +
+            '<i class="fa-solid ' + (p.icono || 'fa-star') + '" style="color:#6366f1;font-size:1.4rem;flex-shrink:0;"></i>' +
+            '<input type="text" placeholder="Título del programa" value="' + esc(p.titulo) + '" data-field="titulo" style="flex:1;">' +
+            '</div>' +
+            '<input type="text" placeholder="Icono (ej: fa-shield-halved)" value="' + esc(p.icono) + '" data-field="icono" style="width:180px;" oninput="this.previousElementSibling.previousElementSibling && (this.closest(\'.item-row\').querySelector(\'.prog-icon-prev\').className=\'fa-solid prog-icon-prev \'+this.value)">' +
+            buildColorSelect(p.color) +
+            '<input type="text" placeholder="Descripción del programa" value="' + esc(p.descripcion) + '" data-field="descripcion" style="flex:2;min-width:200px;">' +
+            '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>' +
+            '</div>';
+    }).join('');
+}
+
+function addPrograma() {
+    var list = document.getElementById('programasList');
+    list.insertAdjacentHTML('beforeend',
+        '<div class="item-row" style="flex-wrap:wrap;">' +
+        '<div style="display:flex;gap:6px;align-items:center;flex:2;min-width:200px;">' +
+        '<i class="fa-solid fa-star prog-icon-prev" style="color:#6366f1;font-size:1.4rem;flex-shrink:0;"></i>' +
+        '<input type="text" placeholder="Título del programa" data-field="titulo" style="flex:1;">' +
+        '</div>' +
+        '<input type="text" placeholder="Icono (ej: fa-shield-halved)" data-field="icono" value="fa-star" style="width:180px;">' +
+        buildColorSelect('blue') +
+        '<input type="text" placeholder="Descripción del programa" data-field="descripcion" style="flex:2;min-width:200px;">' +
+        '<button class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>' +
+        '</div>'
+    );
+}
+
+async function saveProgramas() {
+    var fresh = await readFile('_data/programas.json');
+    if (fresh) programasSha = fresh.sha;
+    var rows = document.querySelectorAll('#programasList .item-row');
+    var programas = [];
+    rows.forEach(function(row) {
+        var titulo = row.querySelector('[data-field="titulo"]').value.trim();
+        var icono = row.querySelector('[data-field="icono"]').value.trim();
+        var color = row.querySelector('[data-field="color"]').value;
+        var descripcion = row.querySelector('[data-field="descripcion"]').value.trim();
+        if (titulo) programas.push({ titulo: titulo, descripcion: descripcion, icono: icono, color: color });
+    });
+    var ok = await writeFile('_data/programas.json', { programas: programas }, programasSha);
+    if (ok) { showToast('Programas guardados'); var u = await readFile('_data/programas.json'); if (u) programasSha = u.sha; }
     else { showToast('Error al guardar', true); }
 }
 </script>
