@@ -20,20 +20,8 @@
       "color": "teal"
     },
     {
-      "titulo": "Prueba programa",
-      "descripcion": "esta es una prueba",
-      "icono": "fa-star",
-      "color": "blue"
-    },
-    {
       "titulo": "Prevencion violencia",
       "descripcion": "",
-      "icono": "fa-star",
-      "color": "blue"
-    },
-    {
-      "titulo": "prueba2",
-      "descripcion": "prueba2",
       "icono": "fa-star",
       "color": "blue"
     },
