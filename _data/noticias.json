@@ -17,12 +17,12 @@
       "contenido": "En la Fundación Integral Allin Kay creemos que la prevención del suicidio no debe limitarse a una fecha o a un mes específico. Es un compromiso permanente que se construye cada día a través de la escucha, la empatía, el acompañamiento y el cuidado de la salud mental.  A veces, un mensaje, una palabra de apoyo o una pregunta tan sencilla como “¿cómo estás?” puede marcar una diferencia significativa en la vida de una persona y recordarle que no está sola.  🌳 Proyecto “Árbol de la Vida”  Como parte de nuestras acciones de sensibilización y prevención, desarrollamos el “Árbol de la Vida”, una iniciativa que invita a las personas a dejar mensajes de esperanza, apoyo, cariño y motivación.  Cada mensaje es colocado simbólicamente en nuestro árbol, convirtiéndolo en un espacio colectivo de encuentro y solidaridad, donde las palabras pueden acompañar a quienes atraviesan momentos difíciles.  💛 Sé parte del Árbol de la Vida. Deja un mensaje de esperanza. Tus palabras pueden abrazar a alguien, incluso sin conocer su historia.  Porque hablar, escuchar y acompañar también puede salvar vidas."
     },
     {
-      "titulo": "Campaña",
+      "titulo": "Salud visual para una atención integral y digna",
       "fecha": "20 May 2026",
       "categoria": "evento",
-      "imagen": "img/noticias/eventos/evento2.jpg",
-      "resumen": "Únete a nuestra campaña de recaudación anual. Cada donación financia atención directa a familias vulnerables.",
-      "contenido": "Este año nuestra meta es recaudar $5,000 para cubrir 250 consultas psicológicas gratuitas. Puedes donar desde $5 y marcar la diferencia en la vida de alguien que lo necesita."
+      "imagen": "img/noticias/noticia-1791412026752.png",
+      "resumen": "Cuidamos la salud visual y contribuimos al bienestar de nuestra comunidad.",
+      "contenido": "Como parte de su compromiso con las poblaciones en situación de vulnerabilidad, la Fundación Integral Allin Kay desarrolló una Campaña de Salud Visual en el Hogar de Vida 2 de la Unidad Patronato Municipal San José, espacio que brinda atención a personas adultas vinculadas a procesos de recuperación frente al consumo problemático de sustancias psicoactivas y a personas con experiencia de vida en calle. Gobierno Abierto Quito La jornada permitió acercar servicios de evaluación y atención visual a los usuarios del Hogar, mediante valoraciones orientadas a identificar necesidades y posibles dificultades visuales, contribuyendo al cuidado integral de su salud. Esta iniciativa refleja el compromiso de la Fundación Integral Allin Kay de llevar sus acciones más allá de sus instalaciones y acercar servicios de salud a poblaciones que enfrentan condiciones de vulnerabilidad, promoviendo el acceso, la prevención y una atención con enfoque humano. Porque cuidar la salud visual también es contribuir a la autonomía, el bienestar y la calidad de vida."
     },
     {
       "titulo": "Jornada de salud comunitaria en el barrio norte",
@@ -39,14 +39,6 @@
       "imagen": "img/noticias/actividades/actividad2.jpg",
       "resumen": "Realizamos un taller con 60 familias sobre herramientas de comunicación y manejo emocional en el hogar.",
       "contenido": "Los participantes aprendieron técnicas de escucha activa, resolución de conflictos y fortalecimiento del vínculo afectivo con sus hijos. El taller fue facilitado por nuestro equipo de psicólogos."
-    },
-    {
-      "titulo": "Lucas volvió a sonreír: psicopedagogía que cambia vidas",
-      "fecha": "25 Feb 2026",
-      "categoria": "historia",
-      "imagen": "img/noticias/historias/historia2.jpg",
-      "resumen": "Con 8 años y dificultades de aprendizaje, Lucas encontró en nuestro equipo el apoyo que necesitaba para avanzar.",
-      "contenido": "Gracias al trabajo psicopedagógico personalizado, hoy lee con fluidez y participa activamente en clases. Su maestra reporta una transformación notable en su confianza y rendimiento escolar."
     }
   ]
 }
