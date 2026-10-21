@@ -336,13 +336,25 @@
             const btnDonar = document.getElementById('btnDonar');
 
             const btnLabels = {
-                paypal:   '<i class="fa-brands fa-paypal"></i> Donar con PayPal (próximamente)',
-                tarjeta:  '<i class="fa-solid fa-credit-card"></i> Pago con tarjeta (próximamente)',
-                qr:       '<i class="fa-solid fa-qrcode"></i> Coordinar transferencia por WhatsApp',
+                paypal:   '<i class="fa-brands fa-paypal"></i> Donar con PayPal',
+                tarjeta:  '<i class="fa-brands fa-whatsapp"></i> Consultar donación con tarjeta por WhatsApp',
+                qr:       '<i class="fa-brands fa-whatsapp"></i> Notificar transferencia por WhatsApp',
                 efectivo: '<i class="fa-brands fa-whatsapp"></i> Coordinar entrega por WhatsApp'
             };
 
-            const metodosDemo = ['paypal', 'tarjeta'];
+            function actualizarVisibilidadBoton(metodo) {
+                if (!btnDonar) return;
+                if (metodo === 'paypal') {
+                    // En PayPal el botón de pago está integrado directamente en la tarjeta de PayPal
+                    btnDonar.style.display = 'none';
+                } else {
+                    btnDonar.style.display = 'flex';
+                    btnDonar.disabled = false;
+                    btnDonar.style.opacity = '1';
+                    btnDonar.style.cursor = 'pointer';
+                    btnDonar.innerHTML = btnLabels[metodo] || '<i class="fa-brands fa-whatsapp"></i> Continuar por WhatsApp';
+                }
+            }
 
             btnPayments.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -351,16 +363,13 @@
                     allDetails.forEach(d => d.classList.remove('active'));
                     const target = document.getElementById('details-' + btn.dataset.method);
                     if (target) target.classList.add('active');
-                    // Cambiar texto del botón
-                    if (btnDonar && btnLabels[btn.dataset.method]) {
-                        btnDonar.innerHTML = btnLabels[btn.dataset.method];
-                        const esDemo = metodosDemo.includes(btn.dataset.method);
-                        btnDonar.disabled = esDemo;
-                        btnDonar.style.opacity = esDemo ? '0.6' : '1';
-                        btnDonar.style.cursor = esDemo ? 'not-allowed' : 'pointer';
-                    }
+                    actualizarVisibilidadBoton(btn.dataset.method);
                 });
             });
+
+            // Inicializar visibilidad según el método activo al cargar
+            const metodoInicial = document.querySelector('.btn-payment.active')?.dataset.method || 'paypal';
+            actualizarVisibilidadBoton(metodoInicial);
 
             // ==========================================
             // Envío por WhatsApp
