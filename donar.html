@@ -441,29 +441,114 @@ ${lineaMetodo}`;
         </a>
     </div>
 
-    <!-- PayPal Donación directa (sin SDK) -->
+    <!-- PayPal Donación directa y recurrente mensual -->
     <script>
+    // Obtener tipo de donación ('mensual' o 'unica')
+    function getDonationType() {
+        var activeType = document.querySelector('.btn-type.active');
+        return activeType ? activeType.dataset.type : 'unica';
+    }
+
     // Obtener monto seleccionado
     function getSelectedAmount() {
         var activeBtn = document.querySelector('.btn-amount.active');
-        if (activeBtn) return parseFloat(activeBtn.textContent.replace('$', ''));
+        if (activeBtn) return parseFloat(activeBtn.dataset.amount || activeBtn.textContent.replace('$', ''));
         var otroInput = document.querySelector('.input-otro-monto');
         if (otroInput && otroInput.value) return parseFloat(otroInput.value);
-        return 10;
+        return 20;
     }
 
-    // Configurar botón PayPal directo
+    // Actualizar visualmente el botón de PayPal
+    function updatePayPalButton() {
+        var btn = document.getElementById('paypal-donate-link');
+        var note = document.getElementById('paypal-mode-note');
+        if (!btn) return;
+        var isMensual = getDonationType() === 'mensual';
+        var amount = getSelectedAmount();
+
+        if (isMensual) {
+            btn.innerHTML = '<i class="fa-solid fa-arrows-rotate" style="font-size:1.15rem;"></i> Suscribirme con PayPal ($' + amount.toFixed(0) + '/mes)';
+            btn.style.background = '#0070ba';
+            if (note) {
+                note.innerHTML = '<i class="fa-solid fa-arrows-rotate" style="color:#0070ba"></i> <strong>Aporte recurrente automático:</strong> Se debitará $' + amount.toFixed(0) + ' USD cada mes a través de PayPal. Puedes cancelar tu suscripción cuando desees desde tu cuenta PayPal.';
+            }
+        } else {
+            btn.innerHTML = '<i class="fa-brands fa-paypal" style="font-size:1.3rem;"></i> Donar $' + amount.toFixed(0) + ' con PayPal';
+            btn.style.background = '#003087';
+            if (note) {
+                note.innerHTML = '<i class="fa-solid fa-circle-info"></i> Pago único de $' + amount.toFixed(0) + ' USD procesado de forma segura por PayPal (no recurrente).';
+            }
+        }
+    }
+
+    // Configurar botón PayPal al cargar
     var paypalContainer = document.getElementById('paypal-button-container');
     if (paypalContainer) {
-        paypalContainer.innerHTML = '<a id="paypal-donate-link" href="#" onclick="openPayPal()" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#003087;color:#fff;padding:14px 28px;border-radius:8px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:all 0.2s;"><i class="fa-brands fa-paypal" style="font-size:1.3rem;"></i> Donar con PayPal</a>';
+        paypalContainer.innerHTML = '<a id="paypal-donate-link" href="#" onclick="openPayPal(event)" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#003087;color:#fff;padding:14px 24px;border-radius:10px;font-size:1.05rem;font-weight:700;text-decoration:none;transition:all 0.25s;box-shadow:0 4px 12px rgba(0,48,135,0.25);"><i class="fa-brands fa-paypal" style="font-size:1.3rem;"></i> Donar con PayPal</a>' +
+            '<p id="paypal-mode-note" class="gateway-note" style="margin-top:12px;font-size:0.82rem;line-height:1.5;"><i class="fa-solid fa-circle-info"></i> Pago seguro procesado por PayPal.</p>';
     }
 
-    function openPayPal() {
+    function openPayPal(e) {
+        if (e && e.preventDefault) e.preventDefault();
         var amount = getSelectedAmount();
-        if (!amount || amount <= 0) { alert('Selecciona un monto para donar.'); return; }
-        var paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=fundacionallinkay_uio%40outlook.com&item_name=Aporte+Fundacion+Allinkay&amount=' + amount.toFixed(2) + '&currency_code=USD&no_shipping=1&return=https://fundacionintegralallinkay.org/donar.html';
+        if (!amount || amount <= 0) {
+            alert('Por favor selecciona o ingresa un monto válido para donar.');
+            return;
+        }
+
+        var isMensual = getDonationType() === 'mensual';
+        var businessEmail = 'fundacionallinkay_uio@outlook.com';
+        var returnUrl = 'https://fundacionintegralallinkay.org/donar.html';
+        var cancelUrl = 'https://fundacionintegralallinkay.org/donar.html';
+        var paypalUrl = '';
+
+        if (isMensual) {
+            // Suscripción mensual periódica automatizada
+            // a3: monto del periodo, p3: frecuencia (1), t3: unidad (M = mensual), src: 1 (recurrente)
+            paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?' +
+                'cmd=_xclick-subscriptions' +
+                '&business=' + encodeURIComponent(businessEmail) +
+                '&item_name=' + encodeURIComponent('Aporte Mensual Recurrente - Fundación Allinkay') +
+                '&item_number=DONACION_MENSUAL' +
+                '&currency_code=USD' +
+                '&a3=' + amount.toFixed(2) +
+                '&p3=1' +
+                '&t3=M' +
+                '&src=1' +
+                '&sra=1' +
+                '&no_shipping=1' +
+                '&return=' + encodeURIComponent(returnUrl) +
+                '&cancel_return=' + encodeURIComponent(cancelUrl);
+        } else {
+            // Pago único
+            paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?' +
+                'cmd=_donations' +
+                '&business=' + encodeURIComponent(businessEmail) +
+                '&item_name=' + encodeURIComponent('Donación Única - Fundación Allinkay') +
+                '&amount=' + amount.toFixed(2) +
+                '&currency_code=USD' +
+                '&no_shipping=1' +
+                '&return=' + encodeURIComponent(returnUrl) +
+                '&cancel_return=' + encodeURIComponent(cancelUrl);
+        }
+
         window.open(paypalUrl, '_blank');
     }
+
+    // Escuchar cambios en tipo de donación o monto para actualizar el botón en tiempo real
+    document.querySelectorAll('.btn-type').forEach(function(b) {
+        b.addEventListener('click', function() { setTimeout(updatePayPalButton, 50); });
+    });
+    document.querySelectorAll('.btn-amount').forEach(function(b) {
+        b.addEventListener('click', function() { setTimeout(updatePayPalButton, 50); });
+    });
+    var inputMontoExtra = document.getElementById('otroMonto');
+    if (inputMontoExtra) {
+        inputMontoExtra.addEventListener('input', updatePayPalButton);
+    }
+
+    // Inicializar estado del botón
+    setTimeout(updatePayPalButton, 100);
     </script>
 
 </body>
