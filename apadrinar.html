@@ -167,7 +167,35 @@
             </div>
         </section>
 
-    </main>
+    <!-- Modal de historia completa del perfil -->
+    <div id="apadHistoriaModal" class="apad-modal-overlay">
+        <div class="apad-modal-content">
+            <button class="apad-modal-close" id="apadModalClose" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+            <div id="apadModalImgWrap" style="display:none;">
+                <img id="apadModalImg" src="" alt="Beneficiario" class="apad-modal-header-img" title="Clic para ver en pantalla completa">
+            </div>
+            <div class="apad-modal-body">
+                <span class="apad-perfil-tag" id="apadModalTag"></span>
+                <h3 id="apadModalTitle"></h3>
+                <div class="apad-perfil-meta" style="border:none;padding:0;margin:0;">
+                    <span id="apadModalZona"><i class="fa-solid fa-location-dot"></i> Quito</span>
+                    <span id="apadModalMonto"><i class="fa-solid fa-hand-holding-dollar"></i> Desde $15/mes</span>
+                </div>
+                <div class="apad-modal-historia" id="apadModalDesc"></div>
+                <div class="apad-modal-footer">
+                    <button class="apad-btn-perfil" id="apadModalWhatsapp" style="flex:1;">
+                        <i class="fa-brands fa-whatsapp"></i> Apadrinar ahora
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox pantalla completa para foto -->
+    <div id="apadLightbox" class="apad-lightbox">
+        <button class="apad-lightbox-close" id="apadLightboxClose" aria-label="Cerrar foto"><i class="fa-solid fa-xmark"></i></button>
+        <img id="apadLightboxImg" src="" alt="Foto ampliada">
+    </div>
 
     <footer>
         <p>&copy; 2026 Fundación Integral Allin Kay. Todos los derechos reservados.</p>
@@ -280,39 +308,168 @@ Por favor indíquenme los pasos para comenzar. ¡Gracias!`;
             norte: 'Quito Norte', sur: 'Quito Sur', centro: 'Quito Centro', valles: 'Valles'
         };
 
-        function buildPerfiles(perfiles) {
-            const cont = document.getElementById('resultados');
-            if (!cont || !perfiles || perfiles.length === 0) return;
+        var _allPerfiles = [];
 
-            cont.innerHTML = perfiles.map(function(p) {
+        function buildPerfiles(perfiles) {
+            _allPerfiles = perfiles || [];
+            const cont = document.getElementById('resultados');
+            if (!cont || !_allPerfiles || _allPerfiles.length === 0) return;
+
+            cont.innerHTML = _allPerfiles.map(function(p, idx) {
                 var t = tipoMap[p.tipo] || tipoMap.integral;
                 var zonaTexto = zonaMap[p.ubicacion] || 'Quito';
-                var avatarHtml = '';
-                if (p.imagen) {
-                    var imgSrc = p.imagen;
-                    if (imgSrc.indexOf('http') !== 0 && imgSrc.indexOf('data:') !== 0) {
-                        imgSrc = 'https://raw.githubusercontent.com/cbiallinkay-pixel/allinkay-web/main/' + imgSrc;
+                var headerMedia = '';
+                var fullImgUrl = '';
+
+                if (p.imagen && p.imagen.trim()) {
+                    fullImgUrl = p.imagen.trim();
+                    if (fullImgUrl.indexOf('http') !== 0 && fullImgUrl.indexOf('data:') !== 0) {
+                        fullImgUrl = 'https://raw.githubusercontent.com/cbiallinkay-pixel/allinkay-web/main/' + fullImgUrl;
                     }
-                    avatarHtml = '<div class="apad-perfil-avatar" style="background:' + t.bg + ';"><img src="' + imgSrc + '" alt="' + (p.nombre || 'Perfil') + '" onerror="this.onerror=null;this.parentElement.innerHTML=\'<i class=\\\'fa-solid ' + t.icon + '\\\' style=\\\'color:' + t.color + ';\\\'></i>\';"></div>';
+                    headerMedia = '<div class="apad-card-media" onclick="abrirFotoPerfil(' + idx + ')" title="Clic para ampliar foto">' +
+                        '<img src="' + fullImgUrl + '" alt="' + (p.nombre || 'Beneficiario') + '" loading="lazy">' +
+                        '<span class="apad-card-media-zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver foto</span>' +
+                        '</div>';
                 } else {
-                    avatarHtml = '<div class="apad-perfil-avatar" style="background:' + t.bg + ';"><i class="fa-solid ' + t.icon + '" style="color:' + t.color + ';"></i></div>';
+                    headerMedia = '<div class="apad-card-icon-hero" style="background:' + t.bg + '; color:' + t.color + ';">' +
+                        '<i class="fa-solid ' + t.icon + '"></i>' +
+                        '</div>';
                 }
+
+                var historiaTexto = p.historia || '';
+                var necesitaVerMas = historiaTexto.length > 130;
+
                 return '<div class="apad-perfil-card" data-edad="' + p.edad + '" data-tipo="' + p.tipo + '" data-ubicacion="' + p.ubicacion + '">' +
-                    avatarHtml +
-                    '<div class="apad-perfil-info">' +
+                    headerMedia +
+                    '<div class="apad-card-body">' +
                     '<span class="apad-perfil-tag" style="background:' + t.bg + '; color:' + t.color + ';">' + t.label + '</span>' +
+                    '<div class="apad-perfil-info">' +
                     '<h4>' + p.nombre + '</h4>' +
-                    '<p>' + p.historia + '</p>' +
+                    '<p class="apad-historia-clamp">' + historiaTexto + '</p>' +
+                    (necesitaVerMas ? '<button type="button" class="apad-btn-ver-mas" onclick="abrirHistoriaModal(' + idx + ')"><i class="fa-solid fa-book-open"></i> Leer historia completa</button>' : '') +
                     '<div class="apad-perfil-meta">' +
-                    '<span><i class="fa-solid fa-location-dot"></i> ' + zonaTexto + '</span></div></div>' +
+                    '<span><i class="fa-solid fa-location-dot"></i> ' + zonaTexto + '</span>' +
+                    '<span style="margin-left:auto;color:#0d9488;font-weight:700;"><i class="fa-solid fa-hand-holding-dollar"></i> $' + (p.monto || 15) + '/mes</span>' +
+                    '</div></div>' +
                     '<button class="apad-btn-perfil" data-nombre="' + p.nombre + '" data-tipo="' + t.apoyo + '" data-monto="' + p.monto + '">' +
-                    '<i class="fa-brands fa-whatsapp"></i> Apadrinar</button></div>';
+                    '<i class="fa-brands fa-whatsapp"></i> Apadrinar</button>' +
+                    '</div></div>';
             }).join('') + '<div class="apad-sin-resultados" id="sinResultados" style="display:none;">' +
                 '<i class="fa-solid fa-magnifying-glass"></i>' +
                 '<p>No encontramos perfiles con esos filtros.<br>Contactanos y te ayudamos.</p>' +
                 '<a href="https://wa.me/593988282747?text=Hola%2C%20quiero%20apadrinar" target="_blank" class="apad-buscar-btn">' +
                 '<i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp</a></div>';
         }
+
+        // ==========================================
+        // Modales de Historia y Foto Ampliada
+        // ==========================================
+        function abrirHistoriaModal(idx) {
+            var p = _allPerfiles[idx];
+            if (!p) return;
+            var t = tipoMap[p.tipo] || tipoMap.integral;
+            var zonaTexto = zonaMap[p.ubicacion] || 'Quito';
+
+            var modal = document.getElementById('apadHistoriaModal');
+            var imgWrap = document.getElementById('apadModalImgWrap');
+            var img = document.getElementById('apadModalImg');
+            var tag = document.getElementById('apadModalTag');
+            var title = document.getElementById('apadModalTitle');
+            var zona = document.getElementById('apadModalZona');
+            var monto = document.getElementById('apadModalMonto');
+            var desc = document.getElementById('apadModalDesc');
+            var btnWa = document.getElementById('apadModalWhatsapp');
+
+            tag.textContent = t.label;
+            tag.style.background = t.bg;
+            tag.style.color = t.color;
+            title.textContent = p.nombre;
+            zona.innerHTML = '<i class="fa-solid fa-location-dot"></i> ' + zonaTexto;
+            monto.innerHTML = '<i class="fa-solid fa-hand-holding-dollar"></i> Desde $' + (p.monto || 15) + ' USD / mes';
+            desc.textContent = p.historia;
+
+            if (p.imagen && p.imagen.trim()) {
+                var url = p.imagen.trim();
+                if (url.indexOf('http') !== 0 && url.indexOf('data:') !== 0) {
+                    url = 'https://raw.githubusercontent.com/cbiallinkay-pixel/allinkay-web/main/' + url;
+                }
+                img.src = url;
+                imgWrap.style.display = 'block';
+                img.onclick = function() { abrirLightboxSrc(url); };
+            } else {
+                imgWrap.style.display = 'none';
+                img.src = '';
+                img.onclick = null;
+            }
+
+            btnWa.onclick = function() {
+                var msg =
+`¡Hola Fundación Allinkay! 👋 Quiero apadrinar a:
+
+👤 *Beneficiario:* ${p.nombre}
+💙 *Tipo de apoyo:* ${t.apoyo}
+💰 *Aporte mensual:* desde $${p.monto || 15} USD
+
+Por favor indíquenme los pasos para comenzar. ¡Gracias!`;
+                window.open(`https://wa.me/593988282747?text=${encodeURIComponent(msg)}`, '_blank');
+            };
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarHistoriaModal() {
+            var modal = document.getElementById('apadHistoriaModal');
+            if (modal) modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function abrirFotoPerfil(idx) {
+            var p = _allPerfiles[idx];
+            if (!p || !p.imagen) return;
+            var url = p.imagen.trim();
+            if (url.indexOf('http') !== 0 && url.indexOf('data:') !== 0) {
+                url = 'https://raw.githubusercontent.com/cbiallinkay-pixel/allinkay-web/main/' + url;
+            }
+            abrirLightboxSrc(url);
+        }
+
+        function abrirLightboxSrc(src) {
+            var lb = document.getElementById('apadLightbox');
+            var img = document.getElementById('apadLightboxImg');
+            if (!lb || !img) return;
+            img.src = src;
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarLightbox() {
+            var lb = document.getElementById('apadLightbox');
+            var img = document.getElementById('apadLightboxImg');
+            if (lb) lb.classList.remove('active');
+            if (img) img.src = '';
+            var histModal = document.getElementById('apadHistoriaModal');
+            if (!histModal || !histModal.classList.contains('active')) {
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.getElementById('apadModalClose').addEventListener('click', cerrarHistoriaModal);
+        document.getElementById('apadHistoriaModal').addEventListener('click', function(e) {
+            if (e.target === this) cerrarHistoriaModal();
+        });
+
+        document.getElementById('apadLightboxClose').addEventListener('click', cerrarLightbox);
+        document.getElementById('apadLightbox').addEventListener('click', function(e) {
+            if (e.target === this) cerrarLightbox();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                cerrarLightbox();
+                cerrarHistoriaModal();
+            }
+        });
 
         function fixMojibake(str) {
             if (typeof str !== 'string') return str;
