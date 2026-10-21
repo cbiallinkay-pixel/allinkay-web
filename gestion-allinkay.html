@@ -59,7 +59,51 @@
         .toast { position: fixed; bottom: 30px; right: 30px; background: #0f766e; color: #fff; padding: 14px 24px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; display: none; z-index: 9999; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
         .toast.show { display: flex; align-items: center; gap: 8px; }
         .toast.error { background: #e53e3e; }
-        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } .links-grid { grid-template-columns: 1fr 1fr; } .tabs { gap: 6px; } .item-row { flex-direction: column; align-items: stretch; } }
+        .panel-thumb {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            object-position: center;
+            background: #fff;
+            border-radius: 10px;
+            border: 1.5px solid #c7d2fe;
+            cursor: zoom-in;
+            display: block;
+            flex-shrink: 0;
+        }
+        .panel-thumb.round { border-radius: 50%; object-fit: cover; }
+        .panel-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+            background: rgba(15, 23, 42, 0.92);
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .panel-lightbox.show { display: flex; }
+        .panel-lightbox img {
+            max-width: 92vw;
+            max-height: 88vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+        }
+        .panel-lightbox-close {
+            position: absolute;
+            top: 16px;
+            right: 24px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 2.4rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } .links-grid { grid-template-columns: 1fr 1fr; } .tabs { gap: 6px; } .item-row { flex-direction: column; align-items: stretch; } .panel-thumb { width: 96px; height: 96px; } }
     </style>
 </head>
 <body>
@@ -209,6 +253,7 @@
                     <li><strong>Ubicacion:</strong> Sector de Quito</li>
                     <li><strong>Historia:</strong> Descripcion de la situacion</li>
                     <li><strong>Monto:</strong> Aporte mensual desde (USD)</li>
+                    <li><strong>Foto:</strong> Imagen del beneficiario (subir con boton verde)</li>
                 </ul>
             </div>
             <div class="item-list" id="apadrinarList"></div>
@@ -278,6 +323,10 @@
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
+<div class="panel-lightbox" id="panelLightbox" onclick="if(event.target===this)closePanelLightbox()">
+    <button type="button" class="panel-lightbox-close" onclick="closePanelLightbox()" aria-label="Cerrar">&times;</button>
+    <img id="panelLightboxImg" alt="Foto ampliada">
+</div>
 
 <script>
 // ==========================================
@@ -286,6 +335,54 @@
 const REPO = 'cbiallinkay-pixel/allinkay-web';
 const BRANCH = 'main';
 const TOKEN_KEY = 'allinkay_gh_token';
+
+function ghRaw(path) {
+    if (!path) return '';
+    if (path.indexOf('http') === 0 || path.indexOf('data:') === 0) return path;
+    return 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path;
+}
+
+function panelThumbHtml(src, round) {
+    return '<img src="' + src + '" class="panel-thumb' + (round ? ' round' : '') + '" alt="Foto" title="Clic para ampliar" onclick="openPanelLightbox(this.src)">';
+}
+
+function openPanelLightbox(src) {
+    if (!src) return;
+    var box = document.getElementById('panelLightbox');
+    var img = document.getElementById('panelLightboxImg');
+    if (!box || !img) return;
+    img.src = src;
+    box.classList.add('show');
+}
+
+function closePanelLightbox() {
+    var box = document.getElementById('panelLightbox');
+    var img = document.getElementById('panelLightboxImg');
+    if (box) box.classList.remove('show');
+    if (img) img.src = '';
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closePanelLightbox();
+});
+
+function setRowThumb(row, src, round) {
+    if (!row || !src) return;
+    var img = row.querySelector('img.panel-thumb');
+    if (img) {
+        img.src = src;
+        img.classList.toggle('round', !!round);
+        return;
+    }
+    var wrap = row.querySelector('.prog-thumb-wrap');
+    if (wrap) {
+        var wrapImg = wrap.querySelector('img');
+        if (wrapImg) { wrapImg.src = src; return; }
+    }
+    var html = panelThumbHtml(src, round);
+    if (wrap) wrap.insertAdjacentHTML('afterbegin', html);
+    else row.insertAdjacentHTML('afterbegin', html);
+}
 
 let estadisticasSha = null;
 let informesSha = null;
@@ -677,7 +774,7 @@ let galeriaSha = null;
 function renderGaleria(fotos) {
     var list = document.getElementById('galeriaList');
     list.innerHTML = fotos.map(function(f) {
-        var imgPrev = f.imagen ? '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + f.imagen + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">' : '';
+        var imgPrev = f.imagen ? panelThumbHtml(ghRaw(f.imagen)) : '';
         return '<div class="item-row">' + imgPrev +
             '<input type="text" placeholder="Descripcion" value="' + (f.descripcion || '') + '" data-field="descripcion">' +
             '<input type="hidden" value="' + (f.imagen || '') + '" data-field="imagen">' +
@@ -715,6 +812,7 @@ async function uploadGaleriaImg(fileInput) {
         if (res.ok) {
             var row = fileInput.closest('.item-row');
             row.querySelector('[data-field="imagen"]').value = path;
+            setRowThumb(row, reader.result);
             showToast('Foto subida');
         } else { showToast('Error al subir', true); }
     };
@@ -749,7 +847,7 @@ function esc(str) {
 function renderNoticias(noticias) {
     var list = document.getElementById('noticiasList');
     list.innerHTML = noticias.map(function(n) {
-        var imgPrev = n.imagen ? '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + n.imagen + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0;">' : '';
+        var imgPrev = n.imagen ? panelThumbHtml(ghRaw(n.imagen)) : '';
         return '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
             '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
             '<input type="text" placeholder="Titulo" value="' + esc(n.titulo) + '" data-field="titulo" style="flex:2;min-width:150px;">' +
@@ -807,12 +905,10 @@ async function uploadNoticiaImg(fileInput) {
         if (res.ok) {
             var row = fileInput.closest('.item-row');
             row.querySelector('[data-field="imagen"]').value = path;
-            var existingImg = row.querySelector('img');
-            if (existingImg) existingImg.src = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path;
-            else {
-                var wrap = fileInput.closest('div');
-                wrap.insertAdjacentHTML('afterbegin', '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0;">');
-            }
+            var wrap = fileInput.closest('div');
+            var existingImg = wrap.querySelector('img.panel-thumb');
+            if (existingImg) existingImg.src = reader.result;
+            else wrap.insertAdjacentHTML('afterbegin', panelThumbHtml(reader.result));
             showToast('Foto subida');
         } else { showToast('Error al subir', true); }
     };
@@ -843,14 +939,35 @@ async function saveNoticias() {
 // ==========================================
 let apadrinarSha = null;
 
+function apadrinarThumbWrap(src) {
+    return '<div class="prog-thumb-wrap" style="position:relative;display:inline-block;flex-shrink:0;">' +
+        panelThumbHtml(src, true) +
+        '<button type="button" title="Quitar foto" onclick="event.stopPropagation();quitarFotoApadrinar(this)" style="position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;z-index:2;"><i class="fa-solid fa-xmark"></i></button>' +
+        '</div>';
+}
+
+function quitarFotoApadrinar(btn) {
+    var row = btn.closest('.item-row');
+    row.querySelector('[data-field="imagen"]').value = '';
+    var wrap = row.querySelector('.prog-thumb-wrap');
+    if (wrap) wrap.remove();
+    var imgDirect = row.querySelector('img.panel-thumb');
+    if (imgDirect) imgDirect.remove();
+    var uploadBtn = row.querySelector('.btn-upload');
+    if (uploadBtn) uploadBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Subir foto<input type="file" accept="image/*" onchange="uploadApadrinarImg(this)" style="display:none;">';
+    showToast('Foto quitada (recuerda guardar perfiles)');
+}
+
 function renderApadrinar(perfiles) {
     var list = document.getElementById('apadrinarList');
     list.innerHTML = perfiles.map(function(p) {
-        var imgPrev = p.imagen ? '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + p.imagen + '" style="width:50px;height:50px;object-fit:cover;border-radius:50%;">' : '';
+        var hasImg = Boolean(p.imagen && p.imagen.trim());
+        var imgThumb = hasImg ? apadrinarThumbWrap(ghRaw(p.imagen)) : '';
+
         return '<div class="item-row" style="flex-direction:column;align-items:stretch;gap:10px;">' +
             '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
-            imgPrev +
-            '<input type="text" placeholder="Nombre y edad" value="' + (p.nombre || '') + '" data-field="nombre" style="flex:2;min-width:150px;">' +
+            imgThumb +
+            '<input type="text" placeholder="Nombre y edad" value="' + esc(p.nombre) + '" data-field="nombre" style="flex:2;min-width:150px;">' +
             '<select data-field="edad" style="padding:8px;border:1.5px solid #e2e8f0;border-radius:8px;">' +
             '<option value="0-5"' + (p.edad==='0-5'?' selected':'') + '>0-5 anos</option>' +
             '<option value="6-12"' + (p.edad==='6-12'?' selected':'') + '>6-12 anos</option>' +
@@ -868,10 +985,10 @@ function renderApadrinar(perfiles) {
             '<option value="valles"' + (p.ubicacion==='valles'?' selected':'') + '>Valles</option></select>' +
             '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button></div>' +
             '<div style="display:flex;gap:8px;align-items:center;">' +
-            '<input type="text" placeholder="Historia / situacion" value="' + (p.historia || '') + '" data-field="historia" style="flex:1;">' +
+            '<input type="text" placeholder="Historia / situacion" value="' + esc(p.historia) + '" data-field="historia" style="flex:1;">' +
             '<input type="number" placeholder="Monto USD" value="' + (p.monto || 15) + '" data-field="monto" style="width:80px;" min="1">' +
-            '<input type="hidden" value="' + (p.imagen || '') + '" data-field="imagen">' +
-            '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadApadrinarImg(this)" style="display:none;"></label>' +
+            '<input type="hidden" value="' + esc(p.imagen || '') + '" data-field="imagen">' +
+            '<label class="btn-upload" style="cursor:pointer;"><i class="fa-solid fa-cloud-arrow-up"></i> ' + (hasImg ? 'Cambiar foto' : 'Subir foto') + '<input type="file" accept="image/*" onchange="uploadApadrinarImg(this)" style="display:none;"></label>' +
             '</div></div>';
     }).join('');
 }
@@ -894,7 +1011,63 @@ function addPerfil() {
         '<div style="display:flex;gap:8px;align-items:center;">' +
         '<input type="text" placeholder="Historia / situacion" data-field="historia" style="flex:1;">' +
         '<input type="number" placeholder="Monto USD" value="15" data-field="monto" style="width:80px;" min="1">' +
+        '<input type="hidden" value="" data-field="imagen">' +
+        '<label class="btn-upload" style="cursor:pointer;"><i class="fa-solid fa-cloud-arrow-up"></i> Subir foto<input type="file" accept="image/*" onchange="uploadApadrinarImg(this)" style="display:none;"></label>' +
         '</div></div>';
+}
+
+async function uploadApadrinarImg(fileInput) {
+    var file = fileInput.files[0];
+    if (!file) return;
+    var token = getToken();
+    if (!token) {
+        showToast('Debes ingresar tu token de GitHub arriba', true);
+        return;
+    }
+    var row = fileInput.closest('.item-row');
+    var label = fileInput.closest('.btn-upload');
+    var originalLabelHtml = label.innerHTML;
+    label.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Subiendo...';
+    showToast('Subiendo foto del perfil...');
+
+    var reader = new FileReader();
+    reader.onload = async function() {
+        var base64 = reader.result.split(',')[1];
+        var localDataUrl = reader.result;
+        var filename = 'apadrinar-' + Date.now() + '.' + file.name.split('.').pop();
+        var path = 'img/apadrinar/' + filename;
+        var body = { message: 'Subir foto apadrinar: ' + filename, content: base64, branch: BRANCH };
+        try {
+            var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+                method: 'PUT',
+                headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            if (res.ok) {
+                row.querySelector('[data-field="imagen"]').value = path;
+                var headerDiv = row.children[0];
+                var wrap = headerDiv.querySelector('.prog-thumb-wrap');
+                if (wrap) {
+                    var img = wrap.querySelector('img');
+                    if (img) img.src = localDataUrl;
+                } else {
+                    var oldImg = headerDiv.querySelector('img.panel-thumb');
+                    if (oldImg) oldImg.remove();
+                    headerDiv.insertAdjacentHTML('afterbegin', apadrinarThumbWrap(localDataUrl));
+                }
+                label.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Cambiar foto<input type="file" accept="image/*" onchange="uploadApadrinarImg(this)" style="display:none;">';
+                showToast('Foto subida con éxito (recuerda presionar Guardar perfiles)');
+            } else {
+                label.innerHTML = originalLabelHtml;
+                var errData = await res.json().catch(function() { return {}; });
+                showToast('Error al subir a GitHub: ' + (errData.message || res.statusText), true);
+            }
+        } catch (e) {
+            label.innerHTML = originalLabelHtml;
+            showToast('Error de conexión al subir imagen', true);
+        }
+    };
+    reader.readAsDataURL(file);
 }
 
 async function saveApadrinar() {
@@ -909,7 +1082,13 @@ async function saveApadrinar() {
         var ubicacion = row.querySelector('[data-field="ubicacion"]').value;
         var historia = row.querySelector('[data-field="historia"]').value.trim();
         var monto = Number(row.querySelector('[data-field="monto"]').value) || 15;
-        if (nombre) perfiles.push({ nombre:nombre, edad:edad, tipo:tipo, ubicacion:ubicacion, historia:historia, monto:monto });
+        var imagenInput = row.querySelector('[data-field="imagen"]');
+        var imagen = imagenInput ? imagenInput.value.trim() : '';
+        if (nombre) {
+            var item = { nombre: nombre, edad: edad, tipo: tipo, ubicacion: ubicacion, historia: historia, monto: monto };
+            if (imagen) item.imagen = imagen;
+            perfiles.push(item);
+        }
     });
     var ok = await writeFile('_data/apadrinar.json', { perfiles: perfiles }, apadrinarSha);
     if (ok) { showToast('Perfiles guardados'); var u = await readFile('_data/apadrinar.json'); if (u) apadrinarSha = u.sha; }
@@ -924,7 +1103,7 @@ let serviciosSha = null;
 function renderServicios(servicios) {
     var list = document.getElementById('serviciosList');
     list.innerHTML = servicios.map(function(s) {
-        var imgPrev = s.imagen ? '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + s.imagen + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">' : '';
+        var imgPrev = s.imagen ? panelThumbHtml(ghRaw(s.imagen)) : '';
         return '<div class="item-row" style="flex-wrap:wrap;">' + imgPrev +
             '<input type="text" placeholder="Titulo del servicio" value="' + (s.titulo || '') + '" data-field="titulo" style="flex:1;min-width:150px;">' +
             '<input type="text" placeholder="Descripcion corta" value="' + (s.descripcion || '') + '" data-field="descripcion" style="flex:1;min-width:150px;">' +
@@ -964,9 +1143,9 @@ async function uploadServicioImg(fileInput) {
         if (res.ok) {
             var row = fileInput.closest('.item-row');
             row.querySelector('[data-field="imagen"]').value = path;
-            var existingImg = row.querySelector('img');
-            if (existingImg) existingImg.src = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path;
-            else row.insertAdjacentHTML('afterbegin', '<img src="https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path + '" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">');
+            var existingImg = row.querySelector('img.panel-thumb');
+            if (existingImg) existingImg.src = reader.result;
+            else row.insertAdjacentHTML('afterbegin', panelThumbHtml(reader.result));
             showToast('Foto subida');
         } else { showToast('Error al subir', true); }
     };
@@ -1010,25 +1189,43 @@ function buildColorSelect(selected) {
         }).join('') + '</select>';
 }
 
+function programaThumbWrap(src) {
+    return '<div class="prog-thumb-wrap" style="position:relative;display:inline-block;flex-shrink:0;">' +
+        panelThumbHtml(src) +
+        '<button type="button" title="Quitar foto" onclick="event.stopPropagation();quitarFotoPrograma(this)" style="position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;z-index:2;"><i class="fa-solid fa-xmark"></i></button>' +
+        '</div>';
+}
+
 function renderProgramas(programas) {
     var list = document.getElementById('programasList');
-    list.innerHTML = programas.map(function(p) {
-        var imgSrc = p.imagen ? (p.imagen.startsWith('http') ? p.imagen : 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + p.imagen) : '';
-        var imgPreview = p.imagen ? '<img src="' + imgSrc + '" style="width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0;flex-shrink:0;">' : '';
-        return '<div class="item-row" style="flex-wrap:wrap;align-items:center;gap:10px;">' +
-            imgPreview +
+    list.innerHTML = programas.map(function(p, idx) {
+        var hasImg = Boolean(p.imagen && p.imagen.trim());
+        var imgThumb = hasImg ? programaThumbWrap(ghRaw(p.imagen)) : '';
+
+        return '<div class="item-row" data-index="' + idx + '" style="flex-wrap:wrap;align-items:center;gap:10px;">' +
+            imgThumb +
             '<div style="display:flex;gap:6px;align-items:center;flex:2;min-width:180px;">' +
             '<i class="fa-solid ' + (p.icono || 'fa-star') + ' prog-icon-prev" style="color:#6366f1;font-size:1.3rem;flex-shrink:0;width:24px;text-align:center;"></i>' +
             '<input type="text" placeholder="Título del programa" value="' + esc(p.titulo) + '" data-field="titulo" style="flex:1;">' +
             '</div>' +
-            '<input type="text" placeholder="Icono (ej: fa-shield-halved)" value="' + esc(p.icono) + '" data-field="icono" style="width:160px;" oninput="this.closest(\'.item-row\').querySelector(\'.prog-icon-prev\').className=\'fa-solid prog-icon-prev \'+this.value">' +
+            '<input type="text" placeholder="Icono (ej: fa-shield-halved)" value="' + esc(p.icono) + '" data-field="icono" style="width:150px;" oninput="this.closest(\'.item-row\').querySelector(\'.prog-icon-prev\').className=\'fa-solid prog-icon-prev \'+this.value">' +
             buildColorSelect(p.color) +
             '<input type="hidden" value="' + esc(p.imagen || '') + '" data-field="imagen">' +
-            '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadProgramaImg(this)" style="display:none;"></label>' +
+            '<label class="btn-upload" style="cursor:pointer;"><i class="fa-solid fa-cloud-arrow-up"></i> ' + (hasImg ? 'Cambiar foto' : 'Subir foto') + '<input type="file" accept="image/*" onchange="uploadProgramaImg(this)" style="display:none;"></label>' +
             '<input type="text" placeholder="Descripción del programa" value="' + esc(p.descripcion) + '" data-field="descripcion" style="flex:2;min-width:200px;">' +
             '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button>' +
             '</div>';
     }).join('');
+}
+
+function quitarFotoPrograma(btn) {
+    var row = btn.closest('.item-row');
+    row.querySelector('[data-field="imagen"]').value = '';
+    var wrap = row.querySelector('.prog-thumb-wrap');
+    if (wrap) wrap.remove();
+    var uploadBtn = row.querySelector('.btn-upload');
+    if (uploadBtn) uploadBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Subir foto<input type="file" accept="image/*" onchange="uploadProgramaImg(this)" style="display:none;">';
+    showToast('Foto quitada (recuerda guardar cambios)');
 }
 
 function addPrograma() {
@@ -1039,10 +1236,10 @@ function addPrograma() {
         '<i class="fa-solid fa-star prog-icon-prev" style="color:#6366f1;font-size:1.3rem;flex-shrink:0;width:24px;text-align:center;"></i>' +
         '<input type="text" placeholder="Título del programa" data-field="titulo" style="flex:1;">' +
         '</div>' +
-        '<input type="text" placeholder="Icono (ej: fa-shield-halved)" data-field="icono" value="fa-star" style="width:160px;" oninput="this.closest(\'.item-row\').querySelector(\'.prog-icon-prev\').className=\'fa-solid prog-icon-prev \'+this.value">' +
+        '<input type="text" placeholder="Icono (ej: fa-shield-halved)" data-field="icono" value="fa-star" style="width:150px;" oninput="this.closest(\'.item-row\').querySelector(\'.prog-icon-prev\').className=\'fa-solid prog-icon-prev \'+this.value">' +
         buildColorSelect('blue') +
         '<input type="hidden" value="" data-field="imagen">' +
-        '<label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i> Foto<input type="file" accept="image/*" onchange="uploadProgramaImg(this)" style="display:none;"></label>' +
+        '<label class="btn-upload" style="cursor:pointer;"><i class="fa-solid fa-cloud-arrow-up"></i> Subir foto<input type="file" accept="image/*" onchange="uploadProgramaImg(this)" style="display:none;"></label>' +
         '<input type="text" placeholder="Descripción del programa" data-field="descripcion" style="flex:2;min-width:200px;">' +
         '<button class="btn-remove" onclick="this.closest(\'.item-row\').remove()"><i class="fa-solid fa-trash"></i></button>' +
         '</div>'
@@ -1054,27 +1251,50 @@ async function uploadProgramaImg(fileInput) {
     if (!file) return;
     var token = getToken();
     if (!token) return;
-    showToast('Subiendo foto...');
+    var row = fileInput.closest('.item-row');
+    var label = fileInput.closest('.btn-upload');
+    var originalLabelHtml = label.innerHTML;
+    label.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Subiendo...';
+    showToast('Subiendo foto del programa...');
+    
     var reader = new FileReader();
     reader.onload = async function() {
         var base64 = reader.result.split(',')[1];
+        var localDataUrl = reader.result;
         var filename = 'programa-' + Date.now() + '.' + file.name.split('.').pop();
         var path = 'img/programas/' + filename;
         var body = { message: 'Subir programa: ' + filename, content: base64, branch: BRANCH };
-        var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
-            method: 'PUT',
-            headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-        });
-        if (res.ok) {
-            var row = fileInput.closest('.item-row');
-            row.querySelector('[data-field="imagen"]').value = path;
-            var existingImg = row.querySelector('img');
-            var fullUrl = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + path;
-            if (existingImg) existingImg.src = fullUrl;
-            else row.insertAdjacentHTML('afterbegin', '<img src="' + fullUrl + '" style="width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0;flex-shrink:0;">');
-            showToast('Foto subida');
-        } else { showToast('Error al subir', true); }
+        try {
+            var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+                method: 'PUT',
+                headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            if (res.ok) {
+                row.querySelector('[data-field="imagen"]').value = path;
+                var wrap = row.querySelector('.prog-thumb-wrap');
+                if (wrap) {
+                    var img = wrap.querySelector('img');
+                    if (img) {
+                        img.src = localDataUrl;
+                        img.className = 'panel-thumb';
+                        img.removeAttribute('style');
+                        img.title = 'Clic para ampliar';
+                        img.onclick = function() { openPanelLightbox(this.src); };
+                    }
+                } else {
+                    row.insertAdjacentHTML('afterbegin', programaThumbWrap(localDataUrl));
+                }
+                label.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Cambiar foto<input type="file" accept="image/*" onchange="uploadProgramaImg(this)" style="display:none;">';
+                showToast('Foto subida con éxito (recuerda guardar cambios)');
+            } else {
+                label.innerHTML = originalLabelHtml;
+                showToast('Error al subir imagen a GitHub', true);
+            }
+        } catch (e) {
+            label.innerHTML = originalLabelHtml;
+            showToast('Error de conexión', true);
+        }
     };
     reader.readAsDataURL(file);
 }

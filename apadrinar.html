@@ -287,9 +287,18 @@ Por favor indíquenme los pasos para comenzar. ¡Gracias!`;
             cont.innerHTML = perfiles.map(function(p) {
                 var t = tipoMap[p.tipo] || tipoMap.integral;
                 var zonaTexto = zonaMap[p.ubicacion] || 'Quito';
+                var avatarHtml = '';
+                if (p.imagen) {
+                    var imgSrc = p.imagen;
+                    if (imgSrc.indexOf('http') !== 0 && imgSrc.indexOf('data:') !== 0) {
+                        imgSrc = 'https://raw.githubusercontent.com/cbiallinkay-pixel/allinkay-web/main/' + imgSrc;
+                    }
+                    avatarHtml = '<div class="apad-perfil-avatar" style="background:' + t.bg + ';"><img src="' + imgSrc + '" alt="' + (p.nombre || 'Perfil') + '" onerror="this.onerror=null;this.parentElement.innerHTML=\'<i class=\\\'fa-solid ' + t.icon + '\\\' style=\\\'color:' + t.color + ';\\\'></i>\';"></div>';
+                } else {
+                    avatarHtml = '<div class="apad-perfil-avatar" style="background:' + t.bg + ';"><i class="fa-solid ' + t.icon + '" style="color:' + t.color + ';"></i></div>';
+                }
                 return '<div class="apad-perfil-card" data-edad="' + p.edad + '" data-tipo="' + p.tipo + '" data-ubicacion="' + p.ubicacion + '">' +
-                    '<div class="apad-perfil-avatar" style="background:' + t.bg + ';">' +
-                    '<i class="fa-solid ' + t.icon + '" style="color:' + t.color + ';"></i></div>' +
+                    avatarHtml +
                     '<div class="apad-perfil-info">' +
                     '<span class="apad-perfil-tag" style="background:' + t.bg + '; color:' + t.color + ';">' + t.label + '</span>' +
                     '<h4>' + p.nombre + '</h4>' +
