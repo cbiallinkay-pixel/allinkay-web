@@ -508,7 +508,7 @@ ${lineaMetodo}`;
             paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?' +
                 'cmd=_xclick-subscriptions' +
                 '&business=' + encodeURIComponent(businessEmail) +
-                '&item_name=' + encodeURIComponent('Aporte Mensual Recurrente - Fundación Allinkay') +
+                '&item_name=' + encodeURIComponent('Aporte Mensual - Fundacion Allinkay') +
                 '&item_number=DONACION_MENSUAL' +
                 '&currency_code=USD' +
                 '&a3=' + amount.toFixed(2) +
@@ -520,16 +520,26 @@ ${lineaMetodo}`;
                 '&return=' + encodeURIComponent(returnUrl) +
                 '&cancel_return=' + encodeURIComponent(cancelUrl);
         } else {
-            // Pago único
+            // Pago único estándar (usamos _xclick para evitar la restricción geográfica de PayPal Donations en cuentas de Ecuador)
             paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?' +
-                'cmd=_donations' +
+                'cmd=_xclick' +
                 '&business=' + encodeURIComponent(businessEmail) +
-                '&item_name=' + encodeURIComponent('Donación Única - Fundación Allinkay') +
+                '&item_name=' + encodeURIComponent('Aporte Solidario - Fundacion Allinkay') +
                 '&amount=' + amount.toFixed(2) +
                 '&currency_code=USD' +
                 '&no_shipping=1' +
                 '&return=' + encodeURIComponent(returnUrl) +
                 '&cancel_return=' + encodeURIComponent(cancelUrl);
+        }
+
+        // Si el donante ya llenó nombre o correo, pre-llenarlos en PayPal
+        var nombreInput = document.getElementById('nombreCompleto');
+        var correoInput = document.getElementById('correo');
+        if (nombreInput && nombreInput.value.trim()) {
+            paypalUrl += '&first_name=' + encodeURIComponent(nombreInput.value.trim());
+        }
+        if (correoInput && correoInput.value.trim()) {
+            paypalUrl += '&email=' + encodeURIComponent(correoInput.value.trim());
         }
 
         window.open(paypalUrl, '_blank');
