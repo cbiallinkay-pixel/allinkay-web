@@ -40,9 +40,11 @@
             <!-- Columna Izquierda: Mensaje Inspirador -->
             <div class="donar-info">
                 <div class="donar-info-content">
-                    <h1>Tu aporte permite cambiar vidas…</h1>
-                    <p>Con tu donación, nos ayudas a seguir brindando apoyo psicológico, educación y prevención a
-                        quienes más lo necesitan. ¡Gracias por ser parte del cambio!</p>
+                    <h1>Tu aporte transforma vidas y construye esperanza</h1>
+                    <p>En la Fundación Integral Allin Kay, cada donación nos permite brindar atención médica, apoyo psicológico, acompañamiento psicopedagógico y asistencia social a personas y familias en situación de vulnerabilidad.</p>
+                    <p style="margin-top:14px;">Tu solidaridad también fortalece nuestros programas de prevención, educación y bienestar comunitario, contribuyendo a mejorar la calidad de vida de quienes más lo necesitan.</p>
+                    <p style="margin-top:14px;">Detrás de cada donación hay una oportunidad de recuperar la salud, superar dificultades, continuar un tratamiento y construir un futuro con esperanza.</p>
+                    <p style="margin-top:18px; font-size:1.05rem; font-weight:600;">✨ ¡Sé parte de esta transformación! Tu ayuda, por pequeña que parezca, puede marcar una gran diferencia en la vida de alguien.</p>
                 </div>
             </div>
 
@@ -120,7 +122,7 @@
                                 internacional. Ideal para donantes en el exterior.</p>
                             <div class="paypal-preview" style="margin-top:16px;">
                                 <div id="paypal-button-container"></div>
-                                <p class="gateway-note" style="margin-top:12px;"><i class="fa-solid fa-circle-info"></i> Pago seguro procesado por PayPal. No admite pago diferido a cuotas.</p>
+                                <p class="gateway-note" style="margin-top:12px;"><i class="fa-solid fa-circle-info"></i> Pago seguro a través de PayPal. <strong>Única:</strong> enlace PayPal.me directo. <strong>Mensual:</strong> suscripción automática cancelable en cualquier momento.</p>
                             </div>
                         </div>
                     </div>
@@ -476,7 +478,7 @@ ${lineaMetodo}`;
             btn.innerHTML = '<i class="fa-brands fa-paypal" style="font-size:1.3rem;"></i> Donar $' + amount.toFixed(0) + ' con PayPal';
             btn.style.background = '#003087';
             if (note) {
-                note.innerHTML = '<i class="fa-solid fa-circle-info"></i> Pago único de $' + amount.toFixed(0) + ' USD procesado de forma segura por PayPal (no recurrente).';
+                note.innerHTML = '<i class="fa-solid fa-circle-info"></i> Pago único de $' + amount.toFixed(0) + ' USD vía enlace PayPal.me directo. Sin restricciones geográficas.';
             }
         }
     }
@@ -497,14 +499,15 @@ ${lineaMetodo}`;
         }
 
         var isMensual = getDonationType() === 'mensual';
+        // IMPORTANTE: Reemplazar 'FundacionAllinkay' con el nombre real del enlace PayPal.me de la fundación
+        var paypalMeUser = 'FundacionAllinkay'; // paypal.me/FundacionAllinkay
         var businessEmail = 'fundacionallinkay_uio@outlook.com';
         var returnUrl = 'https://fundacionintegralallinkay.org/donar.html';
         var cancelUrl = 'https://fundacionintegralallinkay.org/donar.html';
         var paypalUrl = '';
 
         if (isMensual) {
-            // Suscripción mensual periódica automatizada
-            // a3: monto del periodo, p3: frecuencia (1), t3: unidad (M = mensual), src: 1 (recurrente)
+            // Suscripción mensual automática (recurrente) — funciona con cuentas Business de PayPal Ecuador
             paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?' +
                 'cmd=_xclick-subscriptions' +
                 '&business=' + encodeURIComponent(businessEmail) +
@@ -519,27 +522,20 @@ ${lineaMetodo}`;
                 '&no_shipping=1' +
                 '&return=' + encodeURIComponent(returnUrl) +
                 '&cancel_return=' + encodeURIComponent(cancelUrl);
-        } else {
-            // Pago único estándar (usamos _xclick para evitar la restricción geográfica de PayPal Donations en cuentas de Ecuador)
-            paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?' +
-                'cmd=_xclick' +
-                '&business=' + encodeURIComponent(businessEmail) +
-                '&item_name=' + encodeURIComponent('Aporte Solidario - Fundacion Allinkay') +
-                '&amount=' + amount.toFixed(2) +
-                '&currency_code=USD' +
-                '&no_shipping=1' +
-                '&return=' + encodeURIComponent(returnUrl) +
-                '&cancel_return=' + encodeURIComponent(cancelUrl);
-        }
 
-        // Si el donante ya llenó nombre o correo, pre-llenarlos en PayPal
-        var nombreInput = document.getElementById('nombreCompleto');
-        var correoInput = document.getElementById('correo');
-        if (nombreInput && nombreInput.value.trim()) {
-            paypalUrl += '&first_name=' + encodeURIComponent(nombreInput.value.trim());
-        }
-        if (correoInput && correoInput.value.trim()) {
-            paypalUrl += '&email=' + encodeURIComponent(correoInput.value.trim());
+            // Pre-llenar nombre y correo si disponibles
+            var nombreInput = document.getElementById('nombreCompleto');
+            var correoInput = document.getElementById('correo');
+            if (nombreInput && nombreInput.value.trim()) {
+                paypalUrl += '&first_name=' + encodeURIComponent(nombreInput.value.trim());
+            }
+            if (correoInput && correoInput.value.trim()) {
+                paypalUrl += '&email=' + encodeURIComponent(correoInput.value.trim());
+            }
+        } else {
+            // Pago único: usamos paypal.me/Usuario/MONTO que funciona globalmente
+            // incluso desde cuentas de Ecuador sin restricciones geográficas
+            paypalUrl = 'https://www.paypal.me/' + paypalMeUser + '/' + amount.toFixed(2) + 'USD';
         }
 
         window.open(paypalUrl, '_blank');

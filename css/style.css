@@ -652,7 +652,7 @@ nav ul li.lavalamp {
 /* Columna Izquierda (Mensaje) */
 .donar-info {
     flex: 1;
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%), url('../img/galeria/galeria1.jpg') center/cover no-repeat;
+    background: linear-gradient(135deg, rgba(10, 20, 40, 0.55) 0%, rgba(5, 15, 30, 0.65) 100%), url('../img/collage-fundacion.jpg') center/cover no-repeat;
     color: white;
     padding: 50px 40px;
     display: flex;
