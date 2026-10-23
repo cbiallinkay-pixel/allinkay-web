@@ -6,31 +6,6 @@
       "icono": "fa-brain",
       "color": "green",
       "imagen": "img/programas/programa-1790807625768.jpg"
-    },
-    {
-      "titulo": "Atención a mujeres víctimas",
-      "descripcion": "Acompañamiento integral a mujeres víctimas de violencia.",
-      "icono": "fa-hand-holding-heart",
-      "color": "purple"
-    },
-    {
-      "titulo": "Apoyo a familias vulnerables",
-      "descripcion": "Soporte a familias en situación de vulnerabilidad.",
-      "icono": "fa-people-roof",
-      "color": "teal"
-    },
-    {
-      "titulo": "Prevencion violencia",
-      "descripcion": "",
-      "icono": "fa-star",
-      "color": "blue"
-    },
-    {
-      "titulo": "prueba3",
-      "descripcion": "prueba3",
-      "icono": "fa-star",
-      "color": "blue",
-      "imagen": "img/programas/programa-1790807348377.jpg"
     }
   ]
 }
